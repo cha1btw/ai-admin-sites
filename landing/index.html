@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI-адміністратор для beauty-студій: відповідає в директі й записує клієнток</title>
+<meta name="description" content="AI-адміністратор відповідає клієнткам в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина. 14 днів безкоштовно.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:title" content="AI-адміністратор для beauty-студій">
+<meta property="og:description" content="Відповідає в директі за секунди, записує у вільні вікна, складне передає вам. 14 днів безкоштовно.">
+<meta name="theme-color" content="#f6f8f5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%234f7f6a'/%3E%3Cpath d='M22 18.2A7.5 7.5 0 1 1 13.8 10a5.8 5.8 0 0 0 8.2 8.2z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Onest:wght@400..800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+/*
+  Design: soft and light. Blush-white page, deep plum for the night demo only, one rose accent.
+  Type: Onest everywhere (display weights for headlines), IBM Plex Mono for the demo clock.
+  Shapes: buttons and chips are pills, cards 24px, inputs 14px. Shadows are rose-tinted and soft.
+*/
+:root {
+  --font-display: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  --bg: #f6f8f5;
+  --bg-glow: #e3eee7;
+  --surface: #eef3ef;
+  --raised: #ffffff;
+  --ink: #1f2a27;
+  --muted: #5c6a64;
+  --line: #e0e8e2;
+  --accent: #4f7f6a;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6efe9;
+  --accent-text: #3d6956;
+  --shadow: 0 1px 2px rgb(30 60 48 / 0.04), 0 14px 40px rgb(30 60 48 / 0.07);
+  --shadow-lift: 0 2px 4px rgb(30 60 48 / 0.05), 0 22px 50px rgb(30 60 48 / 0.11);
+
+  --stage: #1f2d28;
+  --stage-2: #2a3b35;
+  --stage-ink: #eef5f1;
+  --stage-muted: #a9bfb5;
+  --stage-line: #375048;
+  --stage-dot: #9fd8bd;
+  --phone: #141e1b;
+  --bubble-in: #2d413a;
+  --bubble-in-ink: #eef5f1;
+  --bubble-out: #5b8f78;
+  --bubble-out-ink: #ffffff;
+  --good: #3fbf8f;
+  --bad: #c0362c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121816; --bg-glow: #1a2a23; --surface: #182120; --raised: #1d2826; --ink: #eef4f0;
+    --muted: #a5b6ae; --line: #2c3a35; --accent: #8cc5ab; --accent-ink: #0f1f19;
+    --accent-soft: #1f342c; --accent-text: #9fd3bb; --shadow: none; --shadow-lift: none;
+    --bad: #ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121816; --bg-glow: #1a2a23; --surface: #182120; --raised: #1d2826; --ink: #eef4f0;
+    --muted: #a5b6ae; --line: #2c3a35; --accent: #8cc5ab; --accent-ink: #0f1f19;
+    --accent-soft: #1f342c; --accent-text: #9fd3bb; --shadow: none; --shadow-lift: none;
+  --bad: #ff8a80; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1100px 520px at 85% -120px, var(--bg-glow), transparent 70%),
+    radial-gradient(800px 420px at -10% 0, var(--bg-glow), transparent 70%),
+    var(--bg);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font: 400 17px/1.65 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1, h2 { font-family: var(--font-display); letter-spacing: -0.03em; }
+h1 { font-weight: 700; font-size: clamp(34px, 5vw, 64px); line-height: 1.05; }
+h2 { font-weight: 650; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; }
+h3 { font-weight: 600; font-size: 19px; line-height: 1.3; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+.container { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: max(20px, env(safe-area-inset-left, 0px)); }
+.section { padding-block: clamp(72px, 10vw, 128px); }
+.lead { color: var(--muted); font-size: 18px; max-width: 56ch; }
+.section-head { display: flex; flex-direction: column; gap: 16px; margin-bottom: clamp(32px, 4.5vw, 56px); max-width: 720px; }
+.eyebrow { align-self: flex-start; font: 600 13px/1 var(--font-body); color: var(--accent-text); background: var(--accent-soft); padding: 8px 14px; border-radius: 999px; }
+.ph { line-height: 1; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font: 600 16px/1 var(--font-body); white-space: nowrap;
+  padding: 17px 26px; border-radius: 999px; border: 1px solid transparent;
+  text-decoration: none; cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s, background-color 0.2s, border-color 0.2s;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 8px 22px rgb(79 127 106 / 0.26); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgb(79 127 106 / 0.32); }
+.btn-ghost { background: var(--raised); color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent-text); }
+.btn .ph { font-size: 20px; }
+
+/* navigation */
+.nav {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+}
+.nav-inner { display: flex; align-items: center; gap: 12px; height: 70px; }
+@media (min-width: 900px) { .nav-inner { gap: 32px; } }
+.nav-cta .short { display: none; }
+@media (max-width: 479px) {
+  .nav-cta .long { display: none; }
+  .nav-cta .short { display: inline; }
+}
+@media (max-width: 359px) { .nav .brand-text { display: none; } }
+.brand { display: inline-flex; align-items: center; gap: 10px; font: 700 17px/1 var(--font-display); letter-spacing: -0.02em; text-decoration: none; white-space: nowrap; }
+.brand-mark { width: 34px; height: 34px; border-radius: 12px; background: linear-gradient(140deg, #79a893, var(--accent)); color: #fff; display: grid; place-items: center; font-size: 19px; }
+.nav-links { display: none; gap: 28px; font-size: 15px; color: var(--muted); }
+.nav-links a { text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent-text); }
+.nav .btn { margin-left: auto; padding: 12px 20px; font-size: 15px; box-shadow: none; }
+@media (min-width: 900px) { .nav-links { display: flex; } }
+
+/* hero */
+.hero { padding-block: clamp(40px, 7vw, 88px) 0; }
+.hero-copy { display: flex; flex-direction: column; gap: 22px; max-width: 860px; }
+.hero-copy h1 span { color: var(--accent-text); }
+.hero-copy .lead { font-size: clamp(18px, 1.7vw, 21px); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.hero-demo { margin-top: clamp(36px, 5.5vw, 64px); }
+
+/* demo stage: the only dark surface, a phone at night */
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.tab, .replay {
+  font: 500 14px/1 var(--font-body); padding: 11px 18px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--raised); color: var(--ink); cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.tab:hover, .replay:hover { border-color: var(--accent); }
+.tab[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-text); border-color: transparent; font-weight: 600; }
+.replay { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+.stage { background: radial-gradient(120% 120% at 100% 0%, #2f4640 0%, var(--stage) 60%); color: var(--stage-ink); border-radius: 28px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow-lift); }
+.topbar { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+.moon { font-size: 22px; color: var(--stage-muted); }
+.clock { font: 500 28px/1 var(--font-mono); font-variant-numeric: tabular-nums; min-width: 5.2ch; }
+.pill { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1.2 var(--font-body); background: var(--stage-line); padding: 8px 13px; border-radius: 999px; }
+.progress { height: 2px; background: var(--stage-line); border-radius: 2px; overflow: hidden; }
+.progress span { display: block; height: 100%; width: 0; background: var(--stage-dot); }
+.panes { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) {
+  .stage { padding: 26px; }
+  .panes { grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 28px; }
+}
+.phone { background: var(--phone); border: 1px solid var(--stage-line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.phone-head { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--stage-line); }
+.av { width: 34px; height: 34px; border-radius: 50%; background: var(--bubble-out); color: var(--bubble-out-ink); display: grid; place-items: center; font: 600 15px/1 var(--font-body); flex: none; }
+.phone-head b { display: block; font-size: 14px; font-weight: 600; line-height: 1.2; }
+.phone-head small { display: block; font-size: 12px; color: var(--stage-muted); line-height: 1.2; }
+.chat { height: 340px; padding: 14px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; overflow: hidden; }
+@media (min-width: 860px) { .chat { height: 430px; } }
+.msg { max-width: 86%; padding: 10px 13px; border-radius: 18px; font-size: 14.5px; line-height: 1.45; animation: pop 0.3s ease-out; overflow-wrap: anywhere; }
+.msg.c { align-self: flex-end; background: var(--bubble-out); color: var(--bubble-out-ink); border-bottom-right-radius: 6px; }
+.msg.b { align-self: flex-start; background: var(--bubble-in); color: var(--bubble-in-ink); border-bottom-left-radius: 6px; }
+.msg.m { align-self: flex-start; background: transparent; border: 1px solid var(--bubble-out); color: var(--bubble-in-ink); border-bottom-left-radius: 6px; }
+.who { font: 500 11px/1 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--stage-muted); margin-bottom: 6px; }
+.typing { display: flex; gap: 4px; padding: 13px 14px; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--stage-muted); animation: blink 1s infinite; }
+.typing i:nth-child(2) { animation-delay: 0.15s; }
+.typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes blink { 0%, 60%, 100% { opacity: 0.3; transform: none; } 30% { opacity: 1; transform: translateY(-2px); } }
+@keyframes slide { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+.master { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.label { font: 500 12px/1 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--stage-muted); margin-bottom: 10px; }
+.tg-body { min-height: 124px; display: flex; flex-direction: column; justify-content: center; }
+.tg-idle { color: var(--stage-muted); font-size: 14.5px; padding: 6px 0; }
+.note { background: var(--stage-2); border: 1px solid var(--stage-line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; animation: slide 0.4s ease-out; }
+.note-title { font-weight: 600; font-size: 15px; }
+.note-line { font-size: 14px; color: var(--stage-muted); }
+.note-chip { align-self: flex-start; margin-top: 8px; font: 500 13px/1 var(--font-body); padding: 8px 12px; border-radius: 999px; background: var(--bubble-out); color: var(--bubble-out-ink); }
+.cal { list-style: none; margin: 0; padding: 0; }
+.row { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; padding: 10px 10px; border-top: 1px solid var(--stage-line); font-size: 14.5px; transition: background-color 0.5s; border-radius: 10px; }
+.row .t { font: 500 13px/1.6 var(--font-mono); color: var(--stage-muted); }
+.row.free .what { color: var(--stage-muted); }
+.row.new { background: var(--bubble-out); color: var(--bubble-out-ink); font-weight: 600; border-top-color: transparent; }
+.row.new .t { color: var(--bubble-out-ink); }
+.demo-note { margin-top: 14px; font-size: 13px; color: var(--muted); }
+
+/* soft icon badge used across sections */
+.fact > .ph, .tile > .ph, .service .head > .ph, .never-grid .ph, .next-steps .ph {
+  display: inline-grid; place-items: center; flex: none;
+  width: 48px; height: 48px; border-radius: 16px;
+  background: var(--accent-soft); color: var(--accent-text); font-size: 24px;
+}
+
+/* facts strip */
+.facts { display: grid; gap: 22px 32px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); padding-block: 48px 0; }
+.fact { display: flex; gap: 14px; align-items: center; }
+.fact b { display: block; font-weight: 600; }
+.fact span { color: var(--muted); font-size: 15px; }
+
+/* bento */
+.bento { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) {
+  .bento { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bento .span-2 { grid-column: span 2; }
+  .bento .span-3 { grid-column: span 3; }
+}
+.tile { border-radius: 24px; padding: 30px; background: var(--raised); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-height: 230px; box-shadow: var(--shadow); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s; }
+.tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.tile p { color: var(--muted); max-width: 52ch; }
+.tile.night { background: radial-gradient(120% 140% at 100% 0%, #355048 0%, var(--stage) 60%); color: var(--stage-ink); border-color: transparent; }
+.tile.night p { color: var(--stage-muted); }
+.tile.night > .ph { background: rgb(159 216 189 / 0.16); color: var(--stage-dot); }
+.tile.rose { background: linear-gradient(160deg, var(--accent-soft), var(--raised) 80%); }
+.tile.wide { flex-direction: row; align-items: center; gap: 22px; min-height: 0; }
+.tile.wide > div { display: flex; flex-direction: column; gap: 8px; }
+.tile .big { font: 700 clamp(44px, 6vw, 72px)/1 var(--font-display); letter-spacing: -0.04em; margin-top: auto; }
+.tile.night .big { color: var(--stage-ink); }
+.langs { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.langs span { font: 500 14px/1 var(--font-body); padding: 10px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+
+/* calculator */
+.calc { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: stretch; background: var(--raised); border: 1px solid var(--line); border-radius: 28px; padding: clamp(20px, 3vw, 32px); box-shadow: var(--shadow); }
+@media (min-width: 900px) { .calc { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; } }
+.calc-inputs { display: flex; flex-direction: column; gap: 28px; padding: 8px 4px; }
+.range-field { display: flex; flex-direction: column; gap: 10px; }
+.range-top { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+.range-top label { font-weight: 500; }
+.range-top output { font: 700 18px/1 var(--font-body); color: var(--accent-text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.range-field small { color: var(--muted); font-size: 14px; }
+input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
+.calc-result { background: linear-gradient(160deg, var(--accent-soft), var(--surface)); border-radius: 22px; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; }
+.calc-result .label { margin-bottom: 0; color: var(--muted); font: 600 14px/1.3 var(--font-body); letter-spacing: 0; text-transform: none; }
+.calc-num { font: 700 clamp(42px, 5.5vw, 64px)/1 var(--font-display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--accent-text); }
+.calc-sub { color: var(--muted); }
+.calc-line { border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+.calc-result .fine { color: var(--muted); font-size: 13px; margin-top: auto; }
+
+/* never-list */
+.never { background: var(--raised); border: 1px solid var(--line); border-radius: 28px; padding: clamp(28px, 5vw, 64px); box-shadow: var(--shadow); }
+.never h2 { max-width: 18ch; }
+.never .lead { margin-top: 14px; }
+.never-grid { list-style: none; margin: 44px 0 0; padding: 0; display: grid; gap: 32px 40px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.never-grid li { display: flex; gap: 16px; }
+.never-grid b { display: block; font-weight: 600; margin-bottom: 4px; }
+.never-grid span { color: var(--muted); font-size: 15px; }
+
+/* launch timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; max-width: 820px; }
+.timeline li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 20px; position: relative; padding-bottom: 36px; }
+.timeline li:last-child { padding-bottom: 0; }
+.timeline li::before { content: ""; position: absolute; left: 25px; top: 54px; bottom: 2px; width: 2px; border-radius: 2px; background: linear-gradient(var(--accent-soft), var(--line)); }
+.timeline li:last-child::before { display: none; }
+.timeline .dot { width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); font-size: 24px; color: var(--accent-text); }
+.timeline li:last-child .dot { background: var(--accent); color: var(--accent-ink); }
+.timeline .when { font: 600 13px/1 var(--font-body); color: var(--accent-text); }
+.timeline h3 { margin: 8px 0 6px; }
+.timeline p { color: var(--muted); max-width: 60ch; }
+
+/* services */
+.featured { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: center; border-radius: 28px; padding: clamp(26px, 4vw, 48px); background: linear-gradient(135deg, var(--accent-soft), var(--raised) 75%); border: 1px solid var(--line); margin-bottom: 18px; box-shadow: var(--shadow); }
+@media (min-width: 900px) { .featured { grid-template-columns: minmax(0, 1.3fr) auto; } }
+.featured .channels { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.featured .channels span { display: inline-flex; gap: 8px; align-items: center; font-weight: 500; padding: 9px 15px; border-radius: 999px; background: var(--raised); border: 1px solid var(--line); }
+.featured .channels .ph { font-size: 20px; color: var(--accent-text); }
+.featured h3 { font: 650 clamp(24px, 2.6vw, 32px)/1.2 var(--font-display); letter-spacing: -0.02em; }
+.featured p { color: var(--muted); margin-top: 10px; max-width: 60ch; }
+.services { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+.service { border-radius: 24px; padding: 28px; background: var(--raised); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow); transition: border-color 0.2s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s; }
+.service:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.service p { color: var(--muted); font-size: 15px; }
+.service .head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 4px; }
+.tag { font: 600 12px/1 var(--font-body); padding: 7px 11px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-text); white-space: nowrap; }
+.service .pick { margin-top: auto; align-self: flex-start; display: inline-flex; gap: 6px; align-items: center; font-weight: 600; color: var(--accent-text); background: none; border: 0; padding: 8px 0 0; cursor: pointer; font-size: 15px; font-family: inherit; }
+.service .pick .ph { transition: transform 0.25s; }
+.service .pick:hover .ph { transform: translateX(4px); }
+
+/* pricing */
+.plans { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); align-items: stretch; }
+@media (min-width: 900px) { .plans { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.plan { border-radius: 28px; padding: clamp(26px, 3vw, 38px); background: var(--raised); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 18px; box-shadow: var(--shadow); }
+.plan.best { border: 2px solid var(--accent); background: linear-gradient(180deg, var(--accent-soft), var(--raised) 45%); box-shadow: var(--shadow-lift); }
+.plan .name { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-weight: 650; font-size: 20px; }
+.plan .price { font: 700 clamp(40px, 4.4vw, 54px)/1 var(--font-display); letter-spacing: -0.04em; }
+.plan .price small { font: 500 16px/1 var(--font-body); letter-spacing: 0; color: var(--muted); }
+.plan .for { color: var(--muted); font-size: 15px; }
+.plan ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.plan li { display: flex; gap: 10px; align-items: flex-start; font-size: 15.5px; }
+.plan li .ph { color: var(--accent-text); font-size: 18px; margin-top: 3px; }
+.plan .btn { margin-top: auto; align-self: stretch; }
+.plan.best .tag { background: var(--accent); color: var(--accent-ink); }
+.network { margin-top: 18px; border-radius: 24px; padding: 26px clamp(26px, 3vw, 38px); border: 1px dashed color-mix(in srgb, var(--accent) 35%, var(--line)); background: color-mix(in srgb, var(--raised) 60%, transparent); display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
+.network div { flex: 1 1 380px; }
+.network b { font-size: 18px; }
+.network p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+.network .price-inline { font: 700 26px/1 var(--font-display); letter-spacing: -0.03em; white-space: nowrap; }
+.pricing-notes { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 24px; color: var(--muted); font-size: 15px; }
+.pricing-notes span { display: inline-flex; gap: 8px; align-items: center; }
+.pricing-notes .ph { color: var(--accent-text); font-size: 18px; }
+
+/* faq */
+.faq { max-width: 860px; display: flex; flex-direction: column; gap: 12px; }
+.faq details { background: var(--raised); border: 1px solid var(--line); border-radius: 20px; padding: 0 24px; transition: box-shadow 0.25s, border-color 0.25s; }
+.faq details[open] { box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 20px 0; font-weight: 600; font-size: 17px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .ph { font-size: 20px; color: var(--accent-text); transition: transform 0.25s; flex: none; }
+.faq details[open] summary .ph { transform: rotate(180deg); }
+.faq details p { color: var(--muted); padding-bottom: 22px; max-width: 70ch; }
+
+/* lead form */
+.contact { display: grid; gap: 32px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 900px) { .contact { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; } }
+.next-steps { list-style: none; margin: 30px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.next-steps li { display: flex; gap: 14px; align-items: center; }
+.next-steps .ph { width: 42px; height: 42px; border-radius: 14px; font-size: 21px; }
+.direct { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
+.form { background: var(--raised); border: 1px solid var(--line); border-radius: 28px; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; box-shadow: var(--shadow-lift); }
+.form-row { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 560px) { .form-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-weight: 500; font-size: 15px; }
+.field label .opt { color: var(--muted); font-weight: 400; }
+.field input, .field select, .field textarea {
+  width: 100%; font: 400 16px/1.4 var(--font-body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 15px; min-height: 52px;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.field textarea { resize: vertical; min-height: 100px; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 0.85; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 3px solid color-mix(in srgb, var(--accent) 22%, transparent); outline-offset: 0; border-color: var(--accent); background: var(--raised); }
+.field .error { color: var(--bad); font-size: 14px; }
+.field[data-invalid] input { border-color: var(--bad); }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.form .btn { align-self: stretch; }
+.form .fine { font-size: 13px; color: var(--muted); }
+.form-status { border-radius: 14px; padding: 14px 16px; font-size: 15px; }
+.form-status.err { background: color-mix(in srgb, var(--bad) 10%, transparent); color: var(--bad); }
+.form-done { display: flex; flex-direction: column; gap: 12px; padding: 12px 0; }
+.form-done .ph { font-size: 44px; color: var(--good); }
+.spinner { width: 18px; height: 18px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* footer */
+.footer { border-top: 1px solid var(--line); padding-block: 40px 52px; color: var(--muted); font-size: 14px; }
+.footer-inner { display: flex; flex-wrap: wrap; gap: 18px 32px; justify-content: space-between; align-items: center; }
+.footer .brand { color: var(--ink); }
+.footer nav { display: flex; flex-wrap: wrap; gap: 20px; }
+.footer nav a { text-decoration: none; }
+.footer nav a:hover { color: var(--accent-text); }
+.footer .fine { flex-basis: 100%; font-size: 13px; }
+
+/* reveal on scroll: sections arrive as you reach them */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.in { opacity: 1; transform: none; }
+.no-js .reveal { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .progress { display: none; }
+}
+@media (max-width: 559px) {
+  body { font-size: 16px; }
+  .btn { padding: 15px 20px; }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .tile { padding: 24px; }
+  .tile.wide { flex-direction: column; align-items: flex-start; }
+  .langs { margin-left: 0; }
+  .faq details { padding: 0 18px; }
+}
+
+/* phones: tighter rhythm, compact demo controls, bigger touch targets, sticky CTA */
+.mobile-cta { display: none; }
+@media (max-width: 699px) {
+  .section { padding-block: 56px; }
+  h2 { font-size: clamp(26px, 7vw, 32px); }
+  .lead { font-size: 17px; }
+  .section-head { margin-bottom: 28px; }
+  .controls { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .controls::-webkit-scrollbar { display: none; }
+  .tab, .replay { flex: none; padding: 10px 14px; }
+  .stage { border-radius: 22px; padding: 14px; }
+  .clock { font-size: 24px; }
+  .chat { height: 320px; }
+  .msg { font-size: 14px; }
+  .facts { grid-template-columns: 1fr; gap: 16px; padding-top: 32px; }
+  .tile, .service, .plan, .featured, .never, .calc { border-radius: 20px; }
+  .calc { padding: 18px; }
+  .calc-result { padding: 22px; }
+  input[type="range"] { height: 36px; }
+  .network { padding: 22px; }
+  .network .btn { width: 100%; }
+  .pricing-notes { flex-direction: column; gap: 10px; }
+  .faq summary { font-size: 16px; padding: 18px 0; min-height: 56px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  body.has-mobile-cta { padding-bottom: 84px; }
+  .mobile-cta {
+    display: flex; position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 30; justify-content: center; align-items: center; gap: 10px;
+    padding: 16px 20px; border-radius: 999px; text-decoration: none;
+    font: 600 16px/1 var(--font-body); background: var(--accent); color: var(--accent-ink);
+    box-shadow: 0 12px 30px rgb(30 60 48 / 0.28);
+    transform: translateY(140%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mobile-cta.show { transform: none; }
+}
+@media (hover: none) {
+  .tile:hover, .service:hover, .btn-primary:hover { transform: none; }
+}
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove("no-js");</script>
+
+<!--
+  CONFIG: the only place founders edit before deploying.
+  apiBase: public API address (POST /leads); LANDING_ORIGIN on the API must be this site's origin.
+  Prices: founders' decision of 22.10.2026 (UAH per month).
+  TODO(images): a photo of a master at work (hero or "Як запускаємо") and a real Owner Bot
+  screenshot would add trust; the page is complete without them.
+-->
+<script>
+window.CONFIG = {
+  apiBase: "",
+  demoBot: "YOUR_DEMO_BOT",
+  contact: "YOUR_CONTACT",
+  prices: { start: 2290, studio: 3990, network: 4990 }
+};
+</script>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="AI-адміністратор, на початок сторінки"><span class="brand-mark"><i class="ph ph-moon" aria-hidden="true"></i></span><span class="brand-text">AI-адміністратор</span></a>
+    <nav class="nav-links" aria-label="Розділи">
+      <a href="#features">Можливості</a>
+      <a href="#launch">Запуск</a>
+      <a href="#services">Послуги</a>
+      <a href="#pricing">Ціни</a>
+      <a href="#faq">Питання</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="#form"><span class="long">Спробувати 14 днів</span><span class="short">Спробувати</span></a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <p class="eyebrow">AI-адміністратор для beauty-студій</p>
+        <h1>Клієнтка пише о <span>23:47</span>. Хто їй відповість?</h1>
+        <p class="lead">Бот відповідає в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#form">Спробувати 14 днів <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          <a class="btn btn-ghost" data-link="demo" href="https://t.me/YOUR_DEMO_BOT"><i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати демо-боту</a>
+        </div>
+      </div>
+
+      <div class="hero-demo" aria-label="Демонстрація роботи бота">
+        <div class="controls" role="group" aria-label="Сценарій">
+          <button class="tab" id="tab0" type="button" aria-pressed="true">Нічний запис</button>
+          <button class="tab" id="tab1" type="button" aria-pressed="false">Складне питання</button>
+          <button class="replay" id="replay" type="button"><i class="ph ph-arrow-u-up-left" aria-hidden="true"></i> Ще раз</button>
+        </div>
+        <div class="stage">
+          <div class="topbar">
+            <i class="ph ph-moon moon" aria-hidden="true"></i>
+            <div class="clock" id="clock">23:47</div>
+            <div class="pill" id="pill">Майстер спить</div>
+          </div>
+          <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+          <div class="panes">
+            <div class="phone">
+              <div class="phone-head">
+                <span class="av" aria-hidden="true">S</span>
+                <div><b>studio.example</b><small>AI-асистент студії</small></div>
+              </div>
+              <div class="chat" id="chat" role="log" aria-live="polite"></div>
+            </div>
+            <div class="master">
+              <div>
+                <p class="label">У майстра в Telegram</p>
+                <div class="tg-body" id="tgBody"><p class="tg-idle">Тихо. Майстер спить.</p></div>
+              </div>
+              <div>
+                <p class="label">Завтра в календарі</p>
+                <ul class="cal" id="cal"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="demo-note">Демонстрація: назва студії, ціни, імена й вільні вікна вигадані.</p>
+      </div>
+
+      <div class="facts">
+        <div class="fact reveal"><i class="ph ph-lightning" aria-hidden="true"></i><div><b>Відповідь за секунди</b><span>Вдень, уночі й поки ви з клієнткою.</span></div></div>
+        <div class="fact reveal"><i class="ph ph-instagram-logo" aria-hidden="true"></i><div><b>Instagram і Telegram</b><span>Офіційні API, без сірих схем.</span></div></div>
+        <div class="fact reveal"><i class="ph ph-seal-check" aria-hidden="true"></i><div><b>Тільки ваші ціни</b><span>Кожна сума звіряється з прайсом.</span></div></div>
+        <div class="fact reveal"><i class="ph ph-clock" aria-hidden="true"></i><div><b>Запуск за 1-3 дні</b><span>Налаштування робимо ми.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Адміністратор, який не втомлюється й не забуває</h2>
+        <p class="lead">Робить те саме, що й людина на рецепції: відповідає, записує, переносить. Складне віддає вам.</p>
+      </div>
+      <div class="bento">
+        <article class="tile night span-2 reveal">
+          <i class="ph ph-moon" aria-hidden="true"></i>
+          <h3>Відповідає, поки ви спите або працюєте</h3>
+          <p>Клієнтки пишуть увечері й між процедурами. Бот відповідає одразу, тож вони не йдуть до студії, що відповіла першою.</p>
+          <p class="big">24/7</p>
+        </article>
+        <article class="tile rose reveal">
+          <i class="ph ph-calendar-check" aria-hidden="true"></i>
+          <h3>Записує у вільні вікна</h3>
+          <p>Бачить ваш календар, пропонує реальний час, переносить і скасовує записи за вашими правилами.</p>
+        </article>
+        <article class="tile reveal">
+          <i class="ph ph-hand-palm" aria-hidden="true"></i>
+          <h3>Кличе вас, коли треба</h3>
+          <p>Фото дизайну, алергія, скарга, знижка: бот замовкає й передає діалог вам із коротким поясненням.</p>
+        </article>
+        <article class="tile reveal">
+          <i class="ph ph-telegram-logo" aria-hidden="true"></i>
+          <h3>Керуєте з Telegram</h3>
+          <p>Нові записи, чернетки на погодження, кнопки «Відповісти», «Взяти діалог», «Пауза». Без нових програм.</p>
+        </article>
+        <article class="tile reveal">
+          <i class="ph ph-chart-line-up" aria-hidden="true"></i>
+          <h3>Звіт щопонеділка</h3>
+          <p>Скільки діалогів, скільки записів зробив бот і скільки з них поки ви відпочивали.</p>
+        </article>
+        <article class="tile wide span-3 reveal">
+          <i class="ph ph-globe" aria-hidden="true"></i>
+          <div>
+            <h3>Говорить мовою клієнтки</h3>
+            <p>Вітається українською, а далі відповідає мовою клієнтки, якщо ви її дозволили.</p>
+          </div>
+          <div class="langs" aria-label="Мови"><span>Українська</span><span>English</span><span>та інші за вашим вибором</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="calc" style="padding-top: 0">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Скільки записів губиться в директі</h2>
+        <p class="lead">Підставте свої цифри. Це ваша оцінка, а справжні покаже звіт бота за перші два тижні.</p>
+      </div>
+      <div class="calc reveal">
+        <div class="calc-inputs">
+          <div class="range-field">
+            <div class="range-top"><label for="r-msgs">Нових звернень у директ на тиждень</label><output id="o-msgs" for="r-msgs">40</output></div>
+            <input type="range" id="r-msgs" min="5" max="200" step="5" value="40">
+          </div>
+          <div class="range-field">
+            <div class="range-top"><label for="r-busy">Пишуть, коли ви зайняті або спите</label><output id="o-busy" for="r-busy">50%</output></div>
+            <input type="range" id="r-busy" min="10" max="90" step="5" value="50">
+            <small>Увечері, вночі, у вихідні й під час процедур.</small>
+          </div>
+          <div class="range-field">
+            <div class="range-top"><label for="r-lost">З них не дочікуються відповіді</label><output id="o-lost" for="r-lost">20%</output></div>
+            <input type="range" id="r-lost" min="0" max="60" step="5" value="20">
+            <small>Пишуть кільком студіям і записуються туди, де відповіли першими.</small>
+          </div>
+          <div class="range-field">
+            <div class="range-top"><label for="r-check">Середній чек</label><output id="o-check" for="r-check">800 грн</output></div>
+            <input type="range" id="r-check" min="200" max="5000" step="50" value="800">
+          </div>
+        </div>
+        <div class="calc-result" aria-live="polite">
+          <p class="label">Ви можете втрачати на місяць</p>
+          <p class="calc-num" id="c-money">13 760 грн</p>
+          <p class="calc-sub" id="c-count">це приблизно 17 записів</p>
+          <div class="calc-line">
+            <span>Тариф «Студія» коштує <b data-price="studio">3 990</b> грн на місяць.</span>
+            <span id="c-payback">Він окупається з 5 записів на місяць.</span>
+          </div>
+          <p class="fine">Розрахунок: звернення на тиждень × 4,3 × частка поза вашими годинами × частка втрачених × середній чек.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0">
+    <div class="container">
+      <div class="never reveal">
+        <h2>Чого бот не зробить ніколи</h2>
+        <p class="lead">Ці правила закладені в код, а не лише в інструкцію для моделі.</p>
+        <ul class="never-grid">
+          <li><i class="ph ph-currency-circle-dollar" aria-hidden="true"></i><div><b>Не вигадає ціну</b><span>Суми, час, телефони й посилання звіряються з вашими даними перед відправкою.</span></div></li>
+          <li><i class="ph ph-robot" aria-hidden="true"></i><div><b>Не видасть себе за людину</b><span>Одразу чесно каже, що він AI-асистент студії.</span></div></li>
+          <li><i class="ph ph-prohibit" aria-hidden="true"></i><div><b>Не дасть медичну пораду</b><span>Алергія, вагітність, протипоказання: тільки до майстра.</span></div></li>
+          <li><i class="ph ph-x-circle" aria-hidden="true"></i><div><b>Не пообіцяє знижку</b><span>Знижки, повернення коштів і скарги вирішуєте ви.</span></div></li>
+          <li><i class="ph ph-user-switch" aria-hidden="true"></i><div><b>Не перебʼє вас</b><span>Ви написали клієнтці, і бот замовк, доки ви його не повернете.</span></div></li>
+          <li><i class="ph ph-lock-simple" aria-hidden="true"></i><div><b>Не пише першим</b><span>Без розсилок і спаму: відповідає лише тим, хто написав сам.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="launch" style="padding-top: 0">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Запуск без ризику для ваших клієнток</h2>
+        <p class="lead">Довіра росте сходинками. На будь-якому кроці можна повернутися назад однією командою.</p>
+      </div>
+      <ol class="timeline">
+        <li class="reveal"><span class="dot"><i class="ph ph-note-pencil" aria-hidden="true"></i></span><div><p class="when">День 1</p><h3>Надсилаєте прайс і графік як є</h3><p>Фото прайсу, текст з Instagram, нотатки. Ми переносимо все в бота й показуємо, що він знає.</p></div></li>
+        <li class="reveal"><span class="dot"><i class="ph ph-sparkle" aria-hidden="true"></i></span><div><p class="when">День 1-2</p><h3>Пробуєте зламати бота</h3><p>Пишете йому каверзні питання в Telegram на вашому прайсі, ще до підключення клієнток.</p></div></li>
+        <li class="reveal"><span class="dot"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i></span><div><p class="when">Перший тиждень</p><h3>Чернетки: нічого не йде без вас</h3><p>Бот готує відповідь, ви бачите її в Telegram і надсилаєте кнопкою або виправляєте.</p></div></li>
+        <li class="reveal"><span class="dot"><i class="ph ph-check" aria-hidden="true"></i></span><div><p class="when">Далі</p><h3>Автопілот на типове</h3><p>Ціни, адреса, вільні вікна й запис бот веде сам. Нестандартне завжди приходить вам.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="services" style="padding-top: 0">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Послуги</p>
+        <h2>Автоматизуємо студію навколо директу</h2>
+        <p class="lead">Почніть з AI-адміністратора. Решту додамо, коли захочете.</p>
+      </div>
+      <div class="featured reveal">
+        <div>
+          <h3>AI-адміністратор директу</h3>
+          <p>Відповіді клієнткам, запис у вільні вікна, перенесення й скасування, передача майстру, звіти. Основа, з якої починають усі студії.</p>
+          <div class="channels"><span><i class="ph ph-instagram-logo" aria-hidden="true"></i>Instagram</span><span><i class="ph ph-telegram-logo" aria-hidden="true"></i>Telegram</span><span><i class="ph ph-calendar-blank" aria-hidden="true"></i>Google Календар</span></div>
+        </div>
+        <a class="btn btn-primary" href="#form">Спробувати 14 днів</a>
+      </div>
+      <div class="services">
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-phone-call" aria-hidden="true"></i><span class="tag">Ранній доступ</span></div>
+          <h3>AI-асистент для дзвінків</h3>
+          <p>Відповідає на дзвінки голосом, називає ціни й записує у вільні вікна. Для студій, де телефон не замовкає.</p>
+          <button class="pick" type="button" data-service="voice">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-address-book" aria-hidden="true"></i></div>
+          <h3>CRM під вашу студію</h3>
+          <p>Клієнтська база, історія візитів, нагадування майстрам і звіти. Під ваші процеси, а не навпаки.</p>
+          <button class="pick" type="button" data-service="crm">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-globe" aria-hidden="true"></i></div>
+          <h3>Сайт з онлайн-записом</h3>
+          <p>Швидкий сайт студії з цінами, роботами майстрів і записом у той самий календар, що й бот.</p>
+          <button class="pick" type="button" data-service="website">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-heart" aria-hidden="true"></i></div>
+          <h3>Повернення клієнток</h3>
+          <p>Нагадуємо в Telegram тим, кого давно не було, і пропонуємо вільний час. Лише тим, хто погодився.</p>
+          <button class="pick" type="button" data-service="other">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-star" aria-hidden="true"></i></div>
+          <h3>Відгуки після візиту</h3>
+          <p>Просимо оцінку після процедури. Задоволених ведемо на Google Карти, незадоволених одразу до вас.</p>
+          <button class="pick" type="button" data-service="other">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-plugs-connected" aria-hidden="true"></i><span class="tag">За запитом</span></div>
+          <h3>Інтеграції</h3>
+          <p>Google Календар уже працює. Altegio, Booksy, KeyCRM і ваші таблиці підключаємо під задачу.</p>
+          <button class="pick" type="button" data-service="integration">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing" style="padding-top: 0">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Ціна, яка окупається кількома записами</h2>
+        <p class="lead">Ціна за місяць, модель AI вже включена. Перші 14 днів безкоштовно.</p>
+      </div>
+      <div class="plans">
+        <article class="plan reveal">
+          <div class="name">Старт</div>
+          <p class="price"><span data-price="start">2 290</span> <small>грн / міс</small></p>
+          <p class="for">Для майстра, що працює сам.</p>
+          <ul>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Один канал: Instagram або Telegram</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Календар у боті, запис і перенесення</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Сповіщення й чернетки в Telegram</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Звіт щопонеділка</li>
+          </ul>
+          <a class="btn btn-ghost" href="#form" data-plan="start">Спробувати 14 днів</a>
+        </article>
+        <article class="plan best reveal">
+          <div class="name">Студія <span class="tag">Рекомендуємо</span></div>
+          <p class="price"><span data-price="studio">3 990</span> <small>грн / міс</small></p>
+          <p class="for">Для студії з кількома майстрами.</p>
+          <ul>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Instagram і Telegram разом</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>До 5 майстрів, вибір майстра клієнткою</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Google Календар кожного майстра</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Доступ для адміністратора студії</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Передоплата й правила скасування</li>
+          </ul>
+          <a class="btn btn-primary" href="#form" data-plan="studio">Спробувати 14 днів</a>
+        </article>
+      </div>
+      <div class="network reveal">
+        <div>
+          <b>Мережа й індивідуальні рішення</b>
+          <p>Кілька філій, інтеграції з CRM, AI для дзвінків, сайт з онлайн-записом.</p>
+        </div>
+        <span class="price-inline">від <span data-price="network">4 990</span> грн</span>
+        <button class="btn btn-ghost" type="button" data-service="integration">Обговорити</button>
+      </div>
+      <div class="pricing-notes">
+        <span><i class="ph ph-check" aria-hidden="true"></i>Налаштування безкоштовно для перших студій</span>
+        <span><i class="ph ph-check" aria-hidden="true"></i>Без договору на рік, скасування будь-коли</span>
+        <span><i class="ph ph-check" aria-hidden="true"></i>Зміни цін і графіка за день</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" style="padding-top: 0">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Питання, які нам ставлять</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Клієнткам не буде неприємно говорити з ботом?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Бот одразу чесно каже, що він AI-асистент студії. Клієнтці важливо швидко дізнатися ціну й записатися, а не чекати до ранку. Усе особисте, складне чи емоційне бот передає вам.</p>
+        </details>
+        <details>
+          <summary>А якщо бот назве неправильну ціну?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Ціни й час бот бере тільки з ваших даних. Перед відправкою код перевіряє кожну суму, час, телефон і посилання. Якщо чогось немає в даних, відповідь не піде: бот передасть діалог вам.</p>
+        </details>
+        <details>
+          <summary>Що потрібно від мене для запуску?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Прайс, графік і відповіді на кілька питань про правила студії. Можна надіслати як є: фото, текст, голосове. Налаштування робимо ми, вам лишається додати бота в Telegram для бізнесу або підтвердити підключення Instagram.</p>
+        </details>
+        <details>
+          <summary>Як я відповім клієнтці сама?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Просто напишіть їй, як завжди, або натисніть «Відповісти» в Telegram. Бот побачить, що ви в діалозі, і замовкне, доки ви його не повернете.</p>
+        </details>
+        <details>
+          <summary>Як змінити ціни чи взяти відпустку?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Напишіть зміни боту командою /change, і ми оновимо дані протягом дня. Закрити дні можна самій командою /close, бот одразу перестане пропонувати цей час.</p>
+        </details>
+        <details>
+          <summary>Чи не заблокують мій Instagram?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Ми працюємо через офіційний API Meta для Instagram, без розсилок і сторонніх програм на вашому телефоні. Бот відповідає лише тим, хто написав сам, і в межах правил платформи.</p>
+        </details>
+        <details>
+          <summary>Хто бачить листування моїх клієнток?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Дані зберігаються на сервері в ЄС і використовуються лише для роботи бота. Листування автоматично видаляється через встановлений строк, а дані окремої клієнтки видаляємо на її запит.</p>
+        </details>
+        <details>
+          <summary>Що якщо не сподобається?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
+          <p>Перші 14 днів безкоштовні, договору на рік немає. Вимкнути бота можна однією командою /pause, а відключити повністю в налаштуваннях Telegram чи Instagram.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="form" style="padding-top: 0">
+    <div class="container contact">
+      <div class="reveal">
+        <h2>Підключимо вашу студію за 1-3 дні</h2>
+        <p class="lead" style="margin-top: 14px">Залиште контакт, і ми напишемо протягом робочого дня.</p>
+        <ul class="next-steps">
+          <li><i class="ph ph-chat-circle-dots" aria-hidden="true"></i><span>Коротко поговоримо про вашу студію й канали.</span></li>
+          <li><i class="ph ph-note-pencil" aria-hidden="true"></i><span>Налаштуємо бота на вашому прайсі й дамо його протестувати.</span></li>
+          <li><i class="ph ph-calendar-check" aria-hidden="true"></i><span>14 днів безкоштовно, далі вирішуєте ви.</span></li>
+        </ul>
+        <div class="direct">
+          <a class="btn btn-ghost" data-link="contact" href="https://t.me/YOUR_CONTACT"><i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram</a>
+        </div>
+      </div>
+      <form class="form reveal" id="lead-form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Імʼя</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" required placeholder="Олена">
+            <p class="error" id="e-name" hidden></p>
+          </div>
+          <div class="field">
+            <label for="f-contact">Телефон або Telegram</label>
+            <input id="f-contact" name="contact" type="text" autocomplete="tel" maxlength="200" required placeholder="+380 або @username">
+            <p class="error" id="e-contact" hidden></p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="f-business">Студія <span class="opt">(необовʼязково)</span></label>
+            <input id="f-business" name="business" type="text" autocomplete="organization" maxlength="200" placeholder="Назва або Instagram">
+          </div>
+          <div class="field">
+            <label for="f-service">Що цікавить</label>
+            <select id="f-service" name="service">
+              <option value="ai_admin">AI-адміністратор директу</option>
+              <option value="voice">AI-асистент для дзвінків</option>
+              <option value="crm">CRM під студію</option>
+              <option value="website">Сайт з онлайн-записом</option>
+              <option value="integration">Інтеграція або мережа</option>
+              <option value="other">Інше</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-message">Коментар <span class="opt">(необовʼязково)</span></label>
+          <textarea id="f-message" name="message" maxlength="2000" placeholder="Скільки майстрів, звідки пишуть клієнтки, що хочеться автоматизувати"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Не заповнюйте це поле</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="form-status err" id="form-error" role="alert" hidden></div>
+        <button class="btn btn-primary" type="submit" id="f-submit">Надіслати заявку</button>
+        <p class="fine">Надсилаючи форму, ви погоджуєтесь, що ми звʼяжемося з вами за вказаним контактом. Більше ні для чого ці дані не використовуємо.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<a class="mobile-cta" href="#form" aria-hidden="true" tabindex="-1">Спробувати 14 днів <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <a class="brand" href="#top"><span class="brand-mark"><i class="ph ph-moon" aria-hidden="true"></i></span>AI-адміністратор</a>
+    <nav aria-label="Посилання">
+      <a data-link="demo" href="https://t.me/YOUR_DEMO_BOT">Демо-бот</a>
+      <a data-link="contact" href="https://t.me/YOUR_CONTACT">Telegram</a>
+      <a href="#faq">Питання</a>
+    </nav>
+    <p class="fine">© 2026 AI-адміністратор. Демонстрація на сторінці використовує вигадані дані.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var C = window.CONFIG || {};
+  var $ = function (id) { return document.getElementById(id); };
+  var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var fmt = function (n) { return Math.round(n).toLocaleString("uk-UA").replace(/ /g, " "); };
+
+  // --- links and prices from CONFIG ---------------------------------------------------------
+  // Links with an unfilled CONFIG value (YOUR_...) are hidden instead of leading nowhere.
+  [["demo", C.demoBot], ["contact", C.contact]].forEach(function (pair) {
+    document.querySelectorAll('[data-link="' + pair[0] + '"]').forEach(function (a) {
+      if (!pair[1] || /^YOUR_/.test(pair[1])) a.hidden = true;
+      else a.href = "https://t.me/" + pair[1];
+    });
+  });
+  if (C.prices) {
+    document.querySelectorAll("[data-price]").forEach(function (el) {
+      var v = C.prices[el.getAttribute("data-price")];
+      if (v) el.textContent = fmt(v);
+    });
+  }
+
+  // --- sticky CTA on phones: shown after the hero, hidden while the form is on screen --------
+  var mobileCta = document.querySelector(".mobile-cta");
+  if (mobileCta && "IntersectionObserver" in window) {
+    document.body.classList.add("has-mobile-cta");
+    var heroVisible = true, formVisible = false;
+    var updateCta = function () { mobileCta.classList.toggle("show", !heroVisible && !formVisible); };
+    new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; updateCta(); })
+      .observe(document.querySelector(".hero-actions"));
+    new IntersectionObserver(function (e) { formVisible = e[0].isIntersecting; updateCta(); }, { threshold: 0.15 })
+      .observe(document.getElementById("form"));
+  }
+
+  // --- reveal on scroll ---------------------------------------------------------------------
+  var revealed = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealed.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    revealed.forEach(function (el) { io.observe(el); });
+  }
+
+  // --- ROI calculator ------------------------------------------------------------------------
+  var inputs = { msgs: $("r-msgs"), busy: $("r-busy"), lost: $("r-lost"), check: $("r-check") };
+  function calc() {
+    var msgs = +inputs.msgs.value, busy = +inputs.busy.value / 100, lost = +inputs.lost.value / 100, check = +inputs.check.value;
+    $("o-msgs").textContent = msgs;
+    $("o-busy").textContent = inputs.busy.value + "%";
+    $("o-lost").textContent = inputs.lost.value + "%";
+    $("o-check").textContent = fmt(check) + " грн";
+    var count = msgs * 4.3 * busy * lost;
+    var money = count * check;
+    var price = (C.prices && C.prices.studio) || 3990;
+    $("c-money").textContent = fmt(money) + " грн";
+    $("c-count").textContent = count < 1 ? "менше одного запису" : "це приблизно " + fmt(count) + " " + plural(Math.round(count), "запис", "записи", "записів");
+    var need = Math.ceil(price / check);
+    $("c-payback").textContent = "Він окупається з " + need + " " + plural(need, "запису", "записів", "записів") + " на місяць.";
+  }
+  function plural(n, one, few, many) {
+    var m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+    return many;
+  }
+  Object.keys(inputs).forEach(function (k) { inputs[k].addEventListener("input", calc); });
+  calc();
+
+  // --- service picks prefill the form ------------------------------------------------------
+  document.querySelectorAll("[data-service]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      // After a successful submit the form is replaced by a thank-you note.
+      if ($("f-service")) $("f-service").value = b.getAttribute("data-service");
+      $("form").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+      setTimeout(function () { if ($("f-name")) $("f-name").focus({ preventScroll: true }); }, reduce ? 0 : 500);
+    });
+  });
+
+  // --- lead form -------------------------------------------------------------------------------
+  var form = $("lead-form");
+  function fieldError(name, text) {
+    var box = $("f-" + name).parentNode, err = $("e-" + name);
+    if (text) { box.setAttribute("data-invalid", ""); err.textContent = text; err.hidden = false; }
+    else { box.removeAttribute("data-invalid"); err.hidden = true; }
+    return !text;
+  }
+  function source() {
+    var q = new URLSearchParams(location.search);
+    var s = q.get("utm_source") || q.get("ref");
+    if (!s && document.referrer) { try { s = new URL(document.referrer).hostname; } catch (e) { s = null; } }
+    return s ? s.slice(0, 64) : null;
+  }
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var data = Object.fromEntries(new FormData(form).entries());
+    var ok = fieldError("name", data.name.trim() ? "" : "Як до вас звертатися?");
+    ok = fieldError("contact", data.contact.trim().length >= 3 ? "" : "Залиште телефон або @username у Telegram") && ok;
+    var errorBox = $("form-error");
+    errorBox.hidden = true;
+    if (!ok) return;
+    var fallback = C.contact && !/^YOUR_/.test(C.contact) ? "Напишіть нам у Telegram: @" + C.contact + "." : "Спробуйте трохи пізніше.";
+    if (!C.apiBase) {
+      errorBox.textContent = "Форма ще не підключена. " + fallback;
+      errorBox.hidden = false;
+      return;
+    }
+    var button = $("f-submit"), label = button.textContent;
+    button.disabled = true;
+    button.textContent = "";
+    var spin = document.createElement("span"); spin.className = "spinner"; button.append(spin, " Надсилаємо");
+    try {
+      var res = await fetch(C.apiBase.replace(/\/$/, "") + "/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name.trim(), contact: data.contact.trim(), business: data.business.trim() || null,
+          service: data.service, message: data.message.trim() || null, website: data.website || null, source: source()
+        })
+      });
+      if (res.status === 429) throw new Error("Забагато заявок з цієї адреси. " + fallback);
+      if (!res.ok) throw new Error("Не вдалося надіслати. " + fallback);
+      var done = document.createElement("div");
+      done.className = "form-done";
+      done.setAttribute("role", "status");
+      var icon = document.createElement("i"); icon.className = "ph ph-check-circle"; icon.setAttribute("aria-hidden", "true");
+      var title = document.createElement("h3"); title.textContent = "Дякуємо, заявку отримали";
+      var text = document.createElement("p"); text.textContent = "Напишемо вам протягом робочого дня. А поки можна поговорити з демо-ботом у Telegram.";
+      done.append(icon, title, text);
+      form.replaceChildren(done);
+    } catch (err) {
+      errorBox.textContent = err.message && err.message.indexOf("Telegram") >= 0 ? err.message : "Немає звʼязку з сервером. " + fallback;
+      errorBox.hidden = false;
+      button.disabled = false;
+      button.textContent = label;
+    }
+  });
+
+  // --- demo stage ------------------------------------------------------------------------------
+  var chat = $("chat"), clock = $("clock"), pillEl = $("pill"), bar = $("bar"), tgBody = $("tgBody"), cal = $("cal");
+  var tabs = [$("tab0"), $("tab1")];
+  var run = 0, cur = 0;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function dropTyping() { var t = chat.querySelector(".typing"); if (t) t.remove(); }
+  function say(kind, text, who) {
+    dropTyping();
+    var m = el("div", "msg " + kind);
+    if (who) m.appendChild(el("p", "who", who));
+    m.appendChild(el("span", null, text));
+    chat.appendChild(m);
+  }
+  function typing() {
+    dropTyping();
+    var t = el("div", "msg b typing");
+    for (var i = 0; i < 3; i++) t.appendChild(el("i"));
+    chat.appendChild(t);
+  }
+  function setPill(t) { pillEl.textContent = t; }
+  function setClock(t) { clock.textContent = t; }
+  function idle(t) { tgBody.textContent = ""; tgBody.appendChild(el("p", "tg-idle", t)); }
+  function notify(title, lines, chip) {
+    tgBody.textContent = "";
+    var n = el("div", "note");
+    n.appendChild(el("p", "note-title", title));
+    lines.forEach(function (l) { n.appendChild(el("p", "note-line", l)); });
+    if (chip) n.appendChild(el("span", "note-chip", chip));
+    tgBody.appendChild(n);
+  }
+  var base = [["11:00", "Ірина · манікюр", false], ["13:30", "Софія · педикюр", false], ["15:30", "вільно", true], ["17:30", "вільно", true]];
+  function calReset() {
+    cal.textContent = "";
+    base.forEach(function (r) {
+      var li = el("li", "row" + (r[2] ? " free" : ""));
+      li.setAttribute("data-t", r[0]);
+      li.appendChild(el("span", "t", r[0]));
+      li.appendChild(el("span", "what", r[1]));
+      cal.appendChild(li);
+    });
+  }
+  function book() {
+    var li = cal.querySelector('[data-t="15:30"]');
+    if (li) { li.className = "row new"; li.querySelector(".what").textContent = "Анна · манікюр з гель-лаком"; }
+  }
+
+  var scenes = [
+    {
+      clock: "23:47", pill: "Майстер спить", idle: "Тихо. Майстер спить.",
+      first: "Добрий вечір! Скільки коштує манікюр з гель-лаком? Є вікно завтра після 15:00?",
+      steps: [
+        [900,  function () { setPill("Бот читає прайс і календар"); typing(); }],
+        [1500, function () { setClock("23:47:09"); setPill("Відповідь за кілька секунд"); say("b", "Вітаю! Я AI-асистент студії. Манікюр з гель-лаком коштує 900 грн, приблизно дві години. Завтра, у середу 22.10, вільно о 15:30 і 17:30. Який час зручніший?"); }],
+        [3400, function () { say("c", "А на короткі нігті гель-лак можна?"); }],
+        [900,  function () { typing(); }],
+        [1300, function () { say("b", "Так, можна. Майстер підбере форму під вашу довжину. Записати вас на 15:30?"); }],
+        [2400, function () { say("c", "Так, на 15:30. Я Анна"); }],
+        [900,  function () { setPill("Бот створює запис"); typing(); }],
+        [1300, function () { say("b", "Анна, вас записано: манікюр з гель-лаком, середа, 22.10 о 15:30. Вартість: 900 грн. Адреса: вул. Прикладна, 1. Якщо плани зміняться, напишіть сюди."); }],
+        [1100, function () { book(); notify("Новий запис", ["Анна, середа 22.10 о 15:30", "Манікюр з гель-лаком, 900 грн", "Записав бот. Нічого робити не треба."]); setPill("Запис уже в календарі"); }],
+        [3000, function () { setClock("09:00"); setPill("Ранок: майстер бачить готовий запис"); }]
+      ]
+    },
+    {
+      clock: "21:10", pill: "Клієнтка питає про здоровʼя", idle: "Тихо. Усе під контролем бота.",
+      first: "Добрий вечір! У мене алергія на акрил. Це небезпечно для мене?",
+      steps: [
+        [900,  function () { setPill("Бот вирішує, чи може відповісти"); typing(); }],
+        [1700, function () { say("b", "Вітаю! Я AI-асистент студії. Це питання краще уточнити в студії. Ваше повідомлення вже передано, вам відповідять тут найближчим часом."); setPill("Передано майстру"); }],
+        [1100, function () { notify("Потрібна ваша відповідь", ["Анна питає про алергію на акрил", "Бот замовк і чекає на вас."], "Відповісти"); setPill("Бот мовчить, чекає майстра"); }],
+        [3200, function () { say("m", "Анно, добрий вечір! Це Олена. Розкажіть, що саме спричиняє алергію, і підберемо матеріали.", "Олена, майстер"); setPill("Відповідає людина"); }],
+        [2600, function () { setPill("Бот нічого не вигадав"); }]
+      ]
+    }
+  ];
+
+  function reset(i) {
+    run++; cur = i;
+    var s = scenes[i];
+    chat.textContent = "";
+    setClock(s.clock); setPill(s.pill);
+    say("c", s.first);
+    idle(s.idle); calReset();
+    bar.style.transition = "none"; bar.style.width = "0";
+    tabs.forEach(function (t, k) { t.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+  }
+  function wait(ms, id) {
+    return new Promise(function (res) { setTimeout(function () { res(id === run); }, reduce ? 0 : ms); });
+  }
+  async function play(i, chain) {
+    reset(i);
+    var id = run, s = scenes[i];
+    if (!reduce) {
+      var total = s.steps.reduce(function (a, x) { return a + x[0]; }, 0);
+      void bar.offsetWidth;
+      bar.style.transition = "width " + total + "ms linear";
+      bar.style.width = "100%";
+    }
+    for (var k = 0; k < s.steps.length; k++) {
+      if (!(await wait(s.steps[k][0], id))) return;
+      s.steps[k][1]();
+    }
+    if (chain && i < scenes.length - 1) {
+      if (await wait(3200, id)) play(i + 1, false);
+    }
+  }
+  tabs[0].addEventListener("click", function () { play(0, false); });
+  tabs[1].addEventListener("click", function () { play(1, false); });
+  $("replay").addEventListener("click", function () { play(cur, false); });
+  play(0, !reduce);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Демо адмінки · AI-адміністратор</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/studios"><span class="brand-dot"></span>AI-адміністратор</a>
+    <nav class="nav" id="nav" hidden>
+      <a href="#/studios" data-nav="studios">Студії</a>
+      <a href="#/leads" data-nav="leads">Заявки</a>
+      <a href="#/system" data-nav="system">Система</a>
+    </nav>
+    <div class="topbar-right" id="topbar-right"></div>
+  </header>
+  <div class="demo-banner">Демо-версія адмінки: студії й дані вигадані, зміни не зберігаються. Справжня адмінка працює на нашому сервері.</div>
+  <main id="app" class="main"><div class="loading">Завантаження…</div></main>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <script src="demo.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
