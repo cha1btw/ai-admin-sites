@@ -3,7 +3,7 @@
 // Plain JS without a build step; every piece of user data goes through textContent (no innerHTML).
 
 const $app = document.getElementById("app");
-const S = { me: null, studios: [], cur: null, tab: "overview", chat: {}, checks: {}, lastHash: "" };
+const S = { me: null, studios: [], studiosSeq: 0, cur: null, tab: "overview", chat: {}, checks: {}, lastHash: "" };
 
 // --- constants -------------------------------------------------------------------------------
 
@@ -477,6 +477,8 @@ async function boot() {
         h("button", { class: "btn ghost small", type: "submit" }, "Вийти")));
   window.addEventListener("hashchange", guardedRoute);
   window.addEventListener("beforeunload", (e) => { if (isDirty()) { e.preventDefault(); e.returnValue = ""; } });
+  document.addEventListener("visibilitychange", poll);
+  setInterval(poll, POLL_MS);
   if (!location.hash) location.hash = "#/studios";
   route();
 }
@@ -516,9 +518,50 @@ function renderLogin() {
     h("p", { class: "muted small" }, "Локально: ", h("code", null, "uv run python -m app.cli admin link"))));
 }
 
+// --- live refresh ----------------------------------------------------------------------------
+// Owner Bot runs in the worker and changes mode, pause, members, drafts and handoffs; poll so an
+// open page catches up. Only the studios list, the studio header and the overview tab are redrawn:
+// editors, test chat and leads keep whatever the founder is typing.
+
+const POLL_MS = 15000;
+let polling = false;
+
+function runtimeKey(row) {
+  // What the studio page shows. Counters and tokens change on every reply and would redraw it for nothing.
+  return row && JSON.stringify([row.mode, row.status, row.members, row.channels, row.config_version, row.last_check]);
+}
+
+async function poll() {
+  if (polling || !S.me || document.visibilityState !== "visible") return;
+  const hash = location.hash;
+  const page = hash.replace(/^#\/?/, "").split("/")[0];
+  if (page !== "studios" && !(page === "studio" && S.cur && !S.cur.isNew)) return;
+  polling = true;
+  try {
+    const seq = S.studiosSeq;
+    const fresh = await api("GET", "/studios");
+    if (seq !== S.studiosSeq || location.hash !== hash) return; // a newer load or navigation won
+    if (JSON.stringify(fresh) === JSON.stringify(S.studios)) return;
+    const before = S.cur && runtimeKey(currentRow());
+    S.studios = fresh;
+    if (page === "studios") { drawStudios(); return; }
+    if (!currentRow() || runtimeKey(currentRow()) === before) return;
+    document.getElementById("studio-head").replaceWith(studioHead());
+    if (S.tab !== "overview") return;
+    const detail = await api("GET", "/studios/" + encodeURIComponent(S.cur.slug));
+    if (location.hash !== hash) return;
+    S.cur.detail = detail;
+    renderTab();
+  } catch { /* the next tick retries; a 401 has already shown the login page */ }
+  finally { polling = false; }
+}
+
 // --- studios list ----------------------------------------------------------------------------
 
-async function loadStudios() { S.studios = await api("GET", "/studios"); }
+async function loadStudios() {
+  S.studiosSeq++; // a poll that started earlier must not overwrite this result
+  S.studios = await api("GET", "/studios");
+}
 
 function launchSteps(row, detail) {
   const config = detail ? detail.config : null;
@@ -537,6 +580,10 @@ function launchSteps(row, detail) {
 
 async function renderStudios() {
   await loadStudios();
+  drawStudios();
+}
+
+function drawStudios() {
   const head = h("div", { class: "page-head" },
     h("div", null, h("h1", null, "Студії"), h("p", null, "Усі клієнти, їхній стан і що потребує уваги.")),
     h("a", { class: "btn primary", href: "#/new" }, "+ Нова студія"));
@@ -654,17 +701,6 @@ function renderStudioPage() {
   const errorTabs = new Set((cur.errors || []).map(errorTab));
   const base = cur.isNew ? "#/new/edit/" : `#/studio/${encodeURIComponent(cur.slug)}/`;
 
-  const head = h("div", { class: "studio-head" },
-    h("div", null,
-      h("h1", null, cur.config.name || (cur.isNew ? "Нова студія" : cur.slug)),
-      h("div", { class: "meta" },
-        !cur.isNew && h("span", { class: "badge mono" }, cur.slug),
-        row && h("span", { class: "badge accent" }, MODES[row.mode][0]),
-        row && row.status === "paused" && h("span", { class: "badge bad" }, "Пауза"),
-        row && h("span", { class: "badge" }, `версія ${row.config_version}`),
-        row && row.channels.filter((c) => c.kind !== "telegram_demo").map(channelBadge))),
-    h("a", { class: "btn ghost", href: "#/studios" }, "← Усі студії"));
-
   const tabBar = h("div", { class: "tabs", role: "tablist" }, tabs.map(([k, label]) =>
     h("button", { class: S.tab === k ? "on" : "", role: "tab", onclick: () => { location.hash = base + k; } },
       label, errorTabs.has(k) && h("span", { class: "dot", title: "Є помилки" }))));
@@ -684,8 +720,23 @@ function renderStudioPage() {
     if (b.errors && b.errors.length && !(cur.errors && cur.errors.length)) banners.push(h("div", { class: "banner bad" }, h("b", null, "Потрібно виправити перед збереженням:"), h("ul", null, b.errors.map((e) => h("li", null, `${locLabel(e.loc)}: ${errorText(e.msg)}`)))));
   }
 
-  $app.replaceChildren(head, tabBar, ...banners, h("div", { id: "tab" }));
+  $app.replaceChildren(studioHead(), tabBar, ...banners, h("div", { id: "tab" }));
   renderTab();
+}
+
+function studioHead() {
+  const cur = S.cur;
+  const row = cur.isNew ? null : currentRow();
+  return h("div", { class: "studio-head", id: "studio-head" },
+    h("div", null,
+      h("h1", null, cur.config.name || (cur.isNew ? "Нова студія" : cur.slug)),
+      h("div", { class: "meta" },
+        !cur.isNew && h("span", { class: "badge mono" }, cur.slug),
+        row && h("span", { class: "badge accent" }, MODES[row.mode][0]),
+        row && row.status === "paused" && h("span", { class: "badge bad" }, "Пауза"),
+        row && h("span", { class: "badge" }, `версія ${row.config_version}`),
+        row && row.channels.filter((c) => c.kind !== "telegram_demo").map(channelBadge))),
+    h("a", { class: "btn ghost", href: "#/studios" }, "← Усі студії"));
 }
 
 function renderTab() {
