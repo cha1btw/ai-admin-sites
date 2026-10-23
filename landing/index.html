@@ -53,20 +53,8 @@
   --bubble-out-ink: #ffffff;
   --good: #3fbf8f;
   --bad: #c0362c;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #171614; --bg-glow: #221f1a; --surface: #1e1d1a; --raised: #24221f; --ink: #f2efe8;
-    --muted: #b3ada1; --line: #34312c; --accent: #a9c4b0; --accent-ink: #1a221d;
-    --accent-soft: #2a2f2a; --accent-text: #b9d1bf; --shadow: none; --shadow-lift: none;
-    --bad: #ff8a80; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #171614; --bg-glow: #221f1a; --surface: #1e1d1a; --raised: #24221f; --ink: #f2efe8;
-    --muted: #b3ada1; --line: #34312c; --accent: #a9c4b0; --accent-ink: #1a221d;
-    --accent-soft: #2a2f2a; --accent-text: #b9d1bf; --shadow: none; --shadow-lift: none;
-  --bad: #ff8a80; color-scheme: dark;
+  /* Always the light milky page, even when the visitor's system is in dark mode. */
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
