@@ -1091,7 +1091,9 @@ window.CONFIG = {
     tabs.forEach(function (t, k) { t.setAttribute("aria-pressed", k === i ? "true" : "false"); });
   }
   function wait(ms, id) {
-    return new Promise(function (res) { setTimeout(function () { res(id === run); }, reduce ? 0 : ms); });
+    // The conversation keeps its pace with reduced motion too: the timing is the story, and
+    // nothing moves (CSS turns off the pop-in and slide effects).
+    return new Promise(function (res) { setTimeout(function () { res(id === run); }, ms); });
   }
   async function play(i, chain) {
     reset(i);
@@ -1113,7 +1115,7 @@ window.CONFIG = {
   tabs[0].addEventListener("click", function () { play(0, false); });
   tabs[1].addEventListener("click", function () { play(1, false); });
   $("replay").addEventListener("click", function () { play(cur, false); });
-  play(0, !reduce);
+  play(0, true);
 })();
 </script>
 </body>
