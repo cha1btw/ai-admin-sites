@@ -9,7 +9,7 @@
 <meta property="og:locale" content="uk_UA">
 <meta property="og:title" content="AI-адміністратор для beauty-студій">
 <meta property="og:description" content="Відповідає в директі за секунди, записує у вільні вікна, складне передає вам. 14 днів безкоштовно.">
-<meta name="theme-color" content="#faf8f3">
+<meta name="theme-color" content="#fdfcf9">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%235a7a66'/%3E%3Cpath d='M22 18.2A7.5 7.5 0 1 1 13.8 10a5.8 5.8 0 0 0 8.2 8.2z' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,19 +26,19 @@
   --font-body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
-  --bg: #faf8f3;
-  --bg-glow: #f2ede2;
-  --surface: #f4f1ea;
-  --raised: #fffdf9;
-  --ink: #2b2a26;
-  --muted: #6c695f;
-  --line: #e9e4d9;
+  --bg: #fdfcf9;
+  --bg-glow: #fdfcf9;
+  --surface: #f7f5f0;
+  --raised: #ffffff;
+  --ink: #262522;
+  --muted: #6e6b64;
+  --line: #eeebe4;
   --accent: #5a7a66;
   --accent-ink: #ffffff;
-  --accent-soft: #eef0e7;
+  --accent-soft: #f1f4ee;
   --accent-text: #4b6a57;
-  --shadow: 0 1px 2px rgb(70 60 40 / 0.04), 0 14px 40px rgb(70 60 40 / 0.07);
-  --shadow-lift: 0 2px 4px rgb(70 60 40 / 0.05), 0 22px 50px rgb(70 60 40 / 0.1);
+  --shadow: 0 1px 2px rgb(60 50 30 / 0.03), 0 8px 28px rgb(60 50 30 / 0.05);
+  --shadow-lift: 0 2px 4px rgb(60 50 30 / 0.04), 0 18px 44px rgb(60 50 30 / 0.08);
 
   --stage: #2b2a27;
   --stage-2: #35332f;
@@ -74,11 +74,7 @@
 html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 body {
   margin: 0;
-  background:
-    radial-gradient(1100px 520px at 85% -120px, var(--bg-glow), transparent 70%),
-    radial-gradient(800px 420px at -10% 0, var(--bg-glow), transparent 70%),
-    var(--bg);
-  background-repeat: no-repeat;
+  background: var(--bg);
   color: var(--ink);
   font: 400 17px/1.65 var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -142,7 +138,10 @@ a { color: inherit; }
 .hero-copy { display: flex; flex-direction: column; gap: 22px; max-width: 860px; }
 .hero-copy h1 span { color: var(--accent-text); }
 .hero-copy .lead { font-size: clamp(18px, 1.7vw, 21px); }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 8px; }
+.hero-actions .btn-primary { padding: 19px 30px; font-size: 17px; }
+.hero-link { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 500; text-decoration: none; }
+.hero-link:hover { color: var(--accent-text); }
 .hero-demo { margin-top: clamp(36px, 5.5vw, 64px); }
 
 /* demo stage: the only dark surface, a phone at night */
@@ -225,14 +224,14 @@ a { color: inherit; }
 .tile { border-radius: 24px; padding: 30px; background: var(--raised); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-height: 230px; box-shadow: var(--shadow); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s; }
 .tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
 .tile p { color: var(--muted); max-width: 52ch; }
-.tile.night { background: radial-gradient(120% 140% at 100% 0%, #3d3a35 0%, var(--stage) 60%); color: var(--stage-ink); border-color: transparent; }
-.tile.night p { color: var(--stage-muted); }
-.tile.night > .ph { background: rgb(185 208 189 / 0.16); color: var(--stage-dot); }
-.tile.rose { background: linear-gradient(160deg, var(--accent-soft), var(--raised) 80%); }
+.tile.night { background: var(--accent-soft); border-color: transparent; }
+.tile.night p { color: var(--muted); }
+.tile.night > .ph { background: var(--raised); }
+.tile.rose { background: var(--raised); }
 .tile.wide { flex-direction: row; align-items: center; gap: 22px; min-height: 0; }
 .tile.wide > div { display: flex; flex-direction: column; gap: 8px; }
 .tile .big { font: 700 clamp(44px, 6vw, 72px)/1 var(--font-display); letter-spacing: -0.04em; margin-top: auto; }
-.tile.night .big { color: var(--stage-ink); }
+.tile.night .big { color: var(--accent-text); }
 .langs { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
 .langs span { font: 500 14px/1 var(--font-body); padding: 10px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
 
@@ -382,6 +381,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
   body { font-size: 16px; }
   .btn { padding: 15px 20px; }
   .hero-actions .btn { flex: 1 1 100%; }
+  .hero-link { margin: 0 auto; }
   .tile { padding: 24px; }
   .tile.wide { flex-direction: column; align-items: flex-start; }
   .langs { margin-left: 0; }
@@ -470,11 +470,11 @@ window.CONFIG = {
         <p class="lead">Бот відповідає в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#form">Спробувати 14 днів <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
-          <a class="btn btn-ghost" data-link="demo" href="https://t.me/YOUR_DEMO_BOT"><i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати демо-боту</a>
+          <a class="hero-link" href="#demo">Подивитися, як це працює <i class="ph ph-arrow-down" aria-hidden="true"></i></a>
         </div>
       </div>
 
-      <div class="hero-demo" aria-label="Демонстрація роботи бота">
+      <div class="hero-demo" id="demo" aria-label="Демонстрація роботи бота">
         <div class="controls" role="group" aria-label="Сценарій">
           <button class="tab" id="tab0" type="button" aria-pressed="true">Нічний запис</button>
           <button class="tab" id="tab1" type="button" aria-pressed="false">Складне питання</button>
@@ -640,7 +640,6 @@ window.CONFIG = {
   <section class="section" id="services" style="padding-top: 0">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow">Послуги</p>
         <h2>Автоматизуємо студію навколо директу</h2>
         <p class="lead">Почніть з AI-адміністратора. Решту додамо, коли захочете.</p>
       </div>
