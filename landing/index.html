@@ -10,6 +10,7 @@
 <meta property="og:title" content="AI-адміністратор для beauty-студій">
 <meta property="og:description" content="Відповідає в директі за секунди, записує у вільні вікна, складне передає вам. 14 днів безкоштовно.">
 <meta name="theme-color" content="#fdfcf9">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%235a7a66'/%3E%3Cpath d='M22 18.2A7.5 7.5 0 1 1 13.8 10a5.8 5.8 0 0 0 8.2 8.2z' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,6 +57,17 @@
   /* Always the light milky page, even when the visitor's system is in dark mode. */
   color-scheme: light;
 }
+/* Dark theme only by the visitor's choice (toggle), never from the system setting: the default stays milky. */
+:root[data-theme="dark"] {
+  --bg: #171614; --bg-glow: #171614; --surface: #1e1d1a; --raised: #211f1c;
+  --ink: #f2efe8; --muted: #b3ada1; --line: #34312c;
+  --accent: #a9c4b0; --accent-ink: #1a221d; --accent-soft: #2a2f2a; --accent-text: #b9d1bf;
+  --shadow: none; --shadow-lift: none; --bad: #ff8a80; --good: #5fd3a6;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .stage { border: 1px solid var(--line); }
+:root[data-theme="dark"] .btn-primary { box-shadow: none; }
+:root[data-theme="dark"] .brand-mark { background: linear-gradient(140deg, #6d8a76, #4f6b5a); }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -112,13 +124,19 @@ a { color: inherit; }
   .nav-cta .long { display: none; }
   .nav-cta .short { display: inline; }
 }
-@media (max-width: 359px) { .nav .brand-text { display: none; } }
+@media (max-width: 519px) { .nav .brand-text { display: none; } }
+@media (max-width: 359px) { .nav-inner { gap: 8px; } .nav-tools { gap: 6px; } .nav .btn { padding: 12px 14px; } button.ctl { width: 38px; } select.ctl { min-width: 48px; padding: 0 6px; } }
 .brand { display: inline-flex; align-items: center; gap: 10px; font: 700 17px/1 var(--font-display); letter-spacing: -0.02em; text-decoration: none; white-space: nowrap; }
 .brand-mark { width: 34px; height: 34px; border-radius: 12px; background: linear-gradient(140deg, #93ad9a, var(--accent)); color: #fff; display: grid; place-items: center; font-size: 19px; }
 .nav-links { display: none; gap: 28px; font-size: 15px; color: var(--muted); }
 .nav-links a { text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover { color: var(--accent-text); }
-.nav .btn { margin-left: auto; padding: 12px 20px; font-size: 15px; box-shadow: none; }
+.nav .btn { padding: 12px 20px; font-size: 15px; box-shadow: none; }
+.nav-tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.ctl { height: 42px; border-radius: 999px; border: 1px solid var(--line); background: var(--raised); color: var(--ink); font: 600 14px/1 var(--font-body); cursor: pointer; }
+.ctl:hover { border-color: var(--accent); }
+button.ctl { width: 42px; display: grid; place-items: center; font-size: 20px; padding: 0; }
+select.ctl { padding: 0 10px; appearance: none; -webkit-appearance: none; text-align: center; text-align-last: center; min-width: 54px; }
 @media (min-width: 900px) { .nav-links { display: flex; } }
 
 /* hero */
@@ -445,6 +463,10 @@ window.CONFIG = {
       <a href="#pricing">Ціни</a>
       <a href="#faq">Питання</a>
     </nav>
+    <div class="nav-tools">
+      <select class="ctl" id="lang" aria-label="Мова"><option value="uk">UA</option><option value="ru">RU</option><option value="en">EN</option></select>
+      <button class="ctl" id="theme" type="button" aria-label="Змінити тему"><i class="ph ph-moon" aria-hidden="true"></i></button>
+    </div>
     <a class="btn btn-primary nav-cta" href="#form"><span class="long">Спробувати 14 днів</span><span class="short">Спробувати</span></a>
   </div>
 </header>
@@ -850,7 +872,105 @@ window.CONFIG = {
   var C = window.CONFIG || {};
   var $ = function (id) { return document.getElementById(id); };
   var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  var fmt = function (n) { return Math.round(n).toLocaleString("uk-UA").replace(/ /g, " "); };
+  // --- translations for text built in JS (demo, calculator, form) ----------------------------
+  var TXT = {
+    uk: {
+      cur: "грн", locale: "uk-UA",
+      lessOne: "менше одного запису", about: "це приблизно ", paybackA: "Він окупається з ", paybackB: " на місяць.",
+      bookW: ["запис", "записи", "записів"], payW: ["запису", "записів", "записів"],
+      errName: "Як до вас звертатися?", errContact: "Залиште телефон або @username у Telegram",
+      fbTg: "Напишіть нам у Telegram: @", fbLater: "Спробуйте трохи пізніше.", notWired: "Форма ще не підключена. ",
+      tooMany: "Забагато заявок з цієї адреси. ", failed: "Не вдалося надіслати. ", offline: "Немає звʼязку з сервером. ",
+      sending: " Надсилаємо", thanks: "Дякуємо, заявку отримали",
+      thanksText: "Напишемо вам протягом робочого дня. А поки можна поговорити з демо-ботом у Telegram.",
+      rows: ["Ірина · манікюр", "Софія · педикюр", "вільно"], booked: "Анна · манікюр з гель-лаком",
+      s0: {
+        clock: "23:47", pill: "Майстер спить", idle: "Тихо. Майстер спить.",
+        first: "Добрий вечір! Скільки коштує манікюр з гель-лаком? Є вікно завтра після 15:00?",
+        p1: "Бот читає прайс і календар", p2: "Відповідь за кілька секунд",
+        b1: "Вітаю! Я AI-асистент студії. Манікюр з гель-лаком коштує 900 грн, приблизно дві години. Завтра, у четвер 22.10, вільно о 15:30 і 17:30. Який час зручніший?",
+        c1: "А на короткі нігті гель-лак можна?", b2: "Так, можна. Майстер підбере форму під вашу довжину. Записати вас на 15:30?",
+        c2: "Так, на 15:30. Я Анна", p3: "Бот створює запис",
+        b3: "Анна, вас записано: манікюр з гель-лаком, четвер, 22.10 о 15:30. Вартість: 900 грн. Адреса: вул. Прикладна, 1. Якщо плани зміняться, напишіть сюди.",
+        nTitle: "Новий запис", nLines: ["Анна, четвер 22.10 о 15:30", "Манікюр з гель-лаком, 900 грн", "Записав бот. Нічого робити не треба."],
+        p4: "Запис уже в календарі", p5: "Ранок: майстер бачить готовий запис"
+      },
+      s1: {
+        clock: "21:10", pill: "Клієнтка питає про здоровʼя", idle: "Тихо. Усе під контролем бота.",
+        first: "Добрий вечір! У мене алергія на акрил. Це небезпечно для мене?",
+        p1: "Бот вирішує, чи може відповісти",
+        b1: "Вітаю! Я AI-асистент студії. Це питання краще уточнити в студії. Ваше повідомлення вже передано, вам відповідять тут найближчим часом.",
+        p2: "Передано майстру", nTitle: "Потрібна ваша відповідь", nLines: ["Анна питає про алергію на акрил", "Бот замовк і чекає на вас."], nChip: "Відповісти",
+        p3: "Бот мовчить, чекає майстра", m1: "Анно, добрий вечір! Це Олена. Розкажіть, що саме спричиняє алергію, і підберемо матеріали.",
+        who: "Олена, майстер", p4: "Відповідає людина", p5: "Бот нічого не вигадав"
+      }
+    },
+    ru: {
+      cur: "грн", locale: "ru-RU",
+      lessOne: "меньше одной записи", about: "это примерно ", paybackA: "Он окупается с ", paybackB: " в месяц.",
+      bookW: ["запись", "записи", "записей"], payW: ["записи", "записей", "записей"],
+      errName: "Как к вам обращаться?", errContact: "Оставьте телефон или @username в Telegram",
+      fbTg: "Напишите нам в Telegram: @", fbLater: "Попробуйте чуть позже.", notWired: "Форма ещё не подключена. ",
+      tooMany: "Слишком много заявок с этого адреса. ", failed: "Не удалось отправить. ", offline: "Нет связи с сервером. ",
+      sending: " Отправляем", thanks: "Спасибо, заявку получили",
+      thanksText: "Напишем вам в течение рабочего дня. А пока можно поговорить с демо-ботом в Telegram.",
+      rows: ["Ирина · маникюр", "София · педикюр", "свободно"], booked: "Анна · маникюр с гель-лаком",
+      s0: {
+        clock: "23:47", pill: "Мастер спит", idle: "Тихо. Мастер спит.",
+        first: "Добрый вечер! Сколько стоит маникюр с гель-лаком? Есть окно завтра после 15:00?",
+        p1: "Бот читает прайс и календарь", p2: "Ответ за несколько секунд",
+        b1: "Здравствуйте! Я AI-ассистент студии. Маникюр с гель-лаком стоит 900 грн, примерно два часа. Завтра, в четверг 22.10, свободно в 15:30 и 17:30. Какое время удобнее?",
+        c1: "А на короткие ногти гель-лак можно?", b2: "Да, можно. Мастер подберёт форму под вашу длину. Записать вас на 15:30?",
+        c2: "Да, на 15:30. Я Анна", p3: "Бот создаёт запись",
+        b3: "Анна, вы записаны: маникюр с гель-лаком, четверг, 22.10 в 15:30. Стоимость: 900 грн. Адрес: ул. Примерная, 1. Если планы изменятся, напишите сюда.",
+        nTitle: "Новая запись", nLines: ["Анна, четверг 22.10 в 15:30", "Маникюр с гель-лаком, 900 грн", "Записал бот. Ничего делать не нужно."],
+        p4: "Запись уже в календаре", p5: "Утро: мастер видит готовую запись"
+      },
+      s1: {
+        clock: "21:10", pill: "Клиентка спрашивает о здоровье", idle: "Тихо. Всё под контролем бота.",
+        first: "Добрый вечер! У меня аллергия на акрил. Это опасно для меня?",
+        p1: "Бот решает, может ли ответить",
+        b1: "Здравствуйте! Я AI-ассистент студии. Этот вопрос лучше уточнить в студии. Ваше сообщение уже передано, вам ответят здесь в ближайшее время.",
+        p2: "Передано мастеру", nTitle: "Нужен ваш ответ", nLines: ["Анна спрашивает про аллергию на акрил", "Бот замолчал и ждёт вас."], nChip: "Ответить",
+        p3: "Бот молчит, ждёт мастера", m1: "Анна, добрый вечер! Это Елена. Расскажите, что именно вызывает аллергию, и подберём материалы.",
+        who: "Елена, мастер", p4: "Отвечает человек", p5: "Бот ничего не выдумал"
+      }
+    },
+    en: {
+      cur: "UAH", locale: "en-US",
+      lessOne: "less than one booking", about: "that's about ", paybackA: "It pays for itself after ", paybackB: " a month.",
+      bookW: ["booking", "bookings", "bookings"], payW: ["booking", "bookings", "bookings"],
+      errName: "What should we call you?", errContact: "Leave a phone number or your Telegram @username",
+      fbTg: "Message us on Telegram: @", fbLater: "Please try again a bit later.", notWired: "The form is not connected yet. ",
+      tooMany: "Too many requests from this address. ", failed: "Could not send. ", offline: "No connection to the server. ",
+      sending: " Sending", thanks: "Thank you, we got your request",
+      thanksText: "We'll write back within a working day. Meanwhile you can chat with the demo bot on Telegram.",
+      rows: ["Iryna · manicure", "Sofia · pedicure", "free"], booked: "Anna · gel polish manicure",
+      s0: {
+        clock: "23:47", pill: "Master is asleep", idle: "Quiet. The master is asleep.",
+        first: "Good evening! How much is a gel polish manicure? Is there a slot tomorrow after 3 pm?",
+        p1: "Bot reads the price list and calendar", p2: "Reply in a few seconds",
+        b1: "Hi! I'm the studio's AI assistant. A gel polish manicure is 900 UAH and takes about two hours. Tomorrow, Thursday 22.10, 3:30 pm and 5:30 pm are free. Which works better?",
+        c1: "Can I get gel polish on short nails?", b2: "Yes, you can. The master will pick a shape for your length. Shall I book you for 3:30 pm?",
+        c2: "Yes, 3:30 pm. I'm Anna", p3: "Bot creates the booking",
+        b3: "Anna, you're booked: gel polish manicure, Thursday 22.10 at 3:30 pm. Price: 900 UAH. Address: 1 Example St. If your plans change, write here.",
+        nTitle: "New booking", nLines: ["Anna, Thursday 22.10 at 3:30 pm", "Gel polish manicure, 900 UAH", "Booked by the bot. Nothing to do."],
+        p4: "Booking is already in the calendar", p5: "Morning: the master sees a ready booking"
+      },
+      s1: {
+        clock: "21:10", pill: "Client asks about health", idle: "Quiet. The bot has it under control.",
+        first: "Good evening! I'm allergic to acrylic. Is it dangerous for me?",
+        p1: "Bot decides whether it may answer",
+        b1: "Hi! I'm the studio's AI assistant. This is best checked with the studio. Your message has been passed on, you'll get an answer here soon.",
+        p2: "Passed to the master", nTitle: "Your reply is needed", nLines: ["Anna asks about an acrylic allergy", "The bot went quiet and is waiting for you."], nChip: "Reply",
+        p3: "Bot is silent, waiting for the master", m1: "Anna, good evening! This is Olena. Tell me what exactly triggers the allergy and we'll pick materials.",
+        who: "Olena, master", p4: "A human is replying", p5: "The bot made nothing up"
+      }
+    }
+  };
+  var DICT = {"uk": ["AI-адміністратор, на початок сторінки", "AI-адміністратор", "Розділи", "Можливості", "Запуск", "Послуги", "Ціни", "Питання", "Спробувати 14 днів", "Спробувати", "AI-адміністратор для beauty-студій", "Клієнтка пише о", ". Хто їй відповість?", "Бот відповідає в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина.", "Подивитися, як це працює", "Демонстрація роботи бота", "Сценарій", "Нічний запис", "Складне питання", "Ще раз", "Майстер спить", "AI-асистент студії", "У майстра в Telegram", "Тихо. Майстер спить.", "Завтра в календарі", "Демонстрація: назва студії, ціни, імена й вільні вікна вигадані.", "Відповідь за секунди", "Вдень, уночі й поки ви з клієнткою.", "Instagram і Telegram", "Офіційні API, без сірих схем.", "Тільки ваші ціни", "Кожна сума звіряється з прайсом.", "Запуск за 1-3 дні", "Налаштування робимо ми.", "Адміністратор, який не втомлюється й не забуває", "Робить те саме, що й людина на рецепції: відповідає, записує, переносить. Складне віддає вам.", "Відповідає, поки ви спите або працюєте", "Клієнтки пишуть увечері й між процедурами. Бот відповідає одразу, тож вони не йдуть до студії, що відповіла першою.", "Записує у вільні вікна", "Бачить ваш календар, пропонує реальний час, переносить і скасовує записи за вашими правилами.", "Кличе вас, коли треба", "Фото дизайну, алергія, скарга, знижка: бот замовкає й передає діалог вам із коротким поясненням.", "Керуєте з Telegram", "Нові записи, чернетки на погодження, кнопки «Відповісти», «Взяти діалог», «Пауза». Без нових програм.", "Звіт щопонеділка", "Скільки діалогів, скільки записів зробив бот і скільки з них поки ви відпочивали.", "Говорить мовою клієнтки", "Вітається українською, а далі відповідає мовою клієнтки, якщо ви її дозволили.", "Мови", "Українська", "та інші за вашим вибором", "Скільки записів губиться в директі", "Підставте свої цифри. Це ваша оцінка, а справжні покаже звіт бота за перші два тижні.", "Нових звернень у директ на тиждень", "Пишуть, коли ви зайняті або спите", "Увечері, вночі, у вихідні й під час процедур.", "З них не дочікуються відповіді", "Пишуть кільком студіям і записуються туди, де відповіли першими.", "Середній чек", "800 грн", "Ви можете втрачати на місяць", "13 760 грн", "це приблизно 17 записів", "Тариф «Студія» коштує", "грн на місяць.", "Він окупається з 5 записів на місяць.", "Розрахунок: звернення на тиждень × 4,3 × частка поза вашими годинами × частка втрачених × середній чек.", "Чого бот не зробить ніколи", "Ці правила закладені в код, а не лише в інструкцію для моделі.", "Не вигадає ціну", "Суми, час, телефони й посилання звіряються з вашими даними перед відправкою.", "Не видасть себе за людину", "Одразу чесно каже, що він AI-асистент студії.", "Не дасть медичну пораду", "Алергія, вагітність, протипоказання: тільки до майстра.", "Не пообіцяє знижку", "Знижки, повернення коштів і скарги вирішуєте ви.", "Не перебʼє вас", "Ви написали клієнтці, і бот замовк, доки ви його не повернете.", "Не пише першим", "Без розсилок і спаму: відповідає лише тим, хто написав сам.", "Запуск без ризику для ваших клієнток", "Довіра росте сходинками. На будь-якому кроці можна повернутися назад однією командою.", "День 1", "Надсилаєте прайс і графік як є", "Фото прайсу, текст з Instagram, нотатки. Ми переносимо все в бота й показуємо, що він знає.", "День 1-2", "Пробуєте зламати бота", "Пишете йому каверзні питання в Telegram на вашому прайсі, ще до підключення клієнток.", "Перший тиждень", "Чернетки: нічого не йде без вас", "Бот готує відповідь, ви бачите її в Telegram і надсилаєте кнопкою або виправляєте.", "Далі", "Автопілот на типове", "Ціни, адреса, вільні вікна й запис бот веде сам. Нестандартне завжди приходить вам.", "Автоматизуємо студію навколо директу", "Почніть з AI-адміністратора. Решту додамо, коли захочете.", "AI-адміністратор директу", "Відповіді клієнткам, запис у вільні вікна, перенесення й скасування, передача майстру, звіти. Основа, з якої починають усі студії.", "Google Календар", "Ранній доступ", "AI-асистент для дзвінків", "Відповідає на дзвінки голосом, називає ціни й записує у вільні вікна. Для студій, де телефон не замовкає.", "Обговорити", "CRM під вашу студію", "Клієнтська база, історія візитів, нагадування майстрам і звіти. Під ваші процеси, а не навпаки.", "Сайт з онлайн-записом", "Швидкий сайт студії з цінами, роботами майстрів і записом у той самий календар, що й бот.", "Повернення клієнток", "Нагадуємо в Telegram тим, кого давно не було, і пропонуємо вільний час. Лише тим, хто погодився.", "Відгуки після візиту", "Просимо оцінку після процедури. Задоволених ведемо на Google Карти, незадоволених одразу до вас.", "За запитом", "Інтеграції", "Google Календар уже працює. Altegio, Booksy, KeyCRM і ваші таблиці підключаємо під задачу.", "Ціна, яка окупається кількома записами", "Ціна за місяць, модель AI вже включена. Перші 14 днів безкоштовно.", "Старт", "грн / міс", "Для майстра, що працює сам.", "Один канал: Instagram або Telegram", "Календар у боті, запис і перенесення", "Сповіщення й чернетки в Telegram", "Студія", "Рекомендуємо", "Для студії з кількома майстрами.", "Instagram і Telegram разом", "До 5 майстрів, вибір майстра клієнткою", "Google Календар кожного майстра", "Доступ для адміністратора студії", "Передоплата й правила скасування", "Мережа й індивідуальні рішення", "Кілька філій, інтеграції з CRM, AI для дзвінків, сайт з онлайн-записом.", "від", "грн", "Налаштування безкоштовно для перших студій", "Без договору на рік, скасування будь-коли", "Зміни цін і графіка за день", "Питання, які нам ставлять", "Клієнткам не буде неприємно говорити з ботом?", "Бот одразу чесно каже, що він AI-асистент студії. Клієнтці важливо швидко дізнатися ціну й записатися, а не чекати до ранку. Усе особисте, складне чи емоційне бот передає вам.", "А якщо бот назве неправильну ціну?", "Ціни й час бот бере тільки з ваших даних. Перед відправкою код перевіряє кожну суму, час, телефон і посилання. Якщо чогось немає в даних, відповідь не піде: бот передасть діалог вам.", "Що потрібно від мене для запуску?", "Прайс, графік і відповіді на кілька питань про правила студії. Можна надіслати як є: фото, текст, голосове. Налаштування робимо ми, вам лишається додати бота в Telegram для бізнесу або підтвердити підключення Instagram.", "Як я відповім клієнтці сама?", "Просто напишіть їй, як завжди, або натисніть «Відповісти» в Telegram. Бот побачить, що ви в діалозі, і замовкне, доки ви його не повернете.", "Як змінити ціни чи взяти відпустку?", "Напишіть зміни боту командою /change, і ми оновимо дані протягом дня. Закрити дні можна самій командою /close, бот одразу перестане пропонувати цей час.", "Чи не заблокують мій Instagram?", "Ми працюємо через офіційний API Meta для Instagram, без розсилок і сторонніх програм на вашому телефоні. Бот відповідає лише тим, хто написав сам, і в межах правил платформи.", "Хто бачить листування моїх клієнток?", "Дані зберігаються на сервері в ЄС і використовуються лише для роботи бота. Листування автоматично видаляється через встановлений строк, а дані окремої клієнтки видаляємо на її запит.", "Що якщо не сподобається?", "Перші 14 днів безкоштовні, договору на рік немає. Вимкнути бота можна однією командою /pause, а відключити повністю в налаштуваннях Telegram чи Instagram.", "Підключимо вашу студію за 1-3 дні", "Залиште контакт, і ми напишемо протягом робочого дня.", "Коротко поговоримо про вашу студію й канали.", "Налаштуємо бота на вашому прайсі й дамо його протестувати.", "14 днів безкоштовно, далі вирішуєте ви.", "Написати в Telegram", "Імʼя", "Олена", "Телефон або Telegram", "+380 або @username", "(необовʼязково)", "Назва або Instagram", "Що цікавить", "CRM під студію", "Інтеграція або мережа", "Інше", "Коментар", "Скільки майстрів, звідки пишуть клієнтки, що хочеться автоматизувати", "Не заповнюйте це поле", "Надіслати заявку", "Надсилаючи форму, ви погоджуєтесь, що ми звʼяжемося з вами за вказаним контактом. Більше ні для чого ці дані не використовуємо.", "Посилання", "Демо-бот", "© 2026 AI-адміністратор. Демонстрація на сторінці використовує вигадані дані.", "AI-адміністратор для beauty-студій: відповідає в директі й записує клієнток", "AI-адміністратор відповідає клієнткам в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина. 14 днів безкоштовно.", "Відповідає в директі за секунди, записує у вільні вікна, складне передає вам. 14 днів безкоштовно.", "Мова", "Змінити тему"], "ru": ["AI-администратор, в начало страницы", "AI-администратор", "Разделы", "Возможности", "Запуск", "Услуги", "Цены", "Вопросы", "Попробовать 14 дней", "Попробовать", "AI-администратор для beauty-студий", "Клиентка пишет в", ". Кто ей ответит?", "Бот отвечает в Instagram и Telegram по вашему прайсу, записывает на свободные окна и зовёт вас, когда нужен человек.", "Посмотреть, как это работает", "Демонстрация работы бота", "Сценарий", "Ночная запись", "Сложный вопрос", "Ещё раз", "Мастер спит", "AI-ассистент студии", "У мастера в Telegram", "Тихо. Мастер спит.", "Завтра в календаре", "Демонстрация: название студии, цены, имена и свободные окна выдуманы.", "Ответ за секунды", "Днём, ночью и пока вы с клиенткой.", "Instagram и Telegram", "Официальные API, без серых схем.", "Только ваши цены", "Каждая сумма сверяется с прайсом.", "Запуск за 1-3 дня", "Настройку делаем мы.", "Администратор, который не устаёт и не забывает", "Делает то же, что и человек на ресепшене: отвечает, записывает, переносит. Сложное отдаёт вам.", "Отвечает, пока вы спите или работаете", "Клиентки пишут вечером и между процедурами. Бот отвечает сразу, поэтому они не уходят в студию, которая ответила первой.", "Записывает на свободные окна", "Видит ваш календарь, предлагает реальное время, переносит и отменяет записи по вашим правилам.", "Зовёт вас, когда нужно", "Фото дизайна, аллергия, жалоба, скидка: бот замолкает и передаёт диалог вам с коротким пояснением.", "Управляете из Telegram", "Новые записи, черновики на согласование, кнопки «Ответить», «Взять диалог», «Пауза». Без новых программ.", "Отчёт каждый понедельник", "Сколько диалогов, сколько записей сделал бот и сколько из них, пока вы отдыхали.", "Говорит на языке клиентки", "Здоровается по-украински, а дальше отвечает на языке клиентки, если вы это разрешили.", "Языки", "Украинский", "и другие на ваш выбор", "Сколько записей теряется в директе", "Подставьте свои цифры. Это ваша оценка, а настоящие покажет отчёт бота за первые две недели.", "Новых обращений в директ в неделю", "Пишут, когда вы заняты или спите", "Вечером, ночью, в выходные и во время процедур.", "Из них не дожидаются ответа", "Пишут нескольким студиям и записываются туда, где ответили первыми.", "Средний чек", "800 грн", "Вы можете терять в месяц", "13 760 грн", "это примерно 17 записей", "Тариф «Студия» стоит", "грн в месяц.", "Он окупается с 5 записей в месяц.", "Расчёт: обращения в неделю × 4,3 × доля вне ваших часов × доля потерянных × средний чек.", "Чего бот не сделает никогда", "Эти правила заложены в код, а не только в инструкцию для модели.", "Не выдумает цену", "Суммы, время, телефоны и ссылки сверяются с вашими данными перед отправкой.", "Не выдаст себя за человека", "Сразу честно говорит, что он AI-ассистент студии.", "Не даст медицинский совет", "Аллергия, беременность, противопоказания: только к мастеру.", "Не пообещает скидку", "Скидки, возвраты средств и жалобы решаете вы.", "Не перебьёт вас", "Вы написали клиентке, и бот замолчал, пока вы его не вернёте.", "Не пишет первым", "Без рассылок и спама: отвечает только тем, кто написал сам.", "Запуск без риска для ваших клиенток", "Доверие растёт ступенями. На любом шаге можно вернуться назад одной командой.", "День 1", "Присылаете прайс и график как есть", "Фото прайса, текст из Instagram, заметки. Мы переносим всё в бота и показываем, что он знает.", "День 1-2", "Пробуете сломать бота", "Пишете ему каверзные вопросы в Telegram на вашем прайсе, ещё до подключения клиенток.", "Первая неделя", "Черновики: ничего не уходит без вас", "Бот готовит ответ, вы видите его в Telegram и отправляете кнопкой или исправляете.", "Дальше", "Автопилот на типовое", "Цены, адрес, свободные окна и запись бот ведёт сам. Нестандартное всегда приходит вам.", "Автоматизируем студию вокруг директа", "Начните с AI-администратора. Остальное добавим, когда захотите.", "AI-администратор директа", "Ответы клиенткам, запись на свободные окна, перенос и отмена, передача мастеру, отчёты. Основа, с которой начинают все студии.", "Google Календарь", "Ранний доступ", "AI-ассистент для звонков", "Отвечает на звонки голосом, называет цены и записывает на свободные окна. Для студий, где телефон не умолкает.", "Обсудить", "CRM под вашу студию", "Клиентская база, история визитов, напоминания мастерам и отчёты. Под ваши процессы, а не наоборот.", "Сайт с онлайн-записью", "Быстрый сайт студии с ценами, работами мастеров и записью в тот же календарь, что и бот.", "Возвращение клиенток", "Напоминаем в Telegram тем, кого давно не было, и предлагаем свободное время. Только тем, кто согласился.", "Отзывы после визита", "Просим оценку после процедуры. Довольных ведём на Google Карты, недовольных сразу к вам.", "По запросу", "Интеграции", "Google Календарь уже работает. Altegio, Booksy, KeyCRM и ваши таблицы подключаем под задачу.", "Цена, которая окупается несколькими записями", "Цена за месяц, модель AI уже включена. Первые 14 дней бесплатно.", "Старт", "грн / мес", "Для мастера, который работает один.", "Один канал: Instagram или Telegram", "Календарь в боте, запись и перенос", "Уведомления и черновики в Telegram", "Студия", "Рекомендуем", "Для студии с несколькими мастерами.", "Instagram и Telegram вместе", "До 5 мастеров, выбор мастера клиенткой", "Google Календарь каждого мастера", "Доступ для администратора студии", "Предоплата и правила отмены", "Сеть и индивидуальные решения", "Несколько филиалов, интеграции с CRM, AI для звонков, сайт с онлайн-записью.", "от", "грн", "Настройка бесплатно для первых студий", "Без договора на год, отмена в любое время", "Изменения цен и графика за день", "Вопросы, которые нам задают", "Клиенткам не будет неприятно говорить с ботом?", "Бот сразу честно говорит, что он AI-ассистент студии. Клиентке важно быстро узнать цену и записаться, а не ждать до утра. Всё личное, сложное или эмоциональное бот передаёт вам.", "А если бот назовёт неправильную цену?", "Цены и время бот берёт только из ваших данных. Перед отправкой код проверяет каждую сумму, время, телефон и ссылку. Если чего-то нет в данных, ответ не уйдёт: бот передаст диалог вам.", "Что нужно от меня для запуска?", "Прайс, график и ответы на несколько вопросов о правилах студии. Можно прислать как есть: фото, текст, голосовое. Настройку делаем мы, вам остаётся добавить бота в Telegram для бизнеса или подтвердить подключение Instagram.", "Как я отвечу клиентке сама?", "Просто напишите ей, как обычно, или нажмите «Ответить» в Telegram. Бот увидит, что вы в диалоге, и замолчит, пока вы его не вернёте.", "Как изменить цены или уйти в отпуск?", "Напишите изменения боту командой /change, и мы обновим данные в течение дня. Закрыть дни можно самой командой /close, бот сразу перестанет предлагать это время.", "Не заблокируют ли мой Instagram?", "Мы работаем через официальный API Meta для Instagram, без рассылок и сторонних программ на вашем телефоне. Бот отвечает только тем, кто написал сам, и в рамках правил платформы.", "Кто видит переписку моих клиенток?", "Данные хранятся на сервере в ЕС и используются только для работы бота. Переписка автоматически удаляется через установленный срок, а данные отдельной клиентки мы удаляем по её запросу.", "Что если не понравится?", "Первые 14 дней бесплатны, договора на год нет. Выключить бота можно одной командой /pause, а отключить полностью в настройках Telegram или Instagram.", "Подключим вашу студию за 1-3 дня", "Оставьте контакт, и мы напишем в течение рабочего дня.", "Коротко поговорим о вашей студии и каналах.", "Настроим бота на вашем прайсе и дадим его протестировать.", "14 дней бесплатно, дальше решаете вы.", "Написать в Telegram", "Имя", "Елена", "Телефон или Telegram", "+380 или @username", "(необязательно)", "Название или Instagram", "Что интересует", "CRM под студию", "Интеграция или сеть", "Другое", "Комментарий", "Сколько мастеров, откуда пишут клиентки, что хочется автоматизировать", "Не заполняйте это поле", "Отправить заявку", "Отправляя форму, вы соглашаетесь, что мы свяжемся с вами по указанному контакту. Больше ни для чего эти данные мы не используем.", "Ссылки", "Демо-бот", "© 2026 AI-администратор. Демонстрация на странице использует выдуманные данные.", "AI-администратор для beauty-студий: отвечает в директе и записывает клиенток", "AI-администратор отвечает клиенткам в Instagram и Telegram по вашему прайсу, записывает на свободные окна и зовёт вас, когда нужен человек. 14 дней бесплатно.", "Отвечает в директе за секунды, записывает на свободные окна, сложное передаёт вам. 14 дней бесплатно.", "Язык", "Сменить тему"], "en": ["AI Receptionist, back to top", "AI Receptionist", "Sections", "Features", "Launch", "Services", "Pricing", "FAQ", "Try it for 14 days", "Try it", "AI receptionist for beauty studios", "A client messages at", ". Who will answer?", "The bot replies on Instagram and Telegram using your price list, books free slots and calls you in when a human is needed.", "See how it works", "Bot demo", "Scenario", "Night booking", "Tricky question", "Replay", "Master is asleep", "Studio AI assistant", "On the master's Telegram", "Quiet. The master is asleep.", "Tomorrow in the calendar", "Demo: the studio name, prices, names and free slots are made up.", "Replies in seconds", "By day, at night, and while you are with a client.", "Instagram and Telegram", "Official APIs, no grey schemes.", "Only your prices", "Every amount is checked against your price list.", "Live in 1-3 days", "We do the setup.", "A receptionist who never gets tired or forgets", "Does what a person at the front desk does: answers, books, reschedules. Hands the hard stuff to you.", "Replies while you sleep or work", "Clients write in the evening and between appointments. The bot answers at once, so they don't go to the studio that replied first.", "Books free slots", "Sees your calendar, offers real times, reschedules and cancels by your rules.", "Calls you when needed", "Design photo, allergy, complaint, discount: the bot goes quiet and hands the chat to you with a short summary.", "Run it from Telegram", "New bookings, drafts for approval, buttons “Reply”, “Take over”, “Pause”. No new apps.", "Report every Monday", "How many chats, how many bookings the bot made and how many came while you were off.", "Speaks the client's language", "Greets in Ukrainian, then replies in the client's language if you allowed it.", "Languages", "Ukrainian", "and others of your choice", "How many bookings get lost in DMs", "Enter your own numbers. It's an estimate; the bot's report after the first two weeks shows the real figures.", "New DM inquiries per week", "Write when you are busy or asleep", "In the evening, at night, on weekends and during appointments.", "Of those, don't wait for a reply", "They message several studios and book with whoever answers first.", "Average ticket", "800 UAH", "You may be losing per month", "13,760 UAH", "that's about 17 bookings", "The “Studio” plan costs", "UAH per month.", "It pays for itself after 5 bookings a month.", "Calculation: inquiries per week × 4.3 × share outside your hours × share lost × average ticket.", "What the bot will never do", "These rules are built into the code, not just the model's instructions.", "Won't invent a price", "Amounts, times, phones and links are checked against your data before sending.", "Won't pass as a human", "Says upfront that it is the studio's AI assistant.", "Won't give medical advice", "Allergy, pregnancy, contraindications: only the master answers.", "Won't promise a discount", "Discounts, refunds and complaints are your call.", "Won't talk over you", "You wrote to the client, and the bot goes quiet until you hand it back.", "Won't write first", "No mailings or spam: it only replies to people who wrote first.", "A launch with no risk to your clients", "Trust grows step by step. At any step you can go back with one command.", "Day 1", "Send your prices and schedule as they are", "A photo of the price list, text from Instagram, notes. We move it all into the bot and show you what it knows.", "Day 1-2", "Try to break the bot", "Ask it tricky questions in Telegram on your price list, before any clients are connected.", "First week", "Drafts: nothing goes out without you", "The bot prepares a reply, you see it in Telegram and send it with a button or edit it.", "Then", "Autopilot for the routine", "Prices, address, free slots and booking the bot handles itself. Anything unusual always comes to you.", "We automate your studio around DMs", "Start with the AI receptionist. We'll add the rest when you want it.", "AI receptionist for DMs", "Replies to clients, booking into free slots, rescheduling and cancelling, handoff to the master, reports. The foundation every studio starts with.", "Google Calendar", "Early access", "AI assistant for calls", "Answers calls by voice, quotes prices and books free slots. For studios where the phone never stops.", "Discuss", "CRM for your studio", "Client base, visit history, reminders for masters and reports. Built around your processes, not the other way round.", "Website with online booking", "A fast studio site with prices, the masters' work and booking into the same calendar as the bot.", "Win back clients", "We remind clients you haven't seen in a while on Telegram and offer a free slot. Only those who agreed.", "Reviews after a visit", "We ask for a rating after the appointment. Happy clients go to Google Maps, unhappy ones straight to you.", "On request", "Integrations", "Google Calendar already works. Altegio, Booksy, KeyCRM and your spreadsheets we connect as needed.", "A price that pays off with a few bookings", "Monthly price, the AI model is included. The first 14 days are free.", "Start", "UAH / mo", "For a master working solo.", "One channel: Instagram or Telegram", "Calendar in the bot, booking and rescheduling", "Notifications and drafts in Telegram", "Studio", "Recommended", "For a studio with several masters.", "Instagram and Telegram together", "Up to 5 masters, client picks the master", "Google Calendar for every master", "Access for the studio administrator", "Prepayment and cancellation rules", "Chains and custom solutions", "Several branches, CRM integrations, AI for calls, a website with online booking.", "from", "UAH", "Free setup for the first studios", "No yearly contract, cancel any time", "Price and schedule changes within a day", "Questions we get asked", "Won't clients feel awkward talking to a bot?", "The bot says upfront that it is the studio's AI assistant. A client wants a quick price and a booking, not to wait until morning. Anything personal, complex or emotional the bot hands to you.", "What if the bot quotes the wrong price?", "The bot takes prices and times only from your data. Before sending, the code checks every amount, time, phone and link. If something isn't in the data, the reply doesn't go out: the bot hands the chat to you.", "What do you need from me to launch?", "A price list, a schedule and answers to a few questions about studio rules. Send it as it is: photo, text, voice note. We do the setup; you just add the bot in Telegram Business or confirm the Instagram connection.", "How do I reply to a client myself?", "Just write to her as usual, or tap “Reply” in Telegram. The bot sees you are in the chat and goes quiet until you hand it back.", "How do I change prices or take a vacation?", "Send the changes to the bot with /change and we'll update the data within a day. You can close days yourself with /close, and the bot stops offering that time right away.", "Won't my Instagram get blocked?", "We use Meta's official Instagram API, with no mass mailings or third-party apps on your phone. The bot only replies to people who wrote first, within the platform's rules.", "Who sees my clients' conversations?", "Data is stored on a server in the EU and used only to run the bot. Conversations are deleted automatically after a set period, and we delete an individual client's data on her request.", "What if I don't like it?", "The first 14 days are free and there is no yearly contract. You can switch the bot off with one command, /pause, or disconnect it fully in Telegram or Instagram settings.", "We'll connect your studio in 1-3 days", "Leave a contact and we'll write back within a working day.", "We'll briefly talk about your studio and channels.", "We'll set up the bot on your price list and let you test it.", "14 days free, then you decide.", "Message us on Telegram", "Name", "Olena", "Phone or Telegram", "+380 or @username", "(optional)", "Name or Instagram", "What interests you", "CRM for a studio", "Integration or chain", "Other", "Comment", "How many masters, where clients write from, what you want to automate", "Do not fill in this field", "Send request", "By submitting the form you agree that we may contact you via the contact given. We use this data for nothing else.", "Links", "Demo bot", "© 2026 AI Receptionist. The demo on this page uses made-up data.", "AI receptionist for beauty studios: replies in DMs and books clients", "The AI receptionist replies to clients on Instagram and Telegram using your price list, books free slots and calls you in when a human is needed. 14 days free.", "Replies in DMs within seconds, books free slots, hands the hard stuff to you. 14 days free.", "Language", "Switch theme"]};
+  var lang = "uk", L = TXT.uk;
+  var fmt = function (n) { return Math.round(n).toLocaleString(L.locale).replace(/[\u202f\u00a0]/g, "\u00a0"); };
 
   // --- links and prices from CONFIG ---------------------------------------------------------
   // Links with an unfilled CONFIG value (YOUR_...) are hidden instead of leading nowhere.
@@ -899,20 +1019,21 @@ window.CONFIG = {
     $("o-msgs").textContent = msgs;
     $("o-busy").textContent = inputs.busy.value + "%";
     $("o-lost").textContent = inputs.lost.value + "%";
-    $("o-check").textContent = fmt(check) + " грн";
+    $("o-check").textContent = fmt(check) + " " + L.cur;
     var count = msgs * 4.3 * busy * lost;
     var money = count * check;
     var price = (C.prices && C.prices.studio) || 3990;
-    $("c-money").textContent = fmt(money) + " грн";
-    $("c-count").textContent = count < 1 ? "менше одного запису" : "це приблизно " + fmt(count) + " " + plural(Math.round(count), "запис", "записи", "записів");
+    $("c-money").textContent = fmt(money) + " " + L.cur;
+    $("c-count").textContent = count < 1 ? L.lessOne : L.about + fmt(count) + " " + plural(Math.round(count), L.bookW);
     var need = Math.ceil(price / check);
-    $("c-payback").textContent = "Він окупається з " + need + " " + plural(need, "запису", "записів", "записів") + " на місяць.";
+    $("c-payback").textContent = L.paybackA + need + " " + plural(need, L.payW) + L.paybackB;
   }
-  function plural(n, one, few, many) {
+  function plural(n, w) {
+    if (lang === "en") return n === 1 ? w[0] : w[1];
     var m10 = n % 10, m100 = n % 100;
-    if (m10 === 1 && m100 !== 11) return one;
-    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
-    return many;
+    if (m10 === 1 && m100 !== 11) return w[0];
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return w[1];
+    return w[2];
   }
   Object.keys(inputs).forEach(function (k) { inputs[k].addEventListener("input", calc); });
   calc();
@@ -944,21 +1065,21 @@ window.CONFIG = {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     var data = Object.fromEntries(new FormData(form).entries());
-    var ok = fieldError("name", data.name.trim() ? "" : "Як до вас звертатися?");
-    ok = fieldError("contact", data.contact.trim().length >= 3 ? "" : "Залиште телефон або @username у Telegram") && ok;
+    var ok = fieldError("name", data.name.trim() ? "" : L.errName);
+    ok = fieldError("contact", data.contact.trim().length >= 3 ? "" : L.errContact) && ok;
     var errorBox = $("form-error");
     errorBox.hidden = true;
     if (!ok) return;
-    var fallback = C.contact && !/^YOUR_/.test(C.contact) ? "Напишіть нам у Telegram: @" + C.contact + "." : "Спробуйте трохи пізніше.";
+    var fallback = C.contact && !/^YOUR_/.test(C.contact) ? L.fbTg + C.contact + "." : L.fbLater;
     if (!C.apiBase) {
-      errorBox.textContent = "Форма ще не підключена. " + fallback;
+      errorBox.textContent = L.notWired + fallback;
       errorBox.hidden = false;
       return;
     }
     var button = $("f-submit"), label = button.textContent;
     button.disabled = true;
     button.textContent = "";
-    var spin = document.createElement("span"); spin.className = "spinner"; button.append(spin, " Надсилаємо");
+    var spin = document.createElement("span"); spin.className = "spinner"; button.append(spin, L.sending);
     try {
       var res = await fetch(C.apiBase.replace(/\/$/, "") + "/leads", {
         method: "POST",
@@ -968,18 +1089,18 @@ window.CONFIG = {
           service: data.service, message: data.message.trim() || null, website: data.website || null, source: source()
         })
       });
-      if (res.status === 429) throw new Error("Забагато заявок з цієї адреси. " + fallback);
-      if (!res.ok) throw new Error("Не вдалося надіслати. " + fallback);
+      if (res.status === 429) throw new Error(L.tooMany + fallback);
+      if (!res.ok) throw new Error(L.failed + fallback);
       var done = document.createElement("div");
       done.className = "form-done";
       done.setAttribute("role", "status");
       var icon = document.createElement("i"); icon.className = "ph ph-check-circle"; icon.setAttribute("aria-hidden", "true");
-      var title = document.createElement("h3"); title.textContent = "Дякуємо, заявку отримали";
-      var text = document.createElement("p"); text.textContent = "Напишемо вам протягом робочого дня. А поки можна поговорити з демо-ботом у Telegram.";
+      var title = document.createElement("h3"); title.textContent = L.thanks;
+      var text = document.createElement("p"); text.textContent = L.thanksText;
       done.append(icon, title, text);
       form.replaceChildren(done);
     } catch (err) {
-      errorBox.textContent = err.message && err.message.indexOf("Telegram") >= 0 ? err.message : "Немає звʼязку з сервером. " + fallback;
+      errorBox.textContent = err.message && err.message.indexOf("Telegram") >= 0 ? err.message : L.offline + fallback;
       errorBox.hidden = false;
       button.disabled = false;
       button.textContent = label;
@@ -1022,8 +1143,8 @@ window.CONFIG = {
     if (chip) n.appendChild(el("span", "note-chip", chip));
     tgBody.appendChild(n);
   }
-  var base = [["11:00", "Ірина · манікюр", false], ["13:30", "Софія · педикюр", false], ["15:30", "вільно", true], ["17:30", "вільно", true]];
   function calReset() {
+    var base = [["11:00", L.rows[0], false], ["13:30", L.rows[1], false], ["15:30", L.rows[2], true], ["17:30", L.rows[2], true]];
     cal.textContent = "";
     base.forEach(function (r) {
       var li = el("li", "row" + (r[2] ? " free" : ""));
@@ -1035,42 +1156,41 @@ window.CONFIG = {
   }
   function book() {
     var li = cal.querySelector('[data-t="15:30"]');
-    if (li) { li.className = "row new"; li.querySelector(".what").textContent = "Анна · манікюр з гель-лаком"; }
+    if (li) { li.className = "row new"; li.querySelector(".what").textContent = L.booked; }
   }
 
+  // Scene steps read the current language at call time, so a language switch just replays the scene.
   var scenes = [
     {
-      clock: "23:47", pill: "Майстер спить", idle: "Тихо. Майстер спить.",
-      first: "Добрий вечір! Скільки коштує манікюр з гель-лаком? Є вікно завтра після 15:00?",
+      key: "s0",
       steps: [
-        [900,  function () { setPill("Бот читає прайс і календар"); typing(); }],
-        [1500, function () { setClock("23:47:09"); setPill("Відповідь за кілька секунд"); say("b", "Вітаю! Я AI-асистент студії. Манікюр з гель-лаком коштує 900 грн, приблизно дві години. Завтра, у середу 22.10, вільно о 15:30 і 17:30. Який час зручніший?"); }],
-        [3400, function () { say("c", "А на короткі нігті гель-лак можна?"); }],
+        [900,  function () { var t = L.s0; setPill(t.p1); typing(); }],
+        [1500, function () { var t = L.s0; setClock("23:47:09"); setPill(t.p2); say("b", t.b1); }],
+        [3400, function () { say("c", L.s0.c1); }],
         [900,  function () { typing(); }],
-        [1300, function () { say("b", "Так, можна. Майстер підбере форму під вашу довжину. Записати вас на 15:30?"); }],
-        [2400, function () { say("c", "Так, на 15:30. Я Анна"); }],
-        [900,  function () { setPill("Бот створює запис"); typing(); }],
-        [1300, function () { say("b", "Анна, вас записано: манікюр з гель-лаком, середа, 22.10 о 15:30. Вартість: 900 грн. Адреса: вул. Прикладна, 1. Якщо плани зміняться, напишіть сюди."); }],
-        [1100, function () { book(); notify("Новий запис", ["Анна, середа 22.10 о 15:30", "Манікюр з гель-лаком, 900 грн", "Записав бот. Нічого робити не треба."]); setPill("Запис уже в календарі"); }],
-        [3000, function () { setClock("09:00"); setPill("Ранок: майстер бачить готовий запис"); }]
+        [1300, function () { say("b", L.s0.b2); }],
+        [2400, function () { say("c", L.s0.c2); }],
+        [900,  function () { setPill(L.s0.p3); typing(); }],
+        [1300, function () { say("b", L.s0.b3); }],
+        [1100, function () { var t = L.s0; book(); notify(t.nTitle, t.nLines); setPill(t.p4); }],
+        [3000, function () { setClock("09:00"); setPill(L.s0.p5); }]
       ]
     },
     {
-      clock: "21:10", pill: "Клієнтка питає про здоровʼя", idle: "Тихо. Усе під контролем бота.",
-      first: "Добрий вечір! У мене алергія на акрил. Це небезпечно для мене?",
+      key: "s1",
       steps: [
-        [900,  function () { setPill("Бот вирішує, чи може відповісти"); typing(); }],
-        [1700, function () { say("b", "Вітаю! Я AI-асистент студії. Це питання краще уточнити в студії. Ваше повідомлення вже передано, вам відповідять тут найближчим часом."); setPill("Передано майстру"); }],
-        [1100, function () { notify("Потрібна ваша відповідь", ["Анна питає про алергію на акрил", "Бот замовк і чекає на вас."], "Відповісти"); setPill("Бот мовчить, чекає майстра"); }],
-        [3200, function () { say("m", "Анно, добрий вечір! Це Олена. Розкажіть, що саме спричиняє алергію, і підберемо матеріали.", "Олена, майстер"); setPill("Відповідає людина"); }],
-        [2600, function () { setPill("Бот нічого не вигадав"); }]
+        [900,  function () { setPill(L.s1.p1); typing(); }],
+        [1700, function () { say("b", L.s1.b1); setPill(L.s1.p2); }],
+        [1100, function () { var t = L.s1; notify(t.nTitle, t.nLines, t.nChip); setPill(t.p3); }],
+        [3200, function () { say("m", L.s1.m1, L.s1.who); setPill(L.s1.p4); }],
+        [2600, function () { setPill(L.s1.p5); }]
       ]
     }
   ];
 
   function reset(i) {
     run++; cur = i;
-    var s = scenes[i];
+    var s = L[scenes[i].key];
     chat.textContent = "";
     setClock(s.clock); setPill(s.pill);
     say("c", s.first);
@@ -1103,7 +1223,84 @@ window.CONFIG = {
   tabs[0].addEventListener("click", function () { play(0, false); });
   tabs[1].addEventListener("click", function () { play(1, false); });
   $("replay").addEventListener("click", function () { play(cur, false); });
-  play(0, true);
+
+  // --- theme toggle (default light; the choice is remembered) ----------------------------------
+  var root = document.documentElement, themeBtn = $("theme");
+  function setTheme(t, save) {
+    if (t === "dark") root.setAttribute("data-theme", "dark"); else root.removeAttribute("data-theme");
+    themeBtn.firstElementChild.className = "ph " + (t === "dark" ? "ph-sun" : "ph-moon");
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = t === "dark" ? "#171614" : "#fdfcf9";
+    if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
+  }
+  themeBtn.addEventListener("click", function () { setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true); });
+  setTheme(root.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
+
+  // --- language: static text is swapped by dictionary (Ukrainian text is the source key) ----------
+  var ORIG = new WeakMap(), ATTR = ["placeholder", "aria-label", "title", "content"];
+  var SKIP = ["chat", "tgBody", "cal", "pill", "clock", "o-msgs", "o-busy", "o-lost", "o-check", "c-money", "c-count", "c-payback"];
+  var norm = function (s) { return s.replace(/\s+/g, " ").trim(); };
+  var index = {};
+  DICT.uk.forEach(function (k, i) { index[norm(k)] = i; });
+  function tr(src) {
+    var core = norm(src), i = index[core];
+    if (i === undefined) return null;
+    var out = lang === "uk" ? DICT.uk[i] : DICT[lang][i];
+    return src.match(/^\s*/)[0] + out + src.match(/\s*$/)[0];
+  }
+  function skipNode(n) {
+    for (var p = n.parentNode; p && p !== document.body; p = p.parentNode) {
+      if (p.id && SKIP.indexOf(p.id) >= 0) return true;
+      if (p.nodeName === "SCRIPT" || p.nodeName === "STYLE") return true;
+    }
+    return false;
+  }
+  function translateTree(rootNode) {
+    var w = document.createTreeWalker(rootNode, NodeFilter.SHOW_TEXT), n, nodes = [];
+    while ((n = w.nextNode())) nodes.push(n);
+    nodes.forEach(function (t) {
+      if (skipNode(t)) return;
+      if (!ORIG.has(t)) { if (index[norm(t.nodeValue)] === undefined) return; ORIG.set(t, t.nodeValue); }
+      var src = ORIG.get(t), out = tr(src);
+      if (out !== null) t.nodeValue = out;
+    });
+    rootNode.querySelectorAll("[placeholder],[aria-label],[title]").forEach(function (e) {
+      ATTR.slice(0, 3).forEach(function (a) {
+        if (!e.hasAttribute(a)) return;
+        var key = "__" + a;
+        if (e[key] === undefined) { if (index[norm(e.getAttribute(a))] === undefined) return; e[key] = e.getAttribute(a); }
+        var out = tr(e[key]);
+        if (out !== null) e.setAttribute(a, out);
+      });
+    });
+  }
+  function setLang(l, save) {
+    lang = TXT[l] ? l : "uk"; L = TXT[lang];
+    root.lang = lang;
+    translateTree(document.body);
+    document.querySelectorAll("title, meta[name=description], meta[property='og:title'], meta[property='og:description']").forEach(function (e) {
+      var isT = e.nodeName === "TITLE", key = "__src";
+      if (e[key] === undefined) e[key] = isT ? e.textContent : e.content;
+      var i = index[norm(e[key])]; if (i === undefined) return;
+      var out = DICT[lang][i]; if (isT) e.textContent = out; else e.content = out;
+    });
+    var og = document.querySelector("meta[property='og:locale']");
+    if (og) og.content = { uk: "uk_UA", ru: "ru_RU", en: "en_US" }[lang];
+    $("lang").value = lang;
+    document.querySelectorAll("[data-price]").forEach(function (el) { var v = C.prices && C.prices[el.getAttribute("data-price")]; if (v) el.textContent = fmt(v); });
+    calc();
+    if (!$("lead-form").querySelector(".form-done")) { $("f-submit").textContent = DICT[lang][index["Надіслати заявку"]]; }
+    if (save) { try { localStorage.setItem("lang", lang); } catch (e) {} }
+    play(cur, false);
+  }
+  $("lang").addEventListener("change", function () { setLang(this.value, true); });
+  var initial = "uk";
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    initial = (q && TXT[q]) ? q : (TXT[localStorage.getItem("lang")] ? localStorage.getItem("lang") : "uk");
+  } catch (e) {}
+  if (initial !== "uk") setLang(initial, false); else play(0, true);
+  if (initial !== "uk") { /* setLang already started the scene */ }
 })();
 </script>
 </body>
