@@ -9,3 +9,5 @@
 На Vercel це один проєкт з Root Directory `landing`.
 
 Редизайн ZapysAI, нові тарифи та інструкції перенесення до джерела генерації: [REDESIGN.md](REDESIGN.md).
+
+Приймання заявок у Telegram @ZapysAI: [LEADS.md](LEADS.md). Перевірки: `npm ci --prefix tests && npm test --prefix tests`.
