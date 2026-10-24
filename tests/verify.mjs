@@ -47,6 +47,7 @@ const page=load();const{window,document,click,choose,text,number}=page;
 check(document.querySelectorAll('.audience-card').length===8,'eight audiences');
 check(document.querySelectorAll('.timeline li').length===4,'four launch steps');
 check(document.querySelectorAll('.plan').length===3,'three plans');
+check(document.querySelectorAll('.services > .service').length===9,'complete nine-card services grid');
 check(!document.querySelector('#f-name').closest('details'),'required name immediately visible');
 check(document.querySelector('#f-business').closest('details').id==='lead-details','optional details collapsed');
 check(!document.querySelector('#lead-details').open,'details initially closed');
@@ -75,6 +76,12 @@ for(const lang of ['uk','ru','en','es','pl']){
   check(document.documentElement.lang===lang,'language '+lang);
   check(number('[data-price="medium"]')===3999,'explicit currency retained '+lang);
   check(text('h1').includes(window.ZAPYS_I18N.find(row=>row.uk==='Ви працюєте.')[lang]),'hero translated '+lang);
+  for(const addon of ['waitlist','knowledge']) {
+    click('[data-addon="'+addon+'"]');
+    const title=document.querySelector('[data-addon="'+addon+'"]').closest('.service').querySelector('h3').textContent;
+    check(text('#lead-selection').includes(title),'selected extra service visible '+lang+' '+addon);
+    check(window.ZapysConversion.describeSelection().includes(title),'extra service retained in lead '+lang+' '+addon);
+  }
   for(const[channels,needs,expected]of requirements){choose('#finder-channels',channels);choose('#finder-needs',needs);check(text('#finder-plan')===expected,'minimum plan '+lang+' '+channels+' '+needs);check(text('#finder-reason').length>20,'reason shown');}
   for(let index=0;index<8;index++){click(`[data-industry="${index}"]`);check(text('#example-answer').includes('AI'),'honest example '+lang+' '+index);check(text('#audience-example-title')===document.querySelectorAll('.audience-card h3')[index].textContent,'industry title translated');}
 }
@@ -99,6 +106,12 @@ check(!page.storage.has('Test Name')&&!JSON.stringify([...page.storage]).include
 click('#copy-lead');await new Promise(setImmediate);check(page.clipboard[0]===draft,'copy exact draft');
 page.navigator.clipboard.writeText=async()=>{throw new Error('denied');};click('#copy-lead');await new Promise(setImmediate);check(text('#telegram-copy-status').length>20,'clipboard failure has manual fallback');
 document.querySelector('#f-message').dispatchEvent(new window.Event('input',{bubbles:true}));check(document.querySelector('#telegram-lead').hidden,'edited form invalidates old draft');
+for(const addon of ['waitlist','knowledge']){
+  click('[data-addon="'+addon+'"]');page.submit();
+  const title=document.querySelector('[data-addon="'+addon+'"]').closest('.service').querySelector('h3').textContent;
+  check(document.querySelector('#telegram-draft').value.includes(title),'Telegram draft identifies '+addon);
+}
+choose('#f-service','crm');check(window.ZapysLanding.getState().chosenAddon===null,'manual service choice clears previous add-on');
 click('[data-service="crm"]');check(document.querySelector('#lead-details').open,'addon reveals optional details');check(window.ZapysLanding.getState().chosenPlan===null,'addon clears unrelated plan');
 check(!JSON.stringify(page.events).includes('Test Name')&&!JSON.stringify(page.events).includes('@test_contact'),'event hooks exclude personal details');
 click('[data-plan="medium"]');
