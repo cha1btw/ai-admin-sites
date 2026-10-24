@@ -766,6 +766,18 @@ window.CONFIG = {
           <p>Google Календар уже працює. Altegio, Booksy, KeyCRM і ваші таблиці підключаємо під задачу.</p>
           <button class="pick" type="button" data-service="integration">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
         </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-clock-countdown" aria-hidden="true"></i><span class="tag">У Pro</span></div>
+          <h3>Лист очікування</h3>
+          <p>Якщо бажаний час зайнятий, зберігаємо запит клієнта. Коли вікно звільниться, допомагаємо запропонувати його тим, хто чекає.</p>
+          <button class="pick" type="button" data-service="other" data-addon="waitlist">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
+          <div class="head"><i class="ph ph-books" aria-hidden="true"></i><span class="tag">У Pro</span></div>
+          <h3>База знань для команди</h3>
+          <p>Збираємо ваші послуги, правила й відповіді на часті питання в одному місці. Налаштовуємо сценарії розмов під ваш стиль.</p>
+          <button class="pick" type="button" data-service="other" data-addon="knowledge">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
       </div>
     </div>
   </section>
@@ -1175,7 +1187,7 @@ window.CONFIG = {
 
   // --- ROI calculator ------------------------------------------------------------------------
   var inputs = { msgs: $("r-msgs"), busy: $("r-busy"), lost: $("r-lost"), check: $("r-check") };
-  var billing = "monthly", currency = "UAH", currencyChosen = false, chosenPlan = null;
+  var billing = "monthly", currency = "UAH", currencyChosen = false, chosenPlan = null, chosenAddon = null;
   var pricingText = {
     uk: {month:"міс",year:"рік",saving:"Економія",perYear:"за рік",equivalent:"Приблизно"},
     ru: {month:"мес",year:"год",saving:"Экономия",perYear:"за год",equivalent:"Примерно"},
@@ -1203,6 +1215,7 @@ window.CONFIG = {
   function choosePlan(plan) {
     if (["lite","medium","pro"].indexOf(plan)<0) return;
     chosenPlan=plan;
+    chosenAddon=null;
     if($("f-service"))$("f-service").value="ai_admin";
     publishLandingState();
   }
@@ -1250,6 +1263,7 @@ window.CONFIG = {
       if ($("f-service")) $("f-service").value = b.getAttribute("data-service");
       if ($("lead-details")) $("lead-details").open = true;
       chosenPlan = null;
+      chosenAddon = b.getAttribute("data-addon") || null;
       publishLandingState();
       $("form").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
       setTimeout(function () { if ($("f-name")) $("f-name").focus({ preventScroll: true }); }, reduce ? 0 : 500);
@@ -1258,6 +1272,7 @@ window.CONFIG = {
 
   // --- lead form -------------------------------------------------------------------------------
   var form = $("lead-form");
+  $("f-service").addEventListener("change",function(){chosenAddon=null;chosenPlan=null;publishLandingState();});
   function fieldError(name, text) {
     var box = $("f-" + name).parentNode, err = $("e-" + name);
     if (text) { box.setAttribute("data-invalid", ""); $("f-"+name).setAttribute("aria-invalid","true");err.textContent = text; err.hidden = false; }
@@ -1525,7 +1540,7 @@ window.CONFIG = {
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !langMenu.hidden) { menu(false); langBtn.focus(); } });
 
   window.ZapysLanding = {
-    getState:function(){return {lang:lang,currency:currency,billing:billing,chosenPlan:chosenPlan};},
+    getState:function(){return {lang:lang,currency:currency,billing:billing,chosenPlan:chosenPlan,chosenAddon:chosenAddon};},
     getPrices:function(){return Object.assign({},prices());},
     choosePlan:choosePlan
   };

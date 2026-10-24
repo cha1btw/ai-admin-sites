@@ -33,8 +33,15 @@
     return {plan: 'lite', reason: 'lite'};
   }
   function industryName() { return cards[industry].querySelector('h3').textContent; }
+  function addonName() {
+    var addon=state().chosenAddon;
+    if (['waitlist','knowledge'].indexOf(addon)<0) return '';
+    var button=document.querySelector('[data-addon="'+addon+'"]');
+    return button ? button.closest('.service').querySelector('h3').textContent : '';
+  }
   function describeSelection() {
     var c = copy(), lines = [];
+    if (addonName()) lines.push(c.service + ': ' + addonName());
     if (industryChosen) lines.push(c.industry + ': ' + industryName());
     if (finderTouched) {
       lines.push(c.channels + ': ' + (channelInput.value === 'many' ? c.many : c.one));
@@ -58,7 +65,7 @@
     lines.push(c.contact + ': ' + String(data.contact || '').trim());
     if (String(data.business || '').trim()) lines.push(c.business + ': ' + data.business.trim());
     var service = $('f-service');
-    if (service && service.value !== 'ai_admin') {
+    if (service && service.value !== 'ai_admin' && !addonName()) {
       var option = service.querySelector('option[value="' + service.value + '"]');
       if (option) lines.push(c.service + ': ' + option.textContent);
     }
@@ -117,6 +124,7 @@
     if (selection) {
       var parts = [];
       if (s.chosenPlan) parts.push(c.chosen + ': ' + name(s.chosenPlan) + ' · ' + formatPrice(s.chosenPlan));
+      if (addonName()) parts.push(c.service + ': ' + addonName());
       if (industryChosen) parts.push(c.industry + ': ' + industryName());
       selection.textContent = parts.join('\n');
       selection.hidden = parts.length === 0;
