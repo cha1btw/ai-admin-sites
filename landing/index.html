@@ -445,7 +445,9 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
 }
 </style>
 <link rel="stylesheet" href="zapysai.css">
+<link rel="stylesheet" href="conversion.css">
 <script src="zapysai-content.js"></script>
+<script src="conversion-copy.js"></script>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
@@ -462,7 +464,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
 window.CONFIG = {
   apiBase: "",
   demoBot: "YOUR_DEMO_BOT",
-  contact: "YOUR_CONTACT",
+  contact: "ZapysAI",
   prices: { lite: 2499, medium: 3999, pro: 6999 },
   pricesEur: { lite: 100, medium: 160, pro: 200 },
   annualPrices: { lite: 20000, medium: 32000, pro: 56000 },
@@ -575,6 +577,10 @@ window.CONFIG = {
         <article class="audience-card reveal"><span class="audience-number">08</span><i class="ph ph-book-open" aria-hidden="true"></i><h3>Репетитори та курси</h3><p>Перше знайомство, розклад і запис на урок. Усе важливе для нового учня — в одному діалозі.</p></article>
       </div>
       <p class="audience-footnote">Для кожної сфери окремо погоджуємо правила запису, інтеграції та межі відповідей.</p>
+      <div class="audience-example" id="audience-example" role="region" aria-labelledby="audience-example-title" hidden>
+        <div><p class="eyebrow">ПРИКЛАД ДЛЯ ВАШОЇ СПРАВИ</p><h3 id="audience-example-title"></h3><p class="example-disclaimer">Ілюстрація розмови. Реальний запис тут не створюється.</p><a class="hero-link" href="#plan-finder" id="example-to-finder">Підібрати тариф <i class="ph ph-arrow-down" aria-hidden="true"></i></a></div>
+        <div class="example-dialogue" aria-live="polite"><p class="example-question" id="example-question"></p><p class="example-answer" id="example-answer"></p></div>
+      </div>
     </div>
   </section>
 
@@ -772,6 +778,11 @@ window.CONFIG = {
         <p class="lead">14 днів безкоштовно для кожного тарифу. Почніть із потрібного зараз — і розширюйте можливості разом із бізнесом.</p>
       </div>
       <div class="price-controls"><div class="segmented" role="group" aria-label="Період оплати"><button type="button" data-billing="monthly" aria-pressed="true">Щомісяця</button><button type="button" data-billing="annual" aria-pressed="false">За рік <small>Вигідніше</small></button></div><div class="segmented currency-control" role="group" aria-label="Валюта"><button type="button" data-currency="UAH" aria-pressed="true">UAH ₴</button><button type="button" data-currency="EUR" aria-pressed="false">EUR €</button></div></div>
+      <div class="plan-finder" id="plan-finder" role="region" aria-labelledby="finder-title">
+        <div class="finder-copy"><p class="eyebrow">ОБРАТИ ПРОСТІШЕ, НІЖ ЗДАЄТЬСЯ</p><h3 id="finder-title">Який план потрібен саме вам?</h3><p>Два запитання — і покажемо мінімальний план під ваші задачі.</p></div>
+        <div class="finder-inputs"><div class="field"><label for="finder-channels">Скільки каналів хочете підключити?</label><select id="finder-channels"><option value="one">Один месенджер</option><option value="many">Два або більше</option></select></div><div class="field"><label for="finder-needs">Що потрібно помічнику?</label><select id="finder-needs"><option value="text">Текстові відповіді та запис</option><option value="audio">Аудіо, нагадування або аналітика</option><option value="advanced">Передоплати, лист очікування або база знань</option></select></div></div>
+        <div class="finder-result" aria-live="polite"><div><span id="finder-result-label"></span><strong id="finder-plan">Lite</strong><span class="finder-price" id="finder-price"></span><p id="finder-reason"></p></div><button class="btn btn-ghost" id="finder-apply" type="button">Обрати цей план <i class="ph ph-arrow-down" aria-hidden="true"></i></button><small>Це орієнтир. Сумісність CRM та обсяг налаштувань погодимо перед запуском.</small></div>
+      </div>
       <div class="plans">
         <article class="plan reveal">
           <div class="name">Lite <span class="tag">Базовий</span></div>
@@ -871,31 +882,34 @@ window.CONFIG = {
   <section class="section" id="form" style="padding-top: 0">
     <div class="container contact">
       <div class="reveal">
-        <h2>Підключимо вашу студію за 1-3 дні</h2>
-        <p class="lead" style="margin-top: 14px">Залиште контакт, і ми напишемо протягом робочого дня.</p>
+        <h2>Почнімо<br><em>з вашої справи.</em></h2>
+        <p class="lead" id="lead-intro" style="margin-top: 14px">Підготуйте короткий запит і продовжте розмову в Telegram із @ZapysAI.</p>
         <ul class="next-steps">
           <li><i class="ph ph-chat-circle-dots" aria-hidden="true"></i><span>Коротко поговоримо про вашу студію й канали.</span></li>
           <li><i class="ph ph-note-pencil" aria-hidden="true"></i><span>Налаштуємо бота на вашому прайсі й дамо його протестувати.</span></li>
           <li><i class="ph ph-calendar-check" aria-hidden="true"></i><span>14 днів безкоштовно, далі вирішуєте ви.</span></li>
         </ul>
         <div class="direct">
-          <a class="btn btn-ghost" data-link="contact" href="https://t.me/YOUR_CONTACT"><i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram</a>
+          <a class="btn btn-ghost" data-link="contact" href="https://t.me/ZapysAI"><i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram</a>
         </div>
       </div>
+      <noscript><p>Щоб залишити заявку, <a href="https://t.me/ZapysAI">напишіть нам у Telegram: @ZapysAI</a>.</p><style>#lead-form,.plan-finder{display:none!important}</style></noscript>
       <form class="form reveal" id="lead-form" novalidate>
+        <div class="lead-selection" id="lead-selection" aria-live="polite" hidden></div>
+        <p class="lead-route-note" id="lead-route-note">Після заповнення покажемо текст запиту. У Telegram ви самі підтвердите його надсилання.</p>
         <div class="form-row">
           <div class="field">
-            <label for="f-name">Імʼя</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" required placeholder="Олена">
+            <label for="f-name">Імʼя <span class="opt">(обовʼязково)</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" required placeholder="Олена" aria-describedby="e-name">
             <p class="error" id="e-name" hidden></p>
           </div>
           <div class="field">
-            <label for="f-contact">Телефон або Telegram</label>
-            <input id="f-contact" name="contact" type="text" autocomplete="tel" maxlength="200" required placeholder="+380 або @username">
+            <label for="f-contact">Телефон або Telegram <span class="opt">(обовʼязково)</span></label>
+            <input id="f-contact" name="contact" type="text" autocomplete="tel" maxlength="200" required placeholder="+380 або @username" aria-describedby="e-contact">
             <p class="error" id="e-contact" hidden></p>
           </div>
         </div>
-        <div class="form-row">
+        <details class="optional-fields" id="lead-details"><summary>Додати деталі про бізнес <span class="opt">(необовʼязково)</span><i class="ph ph-plus" aria-hidden="true"></i></summary><div class="optional-fields-body"><div class="form-row">
           <div class="field">
             <label for="f-business">Студія <span class="opt">(необовʼязково)</span></label>
             <input id="f-business" name="business" type="text" autocomplete="organization" maxlength="200" placeholder="Назва або Instagram">
@@ -916,13 +930,15 @@ window.CONFIG = {
           <label for="f-message">Коментар <span class="opt">(необовʼязково)</span></label>
           <textarea id="f-message" name="message" maxlength="2000" placeholder="Скільки майстрів, звідки пишуть клієнтки, що хочеться автоматизувати"></textarea>
         </div>
+        </div></details>
         <div class="hp" aria-hidden="true">
           <label for="f-website">Не заповнюйте це поле</label>
           <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
         <div class="form-status err" id="form-error" role="alert" hidden></div>
         <button class="btn btn-primary" type="submit" id="f-submit">Надіслати заявку</button>
-        <p class="fine">Надсилаючи форму, ви погоджуєтесь, що ми звʼяжемося з вами за вказаним контактом. Більше ні для чого ці дані не використовуємо.</p>
+        <div class="telegram-lead" id="telegram-lead" hidden><p id="telegram-lead-status" role="status"></p><label for="telegram-draft">Текст вашого запиту</label><textarea id="telegram-draft" readonly rows="7"></textarea><div class="telegram-lead-actions"><a class="btn btn-primary" id="telegram-draft-link" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">Відкрити Telegram <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a><button class="btn btn-ghost" id="copy-lead" type="button">Скопіювати текст</button></div><small id="telegram-copy-status" role="status"></small></div>
+        <p class="fine" id="lead-privacy">Дані залишаються у вашому браузері, доки ви не продовжите в Telegram. Не додавайте чутливу інформацію.</p>
       </form>
     </div>
   </section>
@@ -935,7 +951,7 @@ window.CONFIG = {
     <a class="brand" href="#top"><span class="brand-mark"><img src="assets/avatar.png" width="42" height="42" alt=""></span><span>Zapys<span class="brand-ai">AI</span></span></a>
     <nav aria-label="Посилання">
       <a data-link="demo" href="https://t.me/YOUR_DEMO_BOT">Демо-бот</a>
-      <a data-link="contact" href="https://t.me/YOUR_CONTACT">Telegram</a>
+      <a data-link="contact" href="https://t.me/ZapysAI">Telegram</a>
       <a href="#faq">Питання</a>
     </nav>
     <p class="fine">© 2026 ZapysAI. Демонстрація на сторінці використовує вигадані дані.</p>
@@ -1137,7 +1153,7 @@ window.CONFIG = {
   if (mobileCta && "IntersectionObserver" in window) {
     document.body.classList.add("has-mobile-cta");
     var heroVisible = true, formVisible = false;
-    var updateCta = function () { mobileCta.classList.toggle("show", !heroVisible && !formVisible); };
+    var updateCta = function () { var visible=!heroVisible&&!formVisible;mobileCta.classList.toggle("show",visible);mobileCta.setAttribute("aria-hidden",String(!visible));mobileCta.tabIndex=visible?0:-1; };
     new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; updateCta(); })
       .observe(document.querySelector(".hero-actions"));
     new IntersectionObserver(function (e) { formVisible = e[0].isIntersecting; updateCta(); }, { threshold: 0.15 })
@@ -1180,11 +1196,18 @@ window.CONFIG = {
     });
     document.querySelectorAll("[data-billing]").forEach(function (button) { button.setAttribute("aria-pressed",String(button.getAttribute("data-billing")===billing)); });
     document.querySelectorAll("[data-currency]").forEach(function (button) { button.setAttribute("aria-pressed",String(button.getAttribute("data-currency")===currency)); });
-    setCheckRange();calc();
+    setCheckRange();calc();publishLandingState();
   }
   document.querySelectorAll("[data-billing]").forEach(function (button) { button.addEventListener("click",function () {billing=button.getAttribute("data-billing");refreshPricing();}); });
   document.querySelectorAll("[data-currency]").forEach(function (button) { button.addEventListener("click",function () {currency=button.getAttribute("data-currency");currencyChosen=true;refreshPricing();}); });
-  document.querySelectorAll("[data-plan]").forEach(function (button) { button.addEventListener("click",function () {chosenPlan=button.getAttribute("data-plan");if($("f-service"))$("f-service").value="ai_admin";}); });
+  function choosePlan(plan) {
+    if (["lite","medium","pro"].indexOf(plan)<0) return;
+    chosenPlan=plan;
+    if($("f-service"))$("f-service").value="ai_admin";
+    publishLandingState();
+  }
+  function publishLandingState() { document.dispatchEvent(new CustomEvent("zapysai:statechange")); }
+  document.querySelectorAll("[data-plan]").forEach(function (button) { button.addEventListener("click",function () {choosePlan(button.getAttribute("data-plan"));}); });
   // The average-ticket slider works in the page currency (UAH 200-5000 or EUR 5-120).
   function setCheckRange() {
     var r = inputs.check, eur = L.cur === "EUR";
@@ -1225,6 +1248,9 @@ window.CONFIG = {
     b.addEventListener("click", function () {
       // After a successful submit the form is replaced by a thank-you note.
       if ($("f-service")) $("f-service").value = b.getAttribute("data-service");
+      if ($("lead-details")) $("lead-details").open = true;
+      chosenPlan = null;
+      publishLandingState();
       $("form").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
       setTimeout(function () { if ($("f-name")) $("f-name").focus({ preventScroll: true }); }, reduce ? 0 : 500);
     });
@@ -1234,8 +1260,8 @@ window.CONFIG = {
   var form = $("lead-form");
   function fieldError(name, text) {
     var box = $("f-" + name).parentNode, err = $("e-" + name);
-    if (text) { box.setAttribute("data-invalid", ""); err.textContent = text; err.hidden = false; }
-    else { box.removeAttribute("data-invalid"); err.hidden = true; }
+    if (text) { box.setAttribute("data-invalid", ""); $("f-"+name).setAttribute("aria-invalid","true");err.textContent = text; err.hidden = false; }
+    else { box.removeAttribute("data-invalid"); $("f-"+name).removeAttribute("aria-invalid");err.hidden = true; }
     return !text;
   }
   function source() {
@@ -1254,6 +1280,7 @@ window.CONFIG = {
     if (!ok) return;
     var fallback = C.contact && !/^YOUR_/.test(C.contact) ? L.fbTg + C.contact + "." : L.fbLater;
     if (!C.apiBase) {
+      if (window.ZapysConversion && window.ZapysConversion.prepareLead(data)) return;
       errorBox.textContent = L.notWired + fallback;
       errorBox.hidden = false;
       return;
@@ -1268,7 +1295,7 @@ window.CONFIG = {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.name.trim(), contact: data.contact.trim(), business: data.business.trim() || null,
-          service: data.service, message: [data.message.trim(), chosenPlan ? "Plan: " + chosenPlan + "; Billing: " + billing + "; Currency: " + currency : ""].filter(Boolean).join("\n") || null, website: data.website || null, source: source()
+          service: data.service, message: [data.message.trim(), chosenPlan ? "Plan: " + chosenPlan + "; Billing: " + billing + "; Currency: " + currency : "",window.ZapysConversion ? window.ZapysConversion.describeSelection() : ""].filter(Boolean).join("\n") || null, website: data.website || null, source: source()
         })
       });
       if (res.status === 429) throw new Error(L.tooMany + fallback);
@@ -1473,7 +1500,7 @@ window.CONFIG = {
     refreshPricing();
     if (!$("lead-form").querySelector(".form-done")) { $("f-submit").textContent = DICT[lang][index["Надіслати заявку"]]; }
     if (save) { try { localStorage.setItem("lang", lang); } catch (e) {} }
-    play(cur, false);
+    play(cur, false);publishLandingState();
   }
   // Language menu: a button opens a list of native names; Esc, outside click and arrows work.
   var langBtn = $("langBtn"), langMenu = $("langMenu"), langItems = Array.prototype.slice.call(langMenu.querySelectorAll("[role=option]"));
@@ -1497,6 +1524,11 @@ window.CONFIG = {
   document.addEventListener("click", function (e) { if (!langMenu.hidden && !e.target.closest(".lang-wrap")) menu(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !langMenu.hidden) { menu(false); langBtn.focus(); } });
 
+  window.ZapysLanding = {
+    getState:function(){return {lang:lang,currency:currency,billing:billing,chosenPlan:chosenPlan};},
+    getPrices:function(){return Object.assign({},prices());},
+    choosePlan:choosePlan
+  };
   var initial = "uk";
   try {
     var q = new URLSearchParams(location.search).get("lang");
@@ -1506,5 +1538,6 @@ window.CONFIG = {
   if (initial !== "uk") { /* setLang already started the scene */ }
 })();
 </script>
+<script src="conversion.js"></script>
 </body>
 </html>
