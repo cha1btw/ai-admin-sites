@@ -3,18 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI-адміністратор для beauty-студій: відповідає в директі й записує клієнток</title>
-<meta name="description" content="AI-адміністратор відповідає клієнткам в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина. 14 днів безкоштовно.">
+<title>ZapysAI — відповідає клієнтам і дбає про записи</title>
+<meta name="description" content="ZapysAI відповідає клієнтам, пропонує вільний час і записує в календар. Для бізнесу за записом. 14 днів безкоштовно.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="uk_UA">
-<meta property="og:title" content="AI-адміністратор для beauty-студій">
-<meta property="og:description" content="Відповідає в директі за секунди, записує у вільні вікна, складне передає вам. 14 днів безкоштовно.">
-<meta name="theme-color" content="#fdfcf9">
+<meta property="og:title" content="ZapysAI — відповідає клієнтам і дбає про записи">
+<meta property="og:description" content="ZapysAI відповідає клієнтам, пропонує вільний час і записує в календар. Для бізнесу за записом. 14 днів безкоштовно.">
+<meta name="theme-color" content="#f7f4ed">
+<meta property="og:site_name" content="ZapysAI">
 <script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%235a7a66'/%3E%3Cpath d='M22 18.2A7.5 7.5 0 1 1 13.8 10a5.8 5.8 0 0 0 8.2 8.2z' fill='white'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Onest:wght@400..800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Manrope:wght@400..800&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <style>
 /*
@@ -443,14 +444,17 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
   .tile:hover, .service:hover, .btn-primary:hover { transform: none; }
 }
 </style>
+<link rel="stylesheet" href="zapysai.css">
+<script src="zapysai-content.js"></script>
 </head>
 <body class="no-js">
 <script>document.body.classList.remove("no-js");</script>
+<a class="skip-link" href="#top">Перейти до вмісту</a>
 
 <!--
   CONFIG: the only place founders edit before deploying.
   apiBase: public API address (POST /leads); LANDING_ORIGIN on the API must be this site's origin.
-  Prices: founders' decision of 22.10.2026 (UAH per month).
+  Prices: founders' decision of 24.10.2026. UAH/EUR are separate regional prices.
   TODO(images): a photo of a master at work (hero or "Як запускаємо") and a real Owner Bot
   screenshot would add trust; the page is complete without them.
 -->
@@ -459,18 +463,19 @@ window.CONFIG = {
   apiBase: "",
   demoBot: "YOUR_DEMO_BOT",
   contact: "YOUR_CONTACT",
-  prices: { start: 2290, studio: 3990, network: 8999 },
-  // Euro prices for the English and Spanish pages (founders to confirm).
-  pricesEur: { start: 49, studio: 85, network: 200 },
-  pricesPln: { start: 199, studio: 349, network: 799 }
+  prices: { lite: 2499, medium: 3999, pro: 6999 },
+  pricesEur: { lite: 100, medium: 160, pro: 200 },
+  annualPrices: { lite: 20000, medium: 32000, pro: 56000 },
+  annualPricesEur: { lite: 900, medium: 1440, pro: 1800 },
+  proSetupFeeEur: 300
 };
 </script>
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="brand" href="#top" aria-label="AI-адміністратор, на початок сторінки"><span class="brand-mark"><i class="ph ph-moon" aria-hidden="true"></i></span><span class="brand-text">AI-адміністратор</span></a>
+    <a class="brand" href="#top" aria-label="ZapysAI"><span class="brand-mark"><img src="assets/avatar.png" width="42" height="42" alt=""></span><span class="brand-text">Zapys<span class="brand-ai">AI</span></span></a>
     <nav class="nav-links" aria-label="Розділи">
-      <a href="#features">Можливості</a>
+      <a href="#audience">Для кого</a>
       <a href="#launch">Запуск</a>
       <a href="#services">Послуги</a>
       <a href="#pricing">Ціни</a>
@@ -496,17 +501,22 @@ window.CONFIG = {
 <main id="top">
   <section class="hero">
     <div class="container">
+      <div class="hero-intro">
       <div class="hero-copy">
-        <p class="eyebrow">AI-адміністратор для beauty-студій</p>
-        <h1>Клієнтка пише о <span>23:47</span>. Хто їй відповість?</h1>
-        <p class="lead">Бот відповідає в Instagram і Telegram за вашим прайсом, записує у вільні вікна й кличе вас, коли потрібна людина.</p>
+        <p class="eyebrow"><span class="online-dot" aria-hidden="true"></span> AI-адміністратор для бізнесу за записом</p>
+        <h1>Ви працюєте.<br>Записи —<br><em>під наглядом.</em></h1>
+        <p class="lead">Відповідає клієнтам в Instagram і Telegram, пропонує вільний час і записує в календар. А ви приділяєте увагу своїй справі.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#form">Спробувати 14 днів <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
           <a class="hero-link" href="#demo">Подивитися, як це працює <i class="ph ph-arrow-down" aria-hidden="true"></i></a>
         </div>
+        <p class="hero-fine"><i class="ph ph-check" aria-hidden="true"></i>14 днів безкоштовно<span aria-hidden="true">·</span>Останнє слово — за вами</p>
+      </div>
+      <div class="brand-scene" aria-hidden="true"><div class="scene-note"><span>✳</span><p>Вечір для себе.<br><em>Записи — під наглядом.</em></p></div><div class="scene-avatar"><img src="assets/avatar.png" width="360" height="360" alt=""></div><div class="scene-message"><span class="scene-chat-icon"><i class="ph ph-chat-circle-dots"></i></span><div><b>Дякую, цей час мені підходить!</b><small>Ще один запис. Без метушні.</small></div><span class="scene-check">✓</span></div><div class="scene-booking"><i class="ph ph-calendar-check"></i><div><b>Запис у календарі</b><small>Поки ви відпочиваєте</small></div><span>✧</span></div><span class="scene-index">ZAPYSAI / ТУРБОТА ЩОДНЯ</span></div>
       </div>
 
       <div class="hero-demo" id="demo" aria-label="Демонстрація роботи бота">
+        <div class="demo-heading"><div><p class="eyebrow">ПОДИВІТЬСЯ В РОБОТІ</p><h2>Повідомлення прийшло.<br><em>Про запис уже подбали.</em></h2></div><p>Два приклади зі студії краси: звичайний запис і питання, яке потребує людини.</p></div>
         <div class="controls" role="group" aria-label="Сценарій">
           <button class="tab" id="tab0" type="button" aria-pressed="true">Нічний запис</button>
           <button class="tab" id="tab1" type="button" aria-pressed="false">Складне питання</button>
@@ -551,11 +561,29 @@ window.CONFIG = {
     </div>
   </section>
 
+  <section class="section audience-section" id="audience">
+    <div class="container">
+      <div class="section-head reveal"><p class="eyebrow">ВАША СПРАВА — НАШ ФОКУС</p><h2>Кому це <em>підходить?</em></h2><p class="lead">Якщо клієнти пишуть, щоб обрати час і записатися, ZapysAI може взяти ці розмови на себе. Сценарій налаштовуємо під вашу роботу.</p></div>
+      <div class="audience-grid">
+        <article class="audience-card reveal"><span class="audience-number">01</span><i class="ph ph-flower" aria-hidden="true"></i><h3>Салони краси</h3><p>Манікюр, брови, вії та інші послуги. Запис до потрібного майстра за вашим прайсом.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">02</span><i class="ph ph-scissors" aria-hidden="true"></i><h3>Барбершопи</h3><p>Стрижка, борода, улюблений барбер. Вільний час без дзвінків між клієнтами.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">03</span><i class="ph ph-first-aid-kit" aria-hidden="true"></i><h3>Клініки та медичні центри</h3><p>Запис на прийом, розклад і контакти. Медичні питання передаємо фахівцю.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">04</span><i class="ph ph-tooth" aria-hidden="true"></i><h3>Стоматологи</h3><p>Час консультації та організаційні питання. Рішення щодо лікування — за лікарем.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">05</span><i class="ph ph-barbell" aria-hidden="true"></i><h3>Фітнес-студії</h3><p>Розклад і запис на тренування. Поки ви проводите заняття, клієнти отримують відповідь.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">06</span><i class="ph ph-chats-circle" aria-hidden="true"></i><h3>Консультанти та психологи</h3><p>Організація зустрічей і вільний час. Особисті та чутливі питання залишаються вам.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">07</span><i class="ph ph-car" aria-hidden="true"></i><h3>Автосервіси</h3><p>Запис на візит і перелік послуг. Діагностику та складні оцінки проводить майстер.</p></article>
+        <article class="audience-card reveal"><span class="audience-number">08</span><i class="ph ph-book-open" aria-hidden="true"></i><h3>Репетитори та курси</h3><p>Перше знайомство, розклад і запис на урок. Усе важливе для нового учня — в одному діалозі.</p></article>
+      </div>
+      <p class="audience-footnote">Для кожної сфери окремо погоджуємо правила запису, інтеграції та межі відповідей.</p>
+    </div>
+  </section>
+
   <section class="section" id="features">
     <div class="container">
       <div class="section-head reveal">
-        <h2>Адміністратор, який не втомлюється й не забуває</h2>
-        <p class="lead">Робить те саме, що й людина на рецепції: відповідає, записує, переносить. Складне віддає вам.</p>
+        <p class="eyebrow">ТУРБОТА, ЯКА ПРАЦЮЄ</p>
+        <h2>Помічник поруч.<br><em>Головні — ви.</em></h2>
+        <p class="lead">Відповіді, записи й перенесення — за вашими правилами. Усе, що потребує вашого рішення, переходить до вас.</p>
       </div>
       <div class="bento">
         <article class="tile night span-2 reveal">
@@ -596,11 +624,15 @@ window.CONFIG = {
     </div>
   </section>
 
+  <section class="section numbers-section" id="numbers">
+    <div class="container"><div class="section-head reveal"><p class="eyebrow">КОНКРЕТНО ПРО ВАШ СПОКІЙ</p><h2>Що ви отримуєте<br><em>у цифрах.</em></h2><p class="lead">Умови й можливості сервісу. Потенціал для вашого бізнесу можна порахувати нижче.</p></div><div class="numbers-grid"><div class="number-item reveal"><strong>24<span>/</span>7</strong><h3>На зв’язку з клієнтами</h3><p>Увечері, у вихідні та під час вашої роботи.</p></div><div class="number-item reveal"><strong>4</strong><h3>Канали у Pro</h3><p>Instagram, Telegram, Viber і WhatsApp — в одному тарифі Pro.</p></div><div class="number-item reveal"><strong>14</strong><h3>Днів на знайомство</h3><p>Безкоштовний період, щоб перевірити помічника у своїй роботі.</p></div><div class="number-item reveal"><strong>1–3</strong><h3>Дні на налаштування</h3><p>Базовий запуск. Складні інтеграції погоджуємо окремо.</p></div></div></div>
+  </section>
+
   <section class="section" id="calc" style="padding-top: 0">
     <div class="container">
       <div class="section-head reveal">
-        <h2>Скільки записів губиться в директі</h2>
-        <p class="lead">Підставте свої цифри. Це ваша оцінка, а справжні покаже звіт бота за перші два тижні.</p>
+        <h2>Скільки коштує<br><em>«відповім потім»?</em></h2>
+        <p class="lead">Підставте свої дані й оцініть вартість звернень, які можуть залишитися без запису. Це сценарій розрахунку, а не обіцянка результату.</p>
       </div>
       <div class="calc reveal">
         <div class="calc-inputs">
@@ -624,14 +656,15 @@ window.CONFIG = {
           </div>
         </div>
         <div class="calc-result" aria-live="polite">
-          <p class="label">Ви можете втрачати на місяць</p>
+          <p class="label">Потенційна виручка незавершених записів за місяць</p>
           <p class="calc-num" id="c-money">13 760 грн</p>
           <p class="calc-sub" id="c-count">це приблизно 17 записів</p>
           <div class="calc-line">
-            <span>Тариф «Студія» коштує <b data-price="studio">3 990</b> грн на місяць.</span>
+            <span><span>Місячний еквівалент тарифу Medium:</span> <b id="calc-plan-price">3 999</b> <span id="calc-plan-currency">грн</span></span>
             <span id="c-payback">Він окупається з 5 записів на місяць.</span>
           </div>
           <p class="fine">Розрахунок: звернення на тиждень × 4,3 × частка поза вашими годинами × частка втрачених × середній чек.</p>
+          <p class="fine calc-disclaimer">Це оцінка виручки, не прибутку. Помічник не гарантує повернення всіх втрачених звернень; результат залежить від ваших даних і витрат.</p>
         </div>
       </div>
     </div>
@@ -657,8 +690,9 @@ window.CONFIG = {
   <section class="section" id="launch" style="padding-top: 0">
     <div class="container">
       <div class="section-head reveal">
-        <h2>Запуск без ризику для ваших клієнток</h2>
-        <p class="lead">Довіра росте сходинками. На будь-якому кроці можна повернутися назад однією командою.</p>
+        <p class="eyebrow">ВІД ЗНАЙОМСТВА ДО ПЕРШОГО ЗАПИСУ</p>
+        <h2>Запуск за <em>4 кроки.</em><br>У вашому темпі.</h2>
+        <p class="lead">Спочатку перевіряєте помічника самі. Потім обираєте, скільки роботи йому довірити.</p>
       </div>
       <ol class="timeline">
         <li class="reveal"><span class="dot"><i class="ph ph-note-pencil" aria-hidden="true"></i></span><div><p class="when">День 1</p><h3>Надсилаєте прайс і графік як є</h3><p>Фото прайсу, текст з Instagram, нотатки. Ми переносимо все в бота й показуємо, що він знає.</p></div></li>
@@ -692,13 +726,19 @@ window.CONFIG = {
         </article>
         <article class="service reveal">
           <div class="head"><i class="ph ph-address-book" aria-hidden="true"></i></div>
-          <h3>CRM під вашу студію</h3>
-          <p>Клієнтська база, історія візитів, нагадування майстрам і звіти. Під ваші процеси, а не навпаки.</p>
+          <h3>CRM з нуля</h3>
+          <p>Якщо записи ще в блокноті чи Excel, перенесемо їх у CRM і налаштуємо роботу під ваші процеси.</p>
           <button class="pick" type="button" data-service="crm">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
         </article>
         <article class="service reveal">
+          <div class="head"><i class="ph ph-credit-card" aria-hidden="true"></i><span class="tag">Окрема послуга</span></div>
+          <h3>Платіжні системи</h3>
+          <p>Підключення й налаштування WayForPay, Stripe або Mono для приймання передоплат у боті. Вибір сервісу та вимоги погоджуємо з вами.</p>
+          <button class="pick" type="button" data-service="integration">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </article>
+        <article class="service reveal">
           <div class="head"><i class="ph ph-globe" aria-hidden="true"></i></div>
-          <h3>Сайт з онлайн-записом</h3>
+          <h3>Сайт під ключ</h3>
           <p>Швидкий сайт студії з цінами, роботами майстрів і записом у той самий календар, що й бот.</p>
           <button class="pick" type="button" data-service="website">Обговорити <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
         </article>
@@ -727,47 +767,60 @@ window.CONFIG = {
   <section class="section" id="pricing" style="padding-top: 0">
     <div class="container">
       <div class="section-head reveal">
-        <h2>Ціна, яка окупається кількома записами</h2>
-        <p class="lead">Ціна за місяць, модель AI вже включена. Перші 14 днів безкоштовно.</p>
+        <p class="eyebrow">ОБЕРІТЬ СВІЙ РІВЕНЬ ТУРБОТИ</p>
+        <h2>Три плани.<br><em>Один спокійніший директ.</em></h2>
+        <p class="lead">14 днів безкоштовно для кожного тарифу. Почніть із потрібного зараз — і розширюйте можливості разом із бізнесом.</p>
       </div>
+      <div class="price-controls"><div class="segmented" role="group" aria-label="Період оплати"><button type="button" data-billing="monthly" aria-pressed="true">Щомісяця</button><button type="button" data-billing="annual" aria-pressed="false">За рік <small>Вигідніше</small></button></div><div class="segmented currency-control" role="group" aria-label="Валюта"><button type="button" data-currency="UAH" aria-pressed="true">UAH ₴</button><button type="button" data-currency="EUR" aria-pressed="false">EUR €</button></div></div>
       <div class="plans">
         <article class="plan reveal">
-          <div class="name">Старт</div>
-          <p class="price"><span data-price="start">2 290</span> <small>грн / міс</small></p>
-          <p class="for">Для майстра, що працює сам.</p>
+          <div class="name">Lite <span class="tag">Базовий</span></div>
+          <p class="price"><span data-price="lite">2 499</span> <small data-unit>грн / міс</small></p>
+          <p class="annual-meta" data-annual="lite" hidden></p>
+          <p class="for">Основне для впевненого старту.</p>
           <ul>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Один канал: Instagram або Telegram</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Календар у боті, запис і перенесення</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Сповіщення й чернетки в Telegram</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Звіт щопонеділка</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Текстові діалоги з клієнтами</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>1 месенджер</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Інтеграція з 1 CRM</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Передача розмови людині</li>
           </ul>
-          <a class="btn btn-ghost" href="#form" data-plan="start">Спробувати 14 днів</a>
+          <a class="btn btn-ghost" href="#form" data-plan="lite">Спробувати 14 днів</a>
         </article>
         <article class="plan best reveal">
-          <div class="name">Студія <span class="tag">Рекомендуємо</span></div>
-          <p class="price"><span data-price="studio">3 990</span> <small>грн / міс</small></p>
-          <p class="for">Для студії з кількома майстрами.</p>
+          <div class="name">Medium <span class="tag">Стандарт</span></div>
+          <p class="price"><span data-price="medium">3 999</span> <small data-unit>грн / міс</small></p>
+          <p class="annual-meta" data-annual="medium" hidden></p>
+          <p class="for">Більше уваги кожному зверненню.</p>
+          <p class="plan-inherits">Усе з Lite, а також:</p>
           <ul>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Instagram і Telegram разом</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>До 5 майстрів, вибір майстра клієнткою</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Google Календар кожного майстра</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Доступ для адміністратора студії</li>
-            <li><i class="ph ph-check" aria-hidden="true"></i>Передоплата й правила скасування</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Голосові повідомлення → текст</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Нагадування та відгуки</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Базова аналітика</li>
+            <li><i class="ph ph-check" aria-hidden="true"></i>Вибір стилю спілкування</li>
           </ul>
-          <a class="btn btn-primary" href="#form" data-plan="studio">Спробувати 14 днів</a>
+          <a class="btn btn-primary" href="#form" data-plan="medium">Спробувати 14 днів</a>
+        </article>
+        <article class="plan reveal">
+          <div class="name">Pro <span class="tag">Бізнес під ключ</span></div>
+          <p class="price"><span data-price="pro">6 999</span> <small data-unit>грн / міс</small></p>
+          <p class="annual-meta" data-annual="pro" hidden></p>
+          <p class="for">Коли потрібна цілісна система.</p>
+          <p class="plan-inherits">Усе з Medium, а також:</p>
+          <ul><li><i class="ph ph-check" aria-hidden="true"></i>Ваша база знань і сценарії розмов</li><li><i class="ph ph-check" aria-hidden="true"></i>Скрипти роботи із запереченнями та додатковими послугами</li><li><i class="ph ph-check" aria-hidden="true"></i>Instagram, Telegram, Viber і WhatsApp разом</li><li><i class="ph ph-check" aria-hidden="true"></i>Система передоплат</li><li><i class="ph ph-check" aria-hidden="true"></i>Лист очікування</li><li><i class="ph ph-check" aria-hidden="true"></i>Підтримка 24/7</li></ul>
+          <p class="plan-fee">Для складної інтеграції бази знань — окреме разове налаштування: орієнтовно 300 EUR. Вартість погоджуємо до початку роботи.</p>
+          <a class="btn btn-ghost" href="#form" data-plan="pro">Спробувати 14 днів</a>
         </article>
       </div>
       <div class="network reveal">
         <div>
-          <b>Мережа й індивідуальні рішення</b>
-          <p>Кілька філій, інтеграції з CRM, AI для дзвінків, сайт з онлайн-записом.</p>
+          <b>Додаткові послуги — окремий проєкт</b>
+          <p>CRM з нуля, підключення WayForPay, Stripe або Mono та сайт під ключ. Обсяг і вартість узгоджуємо окремо.</p>
         </div>
-        <span class="price-inline">від <span data-price="network">8 999</span> грн</span>
         <button class="btn btn-ghost" type="button" data-service="integration">Обговорити</button>
       </div>
       <div class="pricing-notes">
-        <span><i class="ph ph-check" aria-hidden="true"></i>Налаштування безкоштовно для перших студій</span>
-        <span><i class="ph ph-check" aria-hidden="true"></i>Без договору на рік, скасування будь-коли</span>
+        <span><i class="ph ph-check" aria-hidden="true"></i>14 днів Free Trial для всіх планів</span>
+        <span><i class="ph ph-check" aria-hidden="true"></i>Умови оплати та скасування погоджуємо до підключення</span>
         <span><i class="ph ph-check" aria-hidden="true"></i>Зміни цін і графіка за день</span>
       </div>
     </div>
@@ -809,7 +862,7 @@ window.CONFIG = {
         </details>
         <details>
           <summary>Що якщо не сподобається?<i class="ph ph-caret-down" aria-hidden="true"></i></summary>
-          <p>Перші 14 днів безкоштовні, договору на рік немає. Вимкнути бота можна однією командою /pause, а відключити повністю в налаштуваннях Telegram чи Instagram.</p>
+          <p>Перші 14 днів безкоштовні. Далі ви обираєте місячну або річну оплату. Вимкнути помічника можна командою /pause; умови оплати та скасування погоджуємо до підключення.</p>
         </details>
       </div>
     </div>
@@ -879,13 +932,13 @@ window.CONFIG = {
 
 <footer class="footer">
   <div class="container footer-inner">
-    <a class="brand" href="#top"><span class="brand-mark"><i class="ph ph-moon" aria-hidden="true"></i></span>AI-адміністратор</a>
+    <a class="brand" href="#top"><span class="brand-mark"><img src="assets/avatar.png" width="42" height="42" alt=""></span><span>Zapys<span class="brand-ai">AI</span></span></a>
     <nav aria-label="Посилання">
       <a data-link="demo" href="https://t.me/YOUR_DEMO_BOT">Демо-бот</a>
       <a data-link="contact" href="https://t.me/YOUR_CONTACT">Telegram</a>
       <a href="#faq">Питання</a>
     </nav>
-    <p class="fine">© 2026 AI-адміністратор. Демонстрація на сторінці використовує вигадані дані.</p>
+    <p class="fine">© 2026 ZapysAI. Демонстрація на сторінці використовує вигадані дані.</p>
   </div>
 </footer>
 
@@ -1055,6 +1108,12 @@ window.CONFIG = {
       who: "Elena, maestra", p4: "Responde una persona", p5: "El bot no se inventó nada"
     }
   };
+  // Keep additions aligned with the existing five-language dictionaries.
+  (window.ZAPYS_I18N || []).forEach(function (entry) {
+    Object.keys(DICT).forEach(function (code) { DICT[code].push(entry[code] || entry.uk); });
+  });
+  var paybackCopy = { uk: ["Вартість тарифу дорівнює виручці з ", " за вашим середнім чеком."], ru: ["Стоимость тарифа равна выручке от ", " по вашему среднему чеку."], en: ["The plan price equals gross revenue from ", " at your average ticket."], es: ["El precio del plan equivale a los ingresos de ", " con tu ticket medio."], pl: ["Cena planu odpowiada przychodowi z ", " według średniej wartości wizyty."] };
+  Object.keys(paybackCopy).forEach(function (code) { TXT[code].paybackA = paybackCopy[code][0]; TXT[code].paybackB = paybackCopy[code][1]; });
   var lang = "uk", L = TXT.uk;
   var fmt = function (n) { return Math.round(n).toLocaleString(L.locale).replace(/[\u202f\u00a0]/g, "\u00a0"); };
 
@@ -1100,7 +1159,32 @@ window.CONFIG = {
 
   // --- ROI calculator ------------------------------------------------------------------------
   var inputs = { msgs: $("r-msgs"), busy: $("r-busy"), lost: $("r-lost"), check: $("r-check") };
-  function prices() { if (L.cur === "EUR") return C.pricesEur; if (L.cur === "zł") return C.pricesPln || C.pricesEur; return C.prices; }
+  var billing = "monthly", currency = "UAH", currencyChosen = false, chosenPlan = null;
+  var pricingText = {
+    uk: {month:"міс",year:"рік",saving:"Економія",perYear:"за рік",equivalent:"Приблизно"},
+    ru: {month:"мес",year:"год",saving:"Экономия",perYear:"за год",equivalent:"Примерно"},
+    en: {month:"mo",year:"year",saving:"Save",perYear:"per year",equivalent:"About"},
+    es: {month:"mes",year:"año",saving:"Ahorro",perYear:"al año",equivalent:"Aproximadamente"},
+    pl: {month:"mies.",year:"rok",saving:"Oszczędzasz",perYear:"rocznie",equivalent:"Około"}
+  };
+  function monthlyPrices() { return currency === "EUR" ? C.pricesEur : C.prices; }
+  function prices() { return billing === "annual" ? (currency === "EUR" ? C.annualPricesEur : C.annualPrices) : monthlyPrices(); }
+  function refreshPricing() {
+    var data=prices(), base=monthlyPrices(), copy=pricingText[lang];
+    L.cur=currency === "EUR" ? "EUR" : "грн";
+    document.querySelectorAll("[data-price]").forEach(function (node) { var value=data[node.getAttribute("data-price")]; if(value != null) node.textContent=fmt(value); });
+    document.querySelectorAll("[data-unit]").forEach(function (node) { node.textContent=L.cur+" / "+(billing === "annual" ? copy.year : copy.month); });
+    document.querySelectorAll("[data-annual]").forEach(function (node) {
+      var key=node.getAttribute("data-annual");node.hidden=billing!=="annual";
+      node.textContent=copy.equivalent+" "+fmt(data[key]/12)+" "+L.cur+" / "+copy.month+". "+copy.saving+" "+fmt(base[key]*12-data[key])+" "+L.cur+" "+copy.perYear+".";
+    });
+    document.querySelectorAll("[data-billing]").forEach(function (button) { button.setAttribute("aria-pressed",String(button.getAttribute("data-billing")===billing)); });
+    document.querySelectorAll("[data-currency]").forEach(function (button) { button.setAttribute("aria-pressed",String(button.getAttribute("data-currency")===currency)); });
+    setCheckRange();calc();
+  }
+  document.querySelectorAll("[data-billing]").forEach(function (button) { button.addEventListener("click",function () {billing=button.getAttribute("data-billing");refreshPricing();}); });
+  document.querySelectorAll("[data-currency]").forEach(function (button) { button.addEventListener("click",function () {currency=button.getAttribute("data-currency");currencyChosen=true;refreshPricing();}); });
+  document.querySelectorAll("[data-plan]").forEach(function (button) { button.addEventListener("click",function () {chosenPlan=button.getAttribute("data-plan");if($("f-service"))$("f-service").value="ai_admin";}); });
   // The average-ticket slider works in the page currency (UAH 200-5000 or EUR 5-120).
   function setCheckRange() {
     var r = inputs.check, eur = L.cur === "EUR";
@@ -1118,7 +1202,8 @@ window.CONFIG = {
     $("o-check").textContent = fmt(check) + " " + L.cur;
     var count = msgs * 4.3 * busy * lost;
     var money = count * check;
-    var price = (prices() && prices().studio) || 3990;
+    var price = prices().medium / (billing === "annual" ? 12 : 1);
+    $("calc-plan-price").textContent=fmt(price);$("calc-plan-currency").textContent=L.cur;
     $("c-money").textContent = fmt(money) + " " + L.cur;
     $("c-count").textContent = count < 1 ? L.lessOne : L.about + fmt(count) + " " + plural(Math.round(count), L.bookW);
     var need = Math.ceil(price / check);
@@ -1133,7 +1218,7 @@ window.CONFIG = {
     return w[2];
   }
   Object.keys(inputs).forEach(function (k) { inputs[k].addEventListener("input", calc); });
-  calc();
+  refreshPricing();
 
   // --- service picks prefill the form ------------------------------------------------------
   document.querySelectorAll("[data-service]").forEach(function (b) {
@@ -1183,7 +1268,7 @@ window.CONFIG = {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.name.trim(), contact: data.contact.trim(), business: data.business.trim() || null,
-          service: data.service, message: data.message.trim() || null, website: data.website || null, source: source()
+          service: data.service, message: [data.message.trim(), chosenPlan ? "Plan: " + chosenPlan + "; Billing: " + billing + "; Currency: " + currency : ""].filter(Boolean).join("\n") || null, website: data.website || null, source: source()
         })
       });
       if (res.status === 429) throw new Error(L.tooMany + fallback);
@@ -1327,7 +1412,7 @@ window.CONFIG = {
     if (t === "dark") root.setAttribute("data-theme", "dark"); else root.removeAttribute("data-theme");
     themeBtn.firstElementChild.className = "ph " + (t === "dark" ? "ph-sun" : "ph-moon");
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = t === "dark" ? "#171614" : "#fdfcf9";
+    if (meta) meta.content = t === "dark" ? "#211b23" : "#f7f4ed";
     if (save) { try { localStorage.setItem("theme", t); } catch (e) {} }
   }
   themeBtn.addEventListener("click", function () { setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark", true); });
@@ -1384,9 +1469,8 @@ window.CONFIG = {
     var og = document.querySelector("meta[property='og:locale']");
     if (og) og.content = { uk: "uk_UA", ru: "ru_RU", en: "en_US", es: "es_ES", pl: "pl_PL" }[lang];
     markLang();
-    document.querySelectorAll("[data-price]").forEach(function (el) { var v = prices() && prices()[el.getAttribute("data-price")]; if (v) el.textContent = fmt(v); });
-    setCheckRange();
-    calc();
+    if (!currencyChosen) currency = lang === "uk" || lang === "ru" ? "UAH" : "EUR";
+    refreshPricing();
     if (!$("lead-form").querySelector(".form-done")) { $("f-submit").textContent = DICT[lang][index["Надіслати заявку"]]; }
     if (save) { try { localStorage.setItem("lang", lang); } catch (e) {} }
     play(cur, false);
