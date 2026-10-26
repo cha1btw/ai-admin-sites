@@ -118,5 +118,19 @@ window.ZAPYS_I18N = [
   ['CRM з нуля, підключення WayForPay, Stripe або Mono та сайт під ключ. Обсяг і вартість узгоджуємо окремо.','CRM с нуля, подключение WayForPay, Stripe или Mono и сайт под ключ. Объём и стоимость согласовываем отдельно.','CRM setup from scratch, WayForPay, Stripe or Mono integration, and a complete website. Scope and pricing are agreed separately.','CRM desde cero, integración de WayForPay, Stripe o Mono y una web completa. Acordamos alcance y precio aparte.','CRM od podstaw, integracja WayForPay, Stripe lub Mono oraz strona pod klucz. Zakres i cenę uzgadniamy osobno.'],
   ['14 днів Free Trial для всіх планів','14 дней Free Trial для всех планов','14-day free trial on all plans','14 días de prueba gratis en todos los planes','14 dni bezpłatnego okresu próbnego we wszystkich planach'],
   ['© 2026 ZapysAI. Демонстрація на сторінці використовує вигадані дані.','© 2026 ZapysAI. Демонстрация на странице использует вымышленные данные.','© 2026 ZapysAI. The demonstration uses fictional data.','© 2026 ZapysAI. La demostración utiliza datos ficticios.','© 2026 ZapysAI. Prezentacja wykorzystuje fikcyjne dane.'],
-  ['ZapysAI — відповідає клієнтам і дбає про записи','ZapysAI — отвечает клиентам и заботится о записях','ZapysAI — replies to clients and takes care of bookings','ZapysAI — responde a tus clientes y cuida tus reservas','ZapysAI — odpowiada klientom i dba o rezerwacje']
+  ['ZapysAI — відповідає клієнтам і дбає про записи','ZapysAI — отвечает клиентам и заботится о записях','ZapysAI — replies to clients and takes care of bookings','ZapysAI — responde a tus clientes y cuida tus reservas','ZapysAI — odpowiada klientom i dba o rezerwacje'],
+  ['Політика конфіденційності','Политика конфиденциальности','Privacy Policy','Política de privacidad','Polityka prywatności'],
+  ['Умови використання','Условия использования','Terms of Use','Términos de uso','Regulamin i warunki'],
+  ['Навігація','Навигация','Navigation','Navegación','Nawigacja'],
+  ['Рішення та канали','Решения и каналы','Solutions & channels','Soluciones y canales','Rozwiązania i kanały'],
+  ['Юридична інформація','Юридическая информация','Legal information','Información legal','Informacje prawne'],
+  ['Підтримка в Telegram','Поддержка в Telegram','Support on Telegram','Soporte en Telegram','Wsparcie w Telegramie'],
+  ['Демо-бот у Telegram','Демо-бот в Telegram','Demo bot on Telegram','Bot de demostración en Telegram','Bot demonstracyjny w Telegramie'],
+  ['Вгору ↑','Вверх ↑','Back to top ↑','Arriba ↑','Do góry ↑'],
+  ['Тарифи та ціни','Тарифы и цены','Plans & pricing','Planes y precios','Cennik i pakiety'],
+  ['Часті питання','Частые вопросы','FAQ','Preguntas frecuentes','Często zadawane pytania'],
+  ['Підбір тарифу','Подбор тарифа','Plan finder','Selector de plan','Dobór pakietu'],
+  ['Запуск за 4 дні','Запуск за 4 дня','Get started in 4 steps','Empieza en 4 pasos','Start w 4 krokach'],
+  ['Офіційні Meta & Telegram API • 24/7 доступність','Официальные Meta & Telegram API • 24/7 доступность','Official Meta & Telegram APIs • 24/7 availability','APIs oficiales de Meta y Telegram • Disponibilidad 24/7','Oficjalne API Meta i Telegram • Dostępność 24/7'],
+  ['GDPR • Сервери в ЄС','GDPR • Серверы в ЕС','GDPR • EU-based servers','GDPR • Servidores en la UE','RODO • Serwery w UE']
 ].map(function(row){return {uk:row[0],ru:row[1],en:row[2],es:row[3],pl:row[4]};});
