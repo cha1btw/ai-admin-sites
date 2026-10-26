@@ -3,15 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Умови використання — ZapysAI</title>
-<meta name="description" content="Умови використання сервісу ZapysAI. Прозорі правила підключення, 14 днів безкоштовного тесту, тарифи, відповідальність та права сторін.">
+<title>Terms of Use — ZapysAI</title>
+<meta name="description" content="Terms of Use of ZapysAI. Transparent subscription rules, 14-day free trial, rights and responsibilities.">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="uk_UA">
-<meta property="og:title" content="Умови використання — ZapysAI">
-<meta property="og:description" content="Умови використання сервісу ZapysAI. Прозорі правила підключення, 14 днів безкоштовного тесту, тарифи, відповідальність та права сторін.">
+<meta property="og:title" content="Terms of Use — ZapysAI">
+<meta property="og:description" content="Terms of Use of ZapysAI. Transparent subscription rules, 14-day free trial, rights and responsibilities.">
 <meta name="theme-color" content="#f7f4ed">
 <meta property="og:site_name" content="ZapysAI">
-<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<script>
+(function(){
+  try{
+    var t=localStorage.getItem("theme");
+    if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);
+    var p=new URLSearchParams(location.search).get("lang")||localStorage.getItem("lang")||"uk";
+    if(["uk","en","pl","es","ru"].indexOf(p)<0)p="uk";
+    document.documentElement.lang=p;
+    document.documentElement.setAttribute("data-current-lang",p);
+  }catch(e){}
+})();
+</script>
 <link rel="icon" type="image/png" href="assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,257 +34,592 @@
 
 <header class="legal-nav">
   <div class="container legal-nav-inner">
-    <a class="legal-brand" href="index.html" aria-label="ZapysAI, на головну">
+    <a class="legal-brand" id="homeBrand" href="index.html" aria-label="ZapysAI">
       <span class="legal-brand-mark"><img src="assets/avatar.png" width="40" height="40" alt="ZapysAI"></span>
       <span>Zapys<span class="legal-brand-ai">AI</span></span>
     </a>
     <div class="legal-nav-actions">
-      <a class="btn-back" href="index.html"><i class="ph ph-arrow-left" aria-hidden="true"></i> На головну</a>
-      <button class="theme-toggle-btn" id="themeBtn" type="button" aria-label="Змінити тему інтерфейсу">
+      <a class="btn-back" id="backBtn" href="index.html"><i class="ph ph-arrow-left" aria-hidden="true"></i> <span id="backText">На головну</span></a>
+      <div class="lang-wrap">
+        <button class="lang-btn" id="langBtn" type="button" aria-label="Language" aria-haspopup="listbox" aria-expanded="false">
+          <i class="ph ph-globe" aria-hidden="true"></i><span id="langCur">UA</span><i class="ph ph-caret-down caret" aria-hidden="true"></i>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Language selection" hidden>
+          <li><button type="button" role="option" data-l="uk"><b>UA</b>Українська</button></li>
+          <li><button type="button" role="option" data-l="en"><b>EN</b>English</button></li>
+          <li><button type="button" role="option" data-l="pl"><b>PL</b>Polski</button></li>
+          <li><button type="button" role="option" data-l="es"><b>ES</b>Español</button></li>
+          <li><button type="button" role="option" data-l="ru"><b>RU</b>Русский</button></li>
+        </ul>
+      </div>
+      <button class="theme-toggle-btn" id="themeBtn" type="button" aria-label="Toggle theme">
         <i class="ph ph-moon" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 </header>
 
-<main class="container" id="top">
-  <nav class="breadcrumb" aria-label="Навігаційний ланцюжок">
-    <a href="index.html">Головна</a>
-    <span aria-hidden="true">/</span>
-    <span aria-current="page">Умови використання</span>
-  </nav>
+<!-- ========================= UKRAINIAN CONTENT ========================= -->
+<div class="lang-view" data-lang="uk">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Навігаційний ланцюжок">
+      <a href="index.html" class="nav-home-link">Головна</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Умови використання</span>
+    </nav>
 
-  <section class="legal-hero">
-    <div class="legal-meta-badge">
-      <i class="ph ph-file-text" aria-hidden="true"></i> Офіційний документ • Редакція від 26 жовтня 2026 року
-    </div>
-    <h1>Умови використання сервісу</h1>
-    <p class="legal-hero-lead">
-      Ці Умови регулюють взаємні відносини між сервісом ZapysAI та власниками бізнесу, студіями краси й майстрами, які використовують наш продукт для автоматизації відповідей, консультацій та онлайн-запису клієнтів. Ми виступаємо за чесні, прозорі домовленості без прихованих платежів та довгострокових зобов'язань.
-    </p>
-
-    <div class="legal-highlights">
-      <div class="highlight-card">
-        <i class="ph ph-calendar-check" aria-hidden="true"></i>
-        <h4>14 днів без ризику</h4>
-        <p>Тестуйте повний функціонал на власному прайсі перші два тижні. Жодної автоматичної прив'язки картки.</p>
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-file-text" aria-hidden="true"></i> Офіційний документ • Редакція від 26 жовтня 2026 року
       </div>
-      <div class="highlight-card">
-        <i class="ph ph-handshake" aria-hidden="true"></i>
-        <h4>Без кабальних договорів</h4>
-        <p>Без річних зобов'язань. Скасувати підписку можна будь-якої миті за власним бажанням.</p>
-      </div>
-      <div class="highlight-card">
-        <i class="ph ph-pause-circle" aria-hidden="true"></i>
-        <h4>Керування в 1 клік</h4>
-        <p>Команда /pause миттєво зупиняє бота, а /close закриває вільні вікна в календарі, коли ви відпочиваєте.</p>
-      </div>
-      <div class="highlight-card">
-        <i class="ph ph-shield-check" aria-hidden="true"></i>
-        <h4>Повний контроль майстра</h4>
-        <p>Ви завжди залишаєтеся головними: будь-який діалог можна перехопити та продовжити вручну.</p>
-      </div>
-    </div>
-  </section>
+      <h1>Умови використання сервісу</h1>
+      <p class="legal-hero-lead">
+        Ці Умови регулюють взаємні відносини між сервісом ZapysAI та власниками бізнесу, студіями краси й майстрами, які використовують наш продукт для автоматизації відповідей, консультацій та онлайн-запису клієнтів. Ми виступаємо за чесні, прозорі домовленості без прихованих платежів та довгострокових зобов'язань.
+      </p>
 
-  <div class="legal-layout">
-    <aside class="legal-sidebar" aria-label="Зміст документа">
-      <div class="toc-title"><i class="ph ph-list" aria-hidden="true"></i> Зміст</div>
-      <ul class="toc-list">
-        <li><a href="#sec-1">1. Прийняття умов</a></li>
-        <li><a href="#sec-2">2. Опис послуг ZapysAI</a></li>
-        <li><a href="#sec-3">3. 14 днів тестового періоду</a></li>
-        <li><a href="#sec-4">4. Тарифи та порядок оплати</a></li>
-        <li><a href="#sec-5">5. Правила використання студіями</a></li>
-        <li><a href="#sec-6">6. Заборонені дії</a></li>
-        <li><a href="#sec-7">7. Відповідальність та гарантії</a></li>
-        <li><a href="#sec-8">8. Інтелектуальна власність</a></li>
-        <li><a href="#sec-9">9. Призупинення та розірвання</a></li>
-        <li><a href="#sec-10">10. Застосовне право та спори</a></li>
-      </ul>
-    </aside>
-
-    <article class="legal-body">
-      <section class="legal-section" id="sec-1">
-        <h2><span class="sec-num">1.</span> Прийняття умов</h2>
-        <p class="lead-p">
-          Цей документ є офіційною публічною пропозицією (офертою) сервісу <strong>ZapysAI</strong> (далі — «Сервіс», «ми», «нас») укласти договір про надання послуг цифрового асистента та програмного забезпечення для автоматизації записів (SaaS).
-        </p>
-        <p>
-          Здійснюючи реєстрацію, надсилаючи заявку на сайті, підключаючи бота до Telegram Business чи Instagram, або оплачуючи підписку, ви (далі — «Користувач», «Студія») беззастережно приймаєте всі умови цього документа.
-        </p>
-        <p>
-          Якщо ви не погоджуєтеся з будь-яким із положень цих Умов, будь ласка, не підключайте сервіс та не використовуйте відповідне програмне забезпечення.
-        </p>
-      </section>
-
-      <section class="legal-section" id="sec-2">
-        <h2><span class="sec-num">2.</span> Опис послуг ZapysAI</h2>
-        <p>
-          ZapysAI надає хмарне програмне рішення («AI-адміністратор»), яке виконує такі функції:
-        </p>
-        <ul>
-          <li>Автоматичні відповіді клієнтам у ділових каналах зв'язку (Instagram Direct, Telegram, за запитом — Viber, WhatsApp).</li>
-          <li>Консультація за затвердженим прайс-листом студії, розкладом майстрів та адресою студії.</li>
-          <li>Підбір вільних слотів та бронювання часу в підключеному календарі (Google Календар, Altegio, Booksy тощо).</li>
-          <li>Перенесення, скасування записів за затвердженими правилами студії.</li>
-          <li>Миттєве сповіщення майстра або адміністратора студії в Telegram та передача чату людині, якщо виникає складне питання, скарга чи запит на знижку.</li>
-          <li>Щотижнева аналітика та звіти про кількість звернень, записів та збережених клієнтів.</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-3">
-        <h2><span class="sec-num">3.</span> 14 днів тестового періоду (Free Trial)</h2>
-        <p>
-          Ми прагнемо, щоб кожна студія переконалася в ефективності бота на практиці без будь-якого ризику:
-        </p>
-        <ul>
-          <li><strong>Повний доступ на 14 днів:</strong> перші два тижні використання будь-якого тарифного плану надаються безкоштовно.</li>
-          <li><strong>Жодної прив'язки картки:</strong> на старті тестового періоду ми не вимагаємо введення банківських даних та не здійснюємо прихованих автоматичних списань.</li>
-          <li><strong>Підготовка та тестування:</strong> протягом перших днів ви можете протестувати бота самостійно, ставлячи складні запитання у тестовому чаті Telegram, перш ніж відкривати доступ клієнтам.</li>
-          <li><strong>Рішення після тесту:</strong> після закінчення 14 днів ви самі вирішуєте, чи продовжувати роботу на платному тарифі. Якщо ні — бот просто вимикається без будь-яких штрафів чи претензій.</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-4">
-        <h2><span class="sec-num">4.</span> Тарифи та порядок оплати</h2>
-        <p>
-          Сервіс надається на умовах регулярної підписки (помісячної або річної) згідно з чинними тарифами, опублікованими на сайті:
-        </p>
-        <div class="legal-table-wrap">
-          <table class="legal-table">
-            <thead>
-              <tr>
-                <th>Тарифний план</th>
-                <th>Щомісячна оплата</th>
-                <th>Річна оплата (економія)</th>
-                <th>Основне призначення</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Lite</strong></td>
-                <td>2 499 грн / 100 EUR</td>
-                <td>20 000 грн / 900 EUR</td>
-                <td>1 месенджер, 1 CRM, текстові діалоги для сольного майстра</td>
-              </tr>
-              <tr>
-                <td><strong>Medium</strong></td>
-                <td>3 999 грн / 160 EUR</td>
-                <td>32 000 грн / 1 440 EUR</td>
-                <td>Голосові → текст, нагадування, аналітика, студія з майстрами</td>
-              </tr>
-              <tr>
-                <td><strong>Pro</strong></td>
-                <td>6 999 грн / 200 EUR</td>
-                <td>56 000 грн / 1 800 EUR</td>
-                <td>Всі канали разом, база знань, передоплати, лист очікування, 24/7</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="legal-highlights">
+        <div class="highlight-card">
+          <i class="ph ph-calendar-check" aria-hidden="true"></i>
+          <h4>14 днів без ризику</h4>
+          <p>Тестуйте повний функціонал на власному прайсі перші два тижні. Жодної автоматичної прив'язки картки.</p>
         </div>
-        <ul>
-          <li>Оплата здійснюється на умовах передоплати за обраний розрахунковий період (місяць або рік).</li>
-          <li>Усі суми включають витрати на інфраструктуру та роботу мовної моделі штучного інтелекту.</li>
-          <li>Складна інтеграція індивідуальної бази знань у тарифі Pro може передбачати окреме разове налаштування (орієнтовно 300 EUR), яке завжди погоджується до початку робіт.</li>
-          <li>У разі річної передплати повернення коштів за невикористані місяці розглядається індивідуально за зверненням студії до служби підтримки.</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-5">
-        <h2><span class="sec-num">5.</span> Правила використання студіями (Acceptable Use)</h2>
-        <p>Користуючись сервісом, Студія зобов'язується:</p>
-        <ul>
-          <li>Надавати достовірну та актуальну інформацію щодо цін, тривалості процедур та адрес локацій.</li>
-          <li>Своєчасно повідомляти про зміну прайс-листа через команду <code>/change</code> або закривати зайняті дні командою <code>/close</code>.</li>
-          <li>Забезпечити наявність повноважень та прав на використання каналів зв'язку (Telegram, Instagram) студії.</li>
-          <li>Реагувати на сповіщення бота, якщо діалог позначено як такий, що потребує втручання майстра (алергія, скарга, особисте запитання).</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-6">
-        <h2><span class="sec-num">6.</span> Заборонені дії</h2>
-        <p>Категорично забороняється використовувати сервіс ZapysAI для:</p>
-        <ul>
-          <li>Надсилання непроханих масових рекламних повідомлень (спаму) або завантаження сторонніх баз номерів.</li>
-          <li>Розповсюдження шкідливого програмного забезпечення, шахрайських пропозицій або протиправного контенту.</li>
-          <li>Надання медичних рекомендацій чи постановки діагнозів без участі кваліфікованого лікаря.</li>
-          <li>Будь-яких спроб зламати або порушити роботу хмарної інфраструктури чи алгоритмів верифікації сервісу.</li>
-        </ul>
-        <div class="legal-callout">
-          Порушення цих правил є підставою для негайного припинення надання послуг без повернення сплачених коштів.
+        <div class="highlight-card">
+          <i class="ph ph-handshake" aria-hidden="true"></i>
+          <h4>Без кабальних договорів</h4>
+          <p>Без річних зобов'язань. Скасувати підписку можна будь-якої миті за власним бажанням.</p>
         </div>
-      </section>
+        <div class="highlight-card">
+          <i class="ph ph-pause-circle" aria-hidden="true"></i>
+          <h4>Керування в 1 клік</h4>
+          <p>Команда /pause миттєво зупиняє бота, а /close закриває вільні вікна в календарі, коли ви відпочиваєте.</p>
+        </div>
+        <div class="highlight-card">
+          <i class="ph ph-shield-check" aria-hidden="true"></i>
+          <h4>Повний контроль майстра</h4>
+          <p>Ви завжди залишаєтеся головними: будь-який діалог можна перехопити та продовжити вручну.</p>
+        </div>
+      </div>
+    </section>
 
-      <section class="legal-section" id="sec-7">
-        <h2><span class="sec-num">7.</span> Відповідальність та гарантії</h2>
-        <p>
-          ZapysAI докладає максимум зусиль для безперебійної та точної роботи системи, проте сторони погоджуються з такими обмеженнями:
-        </p>
-        <ul>
-          <li><strong>Перевірка перед відправкою:</strong> наш алгоритм перевіряє кожну суму та слот за вашим прайсом перед формуванням відповіді. Якщо даних бракує, бот замовкає та передає запит людині.</li>
-          <li><strong>Статус AI як асистента:</strong> штучний інтелект є допоміжним інструментом прийому заявок. Остаточне рішення щодо надання послуги та її якості належить студії та майстру.</li>
-          <li><strong>Робота сторонніх платформ:</strong> сервіс не несе відповідальності за глобальні збої на стороні Meta Platforms Inc., Telegram Messenger Inc. або провайдерів календаря Google.</li>
-          <li><strong>Калькулятор окупності:</strong> розрахунки калькулятора на лендингу є орієнтовною оцінкою на основі введених користувачем даних і не становлять фінансової гарантії прибутку.</li>
+    <div class="legal-layout">
+      <aside class="legal-sidebar" aria-label="Зміст документа">
+        <div class="toc-title"><i class="ph ph-list" aria-hidden="true"></i> Зміст</div>
+        <ul class="toc-list">
+          <li><a href="#uk-terms-1">1. Прийняття умов</a></li>
+          <li><a href="#uk-terms-2">2. Опис послуг ZapysAI</a></li>
+          <li><a href="#uk-terms-3">3. 14 днів тестового періоду</a></li>
+          <li><a href="#uk-terms-4">4. Тарифи та порядок оплати</a></li>
+          <li><a href="#uk-terms-5">5. Правила використання студіями</a></li>
+          <li><a href="#uk-terms-6">6. Заборонені дії</a></li>
+          <li><a href="#uk-terms-7">7. Відповідальність та гарантії</a></li>
+          <li><a href="#uk-terms-8">8. Інтелектуальна власність</a></li>
+          <li><a href="#uk-terms-9">9. Призупинення та розірвання</a></li>
+          <li><a href="#uk-terms-10">10. Застосовне право та спори</a></li>
         </ul>
-      </section>
+      </aside>
 
-      <section class="legal-section" id="sec-8">
-        <h2><span class="sec-num">8.</span> Інтелектуальна власність</h2>
-        <p>
-          Усі майнові права на програмне забезпечення ZapysAI, програмні коди, дизайни, товарні знаки та алгоритми належать авторам проєкту ZapysAI.
-        </p>
-        <p>
-          Усі права на назву студії, торгові марки, прайс-лист, фотографії робіт майстрів та клієнтські бази залишаються виключною власністю відповідної Студії. Ми не претендуємо на жоден контент або бренд наших клієнтів.
-        </p>
-      </section>
+      <article class="legal-body">
+        <section class="legal-section" id="uk-terms-1">
+          <h2><span class="sec-num">1.</span> Прийняття умов</h2>
+          <p class="lead-p">
+            Цей документ є офіційною публічною пропозицією (офертою) сервісу <strong>ZapysAI</strong> (далі — «Сервіс», «ми», «нас») укласти договір про надання послуг цифрового асистента та програмного забезпечення для автоматизації записів (SaaS).
+          </p>
+          <p>
+            Здійснюючи реєстрацію, надсилаючи заявку на сайті, підключаючи бота до Telegram Business чи Instagram, або оплачуючи підписку, ви (далі — «Користувач», «Студія») беззастережно приймаєте всі умови цього документа.
+          </p>
+          <p>
+            Якщо ви не погоджуєтеся з будь-яким із положень цих Умов, будь ласка, не підключайте сервіс та не використовуйте відповідне програмне забезпечення.
+          </p>
+        </section>
 
-      <section class="legal-section" id="sec-9">
-        <h2><span class="sec-num">9.</span> Призупинення та розірвання</h2>
-        <p>
-          Ви повністю контролюєте взаємодію із сервісом:
-        </p>
-        <ul>
-          <li><strong>Тимчасова пауза:</strong> ви можете призупинити відповіді бота в будь-який час однією командою <code>/pause</code> у вашому керуючому чаті Telegram.</li>
-          <li><strong>Відключення сервісу:</strong> ви можете повністю відключити бота в налаштуваннях Telegram або бізнес-інтеграціях Instagram без допомоги технічного персоналу.</li>
-          <li><strong>Розірвання співпраці:</strong> ви можете відмовитися від подальшого продовження підписки в кінці оплаченого періоду, повідомивши підтримку.</li>
-        </ul>
-      </section>
+        <section class="legal-section" id="uk-terms-2">
+          <h2><span class="sec-num">2.</span> Опис послуг ZapysAI</h2>
+          <p>ZapysAI надає хмарне програмне рішення («AI-адміністратор»), яке виконує такі функції:</p>
+          <ul>
+            <li>Автоматичні відповіді клієнтам у ділових каналах зв'язку (Instagram Direct, Telegram, за запитом — Viber, WhatsApp).</li>
+            <li>Консультація за затвердженим прайс-листом студії, розкладом майстрів та адресою студії.</li>
+            <li>Підбір вільних слотів та бронювання часу в підключеному календарі (Google Календар, Altegio, Booksy тощо).</li>
+            <li>Перенесення, скасування записів за затвердженими правилами студії.</li>
+            <li>Миттєве сповіщення майстра або адміністратора студії в Telegram та передача чату людині, якщо виникає складне питання, скарга чи запит на знижку.</li>
+            <li>Щотижнева аналітика та звіти про кількість звернень, записів та збережених клієнтів.</li>
+          </ul>
+        </section>
 
-      <section class="legal-section" id="sec-10">
-        <h2><span class="sec-num">10.</span> Застосовне право та спори</h2>
-        <p>
-          Ці Умови регулюються нормами чинного законодавства України та загальновизнаними принципами міжнародного права в сфері електронної комерції та захисту даних.
-        </p>
-        <p>
-          Будь-які розбіжності чи спори сторони прагнуть вирішувати шляхом відкритих добросовісних переговорів. У разі недосягнення згоди спір підлягає розгляду у судовому порядку згідно з підсудністю, визначеною законодавством.
-        </p>
-        <div class="legal-contact-box">
-          <div>
-            <h4>Є питання щодо умов співпраці?</h4>
-            <p>Наша служба турботи відповість на всі організаційні та юридичні запитання.</p>
+        <section class="legal-section" id="uk-terms-3">
+          <h2><span class="sec-num">3.</span> 14 днів тестового періоду (Free Trial)</h2>
+          <p>Ми прагнемо, щоб кожна студія переконалася в ефективності бота на практиці без будь-якого ризику:</p>
+          <ul>
+            <li><strong>Повний доступ на 14 днів:</strong> перші два тижні використання будь-якого тарифного плану надаються безкоштовно.</li>
+            <li><strong>Жодної прив'язки картки:</strong> на старті тестового періоду ми не вимагаємо введення банківських даних та не здійснюємо прихованих автоматичних списань.</li>
+            <li><strong>Підготовка та тестування:</strong> протягом перших днів ви можете протестувати бота самостійно, ставлячи складні запитання у тестовому чаті Telegram, перш ніж відкривати доступ клієнтам.</li>
+            <li><strong>Рішення після тесту:</strong> після закінчення 14 днів ви самі вирішуєте, чи продовжувати роботу на платному тарифі. Якщо ні — бот просто вимикається без будь-яких штрафів чи претензій.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-terms-4">
+          <h2><span class="sec-num">4.</span> Тарифи та порядок оплати</h2>
+          <p>Сервіс надається на умовах регулярної підписки (помісячної або річної) згідно з чинними тарифами, опублікованими на сайті:</p>
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Тарифний план</th>
+                  <th>Щомісячна оплата</th>
+                  <th>Річна оплата (економія)</th>
+                  <th>Основне призначення</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Lite</strong></td>
+                  <td>2 499 грн / 100 EUR</td>
+                  <td>20 000 грн / 900 EUR</td>
+                  <td>1 месенджер, 1 CRM, текстові діалоги для сольного майстра</td>
+                </tr>
+                <tr>
+                  <td><strong>Medium</strong></td>
+                  <td>3 999 грн / 160 EUR</td>
+                  <td>32 000 грн / 1 440 EUR</td>
+                  <td>Голосові → текст, нагадування, аналітика, студія з майстрами</td>
+                </tr>
+                <tr>
+                  <td><strong>Pro</strong></td>
+                  <td>6 999 грн / 200 EUR</td>
+                  <td>56 000 грн / 1 800 EUR</td>
+                  <td>Всі канали разом, база знань, передоплати, лист очікування, 24/7</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="legal-contact-actions">
-            <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">
-              <i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram
-            </a>
-            <a class="legal-btn legal-btn-ghost" href="mailto:support@zapysai.com">
-              <i class="ph ph-envelope-simple" aria-hidden="true"></i> support@zapysai.com
-            </a>
+          <ul>
+            <li>Оплата здійснюється на умовах передоплати за обраний розрахунковий період (місяць або рік).</li>
+            <li>Усі суми включають витрати на інфраструктуру та роботу мовної моделі штучного інтелекту.</li>
+            <li>Складна інтеграція індивідуальної бази знань у тарифі Pro може передбачати окреме разове налаштування (орієнтовно 300 EUR), яке завжди погоджується до початку робіт.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-terms-5">
+          <h2><span class="sec-num">5.</span> Правила використання студіями (Acceptable Use)</h2>
+          <p>Користуючись сервісом, Студія зобов'язується:</p>
+          <ul>
+            <li>Надавати достовірну та актуальну інформацію щодо цін, тривалості процедур та адрес локацій.</li>
+            <li>Своєчасно повідомляти про зміну прайс-листа через команду <code>/change</code> або закривати зайняті дні командою <code>/close</code>.</li>
+            <li>Забезпечити наявність повноважень та прав на використання каналів зв'язку (Telegram, Instagram) студії.</li>
+            <li>Реагувати на сповіщення бота, якщо діалог позначено як такий, що потребує втручання майстра (алергія, скарга, особисте запитання).</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-terms-6">
+          <h2><span class="sec-num">6.</span> Заборонені дії</h2>
+          <p>Категорично забороняється використовувати сервіс ZapysAI для:</p>
+          <ul>
+            <li>Надсилання непроханих масових рекламних повідомлень (спаму) або завантаження сторонніх баз номерів.</li>
+            <li>Розповсюдження шкідливого програмного забезпечення, шахрайських пропозицій або протиправного контенту.</li>
+            <li>Надання медичних рекомендацій чи постановки діагнозів без участі кваліфікованого лікаря.</li>
+            <li>Будь-яких спроб зламати або порушити роботу хмарної інфраструктури чи алгоритмів верифікації сервісу.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-terms-7">
+          <h2><span class="sec-num">7.</span> Відповідальність та гарантії</h2>
+          <ul>
+            <li><strong>Перевірка перед відправкою:</strong> наш алгоритм перевіряє кожну суму та слот за вашим прайсом перед формуванням відповіді. Якщо даних бракує, бот замовкає та передає запит людині.</li>
+            <li><strong>Статус AI як асистента:</strong> штучний інтелект є допоміжним інструментом прийому заявок. Остаточне рішення щодо надання послуги та її якості належить студії та майстру.</li>
+            <li><strong>Робота сторонніх платформ:</strong> сервіс не несе відповідальності за глобальні збої на стороні Meta Platforms Inc., Telegram Messenger Inc. або Google Calendar.</li>
+            <li><strong>Калькулятор окупності:</strong> розрахунки калькулятора на лендингу є орієнтовною оцінкою на основі введених користувачем даних і не становлять фінансової гарантії прибутку.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-terms-8">
+          <h2><span class="sec-num">8.</span> Інтелектуальна власність</h2>
+          <p>
+            Усі майнові права на програмне забезпечення ZapysAI, програмні коди, дизайни, товарні знаки та алгоритми належать авторам проєкту ZapysAI.
+          </p>
+          <p>
+            Усі права на назву студії, торгові марки, прайс-лист, фотографії робіт майстрів та клієнтські бази залишаються виключною власністю відповідної Студії.
+          </p>
+        </section>
+
+        <section class="legal-section" id="uk-terms-9">
+          <h2><span class="sec-num">9.</span> Призупинення та розірвання</h2>
+          <ul>
+            <li><strong>Тимчасова пауза:</strong> ви можете призупинити відповіді бота в будь-який час однією командою <code>/pause</code> у вашому керуючому чаті Telegram.</li>
+            <li><strong>Відключення сервісу:</strong> ви можете повністю відключити бота в налаштуваннях Telegram або бізнес-інтеграціях Instagram без допомоги технічного персоналу.</li>
+            <li><strong>Розірвання співпраці:</strong> ви можете відмовитися від подальшого продовження підписки в кінці оплаченого періоду, повідомивши підтримку.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-terms-10">
+          <h2><span class="sec-num">10.</span> Застосовне право та спори</h2>
+          <p>
+            Ці Умови регулюються нормами чинного законодавства України та загальновизнаними принципами міжнародного права в сфері електронної комерції та захисту даних. Будь-які спори сторони прагнуть вирішувати шляхом відкритих добросовісних переговорів.
+          </p>
+          <div class="legal-contact-box">
+            <div>
+              <h4>Служба турботи ZapysAI</h4>
+              <p>Відповімо на всі організаційні та комерційні запитання</p>
+            </div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">
+                <i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram
+              </a>
+              <a class="legal-btn legal-btn-ghost" href="mailto:support@zapysai.com">
+                <i class="ph ph-envelope-simple" aria-hidden="true"></i> support@zapysai.com
+              </a>
+            </div>
           </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<!-- ========================= ENGLISH CONTENT ========================= -->
+<div class="lang-view" data-lang="en">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html" class="nav-home-link">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Terms of Use</span>
+    </nav>
+
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-file-text" aria-hidden="true"></i> Official Document • Revision of 26 October 2026
+      </div>
+      <h1>Terms of Use</h1>
+      <p class="legal-hero-lead">
+        These Terms govern the relationship between ZapysAI and business owners, beauty studios, and specialists who use our software to automate customer communication, consultations, and appointment scheduling. We stand for fair, transparent agreements without hidden fees or lock-in contracts.
+      </p>
+
+      <div class="legal-highlights">
+        <div class="highlight-card">
+          <i class="ph ph-calendar-check" aria-hidden="true"></i>
+          <h4>14 Days Risk-Free</h4>
+          <p>Full access for the first two weeks on your own price list. No automatic credit card charges.</p>
         </div>
-      </section>
-    </article>
-  </div>
-</main>
+        <div class="highlight-card">
+          <i class="ph ph-handshake" aria-hidden="true"></i>
+          <h4>No Lock-In Contracts</h4>
+          <p>No annual commitments. Cancel your subscription at any time at your sole discretion.</p>
+        </div>
+        <div class="highlight-card">
+          <i class="ph ph-pause-circle" aria-hidden="true"></i>
+          <h4>1-Click Control</h4>
+          <p>Command /pause halts the bot instantly, and /close blocks calendar slots when you take time off.</p>
+        </div>
+        <div class="highlight-card">
+          <i class="ph ph-shield-check" aria-hidden="true"></i>
+          <h4>Master In Command</h4>
+          <p>You always stay in control: easily take over any client dialogue and continue speaking in person.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="legal-layout">
+      <aside class="legal-sidebar" aria-label="Table of contents">
+        <div class="toc-title"><i class="ph ph-list" aria-hidden="true"></i> Table of Contents</div>
+        <ul class="toc-list">
+          <li><a href="#en-terms-1">1. Acceptance of Terms</a></li>
+          <li><a href="#en-terms-2">2. Description of Services</a></li>
+          <li><a href="#en-terms-3">3. 14-Day Free Trial</a></li>
+          <li><a href="#en-terms-4">4. Plans, Billing & Pricing</a></li>
+          <li><a href="#en-terms-5">5. Studio Rules (Acceptable Use)</a></li>
+          <li><a href="#en-terms-6">6. Prohibited Activities</a></li>
+          <li><a href="#en-terms-7">7. Liability & Warranties</a></li>
+          <li><a href="#en-terms-8">8. Intellectual Property</a></li>
+          <li><a href="#en-terms-9">9. Suspension & Cancellation</a></li>
+          <li><a href="#en-terms-10">10. Governing Law & Contact</a></li>
+        </ul>
+      </aside>
+
+      <article class="legal-body">
+        <section class="legal-section" id="en-terms-1">
+          <h2><span class="sec-num">1.</span> Acceptance of Terms</h2>
+          <p class="lead-p">
+            This document constitutes a binding public offer and agreement by <strong>ZapysAI</strong> ("Service", "we", "us") governing the provision of automated digital assistant and appointment scheduling software (SaaS).
+          </p>
+          <p>
+            By submitting a form, connecting the bot to your Telegram Business or Instagram account, or paying for an active subscription, you ("User", "Studio") unconditionally agree to all terms outlined herein.
+          </p>
+        </section>
+
+        <section class="legal-section" id="en-terms-2">
+          <h2><span class="sec-num">2.</span> Description of Services</h2>
+          <p>ZapysAI provides a cloud software solution ("AI Receptionist") designed to handle:</p>
+          <ul>
+            <li>Automated answers in business channels (Instagram Direct, Telegram, and upon request Viber/WhatsApp).</li>
+            <li>Consultations according to the studio's verified price list, location, and procedural guidelines.</li>
+            <li>Slot availability checks and calendar bookings in connected calendars (Google Calendar, Altegio, Booksy, etc.).</li>
+            <li>Rescheduling and cancellations based on established studio rules.</li>
+            <li>Instant Telegram notifications to the master/administrator and immediate human takeover whenever complex, sensitive, or discount queries arise.</li>
+            <li>Weekly performance reports summarizing conversations, bookings, and off-hour inquiries.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-3">
+          <h2><span class="sec-num">3.</span> 14-Day Free Trial</h2>
+          <p>Every studio has the opportunity to evaluate the bot under real conditions without financial commitments:</p>
+          <ul>
+            <li><strong>Full 14-day access:</strong> Enjoy full access to features for the first two weeks completely free of charge.</li>
+            <li><strong>No credit card required upfront:</strong> We never ask for payment details before the trial ends, eliminating surprise charges.</li>
+            <li><strong>Internal stress-testing:</strong> Before opening the bot to real clients, test it yourself in a private Telegram chat with tricky questions.</li>
+            <li><strong>Free decision after trial:</strong> Continue only if satisfied with the results. If not, the bot pauses with no cancellation fees.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-4">
+          <h2><span class="sec-num">4.</span> Plans, Billing & Pricing</h2>
+          <p>The service is offered on a periodic subscription basis (monthly or annually) according to current pricing:</p>
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Plan</th>
+                  <th>Monthly Billing</th>
+                  <th>Annual Billing (Savings)</th>
+                  <th>Target Fit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Lite</strong></td>
+                  <td>2,499 UAH / 100 EUR</td>
+                  <td>20,000 UAH / 900 EUR</td>
+                  <td>1 messaging channel, 1 CRM, text conversations for solo masters</td>
+                </tr>
+                <tr>
+                  <td><strong>Medium</strong></td>
+                  <td>3,999 UAH / 160 EUR</td>
+                  <td>32,000 UAH / 1,440 EUR</td>
+                  <td>Voice-to-text, reminders, analytics, multi-master beauty salons</td>
+                </tr>
+                <tr>
+                  <td><strong>Pro</strong></td>
+                  <td>6,999 UAH / 200 EUR</td>
+                  <td>56,000 UAH / 1,800 EUR</td>
+                  <td>All channels combined, knowledge base, prepayments, waitlist, 24/7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ul>
+            <li>Subscriptions are billed in advance for the selected period (monthly or annually).</li>
+            <li>All fees include underlying AI language model operational costs and cloud infrastructure.</li>
+            <li>Custom knowledge base setup in the Pro tier may incur a one-time onboarding fee (~EUR 300), agreed upon prior to setup.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-5">
+          <h2><span class="sec-num">5.</span> Studio Rules (Acceptable Use)</h2>
+          <p>The Studio agrees to:</p>
+          <ul>
+            <li>Provide accurate and up-to-date pricing, service durations, and studio locations.</li>
+            <li>Promptly update price changes using the <code>/change</code> command or block closed days via <code>/close</code>.</li>
+            <li>Maintain proper authorization and admin credentials for connected social media channels.</li>
+            <li>Respond to client notifications whenever the bot flags a conversation as requiring personal master attention.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-6">
+          <h2><span class="sec-num">6.</span> Prohibited Activities</h2>
+          <p>You may not use ZapysAI for:</p>
+          <ul>
+            <li>Unsolicited outbound mass messaging (spam) or importing unverified recipient lists.</li>
+            <li>Distributing malicious code, deceptive commercial practices, or unlawful content.</li>
+            <li>Dispensing medical diagnosis or prescription advice without licensed doctor involvement.</li>
+            <li>Attempting to bypass security restrictions or reverse engineer platform algorithms.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-7">
+          <h2><span class="sec-num">7.</span> Liability & Warranties</h2>
+          <ul>
+            <li><strong>Pre-Send Verification:</strong> Our codebase verifies every price and slot against your data before dispatch. In case of missing data, the bot remains silent and forwards the query to you.</li>
+            <li><strong>Status of AI Assistant:</strong> Artificial intelligence functions as an automated administrative tool. Final responsibility for service quality rests with the studio.</li>
+            <li><strong>Third-Party Uptime:</strong> We cannot guarantee uninterrupted uptime caused by outages on Meta Platforms, Telegram Messenger, or Google Cloud services.</li>
+            <li><strong>Opportunity Calculator:</strong> Calculations on the landing page represent illustrative estimates based on user inputs and do not guarantee future revenue.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-8">
+          <h2><span class="sec-num">8.</span> Intellectual Property</h2>
+          <p>
+            All proprietary rights in the ZapysAI software, underlying code, visual design, and brand assets remain the exclusive property of ZapysAI.
+          </p>
+          <p>
+            The studio retains all rights, ownership, and copyright over its business name, trademarks, client lists, and procedural photography.
+          </p>
+        </section>
+
+        <section class="legal-section" id="en-terms-9">
+          <h2><span class="sec-num">9.</span> Suspension & Cancellation</h2>
+          <ul>
+            <li><strong>Temporary Pause:</strong> Stop automated replies at any moment with the <code>/pause</code> command in Telegram.</li>
+            <li><strong>Disconnection:</strong> Disconnect the integration anytime directly within Telegram or Instagram settings without requiring staff intervention.</li>
+            <li><strong>Subscription End:</strong> Cancel auto-renewal at any time prior to the next billing cycle by contacting support.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-terms-10">
+          <h2><span class="sec-num">10.</span> Governing Law & Contact</h2>
+          <p>
+            These Terms are governed by applicable commercial law and standard principles of digital services agreements. Parties shall resolve disputes through amicable negotiations.
+          </p>
+          <div class="legal-contact-box">
+            <div>
+              <h4>ZapysAI Customer Care</h4>
+              <p>Reach out with any operational or billing questions</p>
+            </div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">
+                <i class="ph ph-telegram-logo" aria-hidden="true"></i> Message on Telegram
+              </a>
+              <a class="legal-btn legal-btn-ghost" href="mailto:support@zapysai.com">
+                <i class="ph ph-envelope-simple" aria-hidden="true"></i> support@zapysai.com
+              </a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<!-- ========================= POLISH / SPANISH / RUSSIAN VIEWS ========================= -->
+<div class="lang-view" data-lang="pl">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Nawigacja">
+      <a href="index.html" class="nav-home-link">Strona główna</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Regulamin i warunki</span>
+    </nav>
+    <section class="legal-hero">
+      <div class="legal-meta-badge"><i class="ph ph-file-text"></i> Dokument oficjalny • 26 października 2026 r.</div>
+      <h1>Regulamin korzystania z ZapysAI</h1>
+      <p class="legal-hero-lead">Przejrzyste zasady współpracy: 14 dni bezpłatnego okresu próbnego, brak ukrytych opłat, możliwość rezygnacji w dowolnym momencie komendą /pause.</p>
+      <div class="legal-highlights">
+        <div class="highlight-card"><i class="ph ph-calendar-check"></i><h4>14 dni za darmo</h4><p>Testuj pełne możliwości bez podawania karty płatniczej.</p></div>
+        <div class="highlight-card"><i class="ph ph-handshake"></i><h4>Bez długich umów</h4><p>Brak umów rocznych – zrezygnuj, kiedy chcesz.</p></div>
+        <div class="highlight-card"><i class="ph ph-pause-circle"></i><h4>Kontrola 1 kliknięciem</h4><p>Komenda /pause natychmiast zatrzymuje bota.</p></div>
+        <div class="highlight-card"><i class="ph ph-shield-check"></i><h4>Kontrola salonu</h4><p>W każdej chwili możesz przejąć czat z klientką.</p></div>
+      </div>
+    </section>
+    <div class="legal-layout">
+      <aside class="legal-sidebar">
+        <div class="toc-title"><i class="ph ph-list"></i> Spis treści</div>
+        <ul class="toc-list">
+          <li><a href="#en-terms-1">1. Postanowienia (EN)</a></li>
+          <li><a href="#en-terms-3">2. Okres próbny (EN)</a></li>
+          <li><a href="#en-terms-4">3. Cennik i pakiety (EN)</a></li>
+          <li><a href="#en-terms-10">4. Kontakt</a></li>
+        </ul>
+      </aside>
+      <article class="legal-body">
+        <section class="legal-section">
+          <h2><span class="sec-num">1.</span> Oficjalny regulamin w języku angielskim</h2>
+          <div class="legal-callout good">Zapoznaj się z pełną wersją powyżej w języku angielskim lub przełącz język na Ukraiński w prawym górnym rogu.</div>
+          <div class="legal-contact-box">
+            <div><h4>Wsparcie ZapysAI</h4><p>support@zapysai.com • Telegram: @ZapysAI</p></div>
+            <div class="legal-contact-actions"><a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank"><i class="ph ph-telegram-logo"></i> Telegram</a></div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<div class="lang-view" data-lang="es">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Navegación">
+      <a href="index.html" class="nav-home-link">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Términos de uso</span>
+    </nav>
+    <section class="legal-hero">
+      <div class="legal-meta-badge"><i class="ph ph-file-text"></i> Documento oficial • 26 de octubre de 2026</div>
+      <h1>Términos de uso de ZapysAI</h1>
+      <p class="legal-hero-lead">Condiciones claras y transparentes: prueba gratuita de 14 días sin tarjeta, sin permanencia obligatoria y control total desde Telegram.</p>
+      <div class="legal-highlights">
+        <div class="highlight-card"><i class="ph ph-calendar-check"></i><h4>14 días gratis</h4><p>Prueba sin compromiso ni datos bancarios por adelantado.</p></div>
+        <div class="highlight-card"><i class="ph ph-handshake"></i><h4>Sin permanencia</h4><p>Cancela en cualquier momento sin penalizaciones.</p></div>
+        <div class="highlight-card"><i class="ph ph-pause-circle"></i><h4>Control en 1 clic</h4><p>El comando /pause detiene el asistente al instante.</p></div>
+        <div class="highlight-card"><i class="ph ph-shield-check"></i><h4>Tú mandas</h4><p>Intervén y continúa la conversación siempre que quieras.</p></div>
+      </div>
+    </section>
+    <div class="legal-layout">
+      <aside class="legal-sidebar">
+        <div class="toc-title"><i class="ph ph-list"></i> Contenido</div>
+        <ul class="toc-list">
+          <li><a href="#en-terms-1">1. Términos generales (EN)</a></li>
+          <li><a href="#en-terms-3">2. Periodo de prueba (EN)</a></li>
+          <li><a href="#en-terms-4">3. Precios y planes (EN)</a></li>
+          <li><a href="#en-terms-10">4. Contacto</a></li>
+        </ul>
+      </aside>
+      <article class="legal-body">
+        <section class="legal-section">
+          <h2><span class="sec-num">1.</span> Términos completos en inglés</h2>
+          <div class="legal-callout good">Consulta la versión oficial en inglés o cambia de idioma en la barra superior.</div>
+          <div class="legal-contact-box">
+            <div><h4>Atención al cliente</h4><p>support@zapysai.com • Telegram: @ZapysAI</p></div>
+            <div class="legal-contact-actions"><a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank"><i class="ph ph-telegram-logo"></i> Telegram</a></div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<div class="lang-view" data-lang="ru">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Навигация">
+      <a href="index.html" class="nav-home-link">Главная</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Условия использования</span>
+    </nav>
+    <section class="legal-hero">
+      <div class="legal-meta-badge"><i class="ph ph-file-text"></i> Официальный документ • 26 октября 2026 года</div>
+      <h1>Условия использования ZapysAI</h1>
+      <p class="legal-hero-lead">Прозрачные условия: 14 дней бесплатного теста без привязки карты, отсутствие годовых контрактов и управление ботом командами /pause и /close.</p>
+      <div class="legal-highlights">
+        <div class="highlight-card"><i class="ph ph-calendar-check"></i><h4>14 дней бесплатно</h4><p>Тестируйте на своём прайсе без ввода данных карты.</p></div>
+        <div class="highlight-card"><i class="ph ph-handshake"></i><h4>Без обязательств</h4><p>Без скрытых платежей, отмена в любой момент.</p></div>
+        <div class="highlight-card"><i class="ph ph-pause-circle"></i><h4>В один клик</h4><p>Команда /pause сразу останавливает бота.</p></div>
+        <div class="highlight-card"><i class="ph ph-shield-check"></i><h4>Полный контроль</h4><p>Вы можете перехватить диалог в Telegram в любую секунду.</p></div>
+      </div>
+    </section>
+    <div class="legal-layout">
+      <aside class="legal-sidebar">
+        <div class="toc-title"><i class="ph ph-list"></i> Содержание</div>
+        <ul class="toc-list">
+          <li><a href="#uk-terms-1">1. Принятие условий</a></li>
+          <li><a href="#uk-terms-3">2. Тестовый период</a></li>
+          <li><a href="#uk-terms-4">3. Тарифы и оплата</a></li>
+          <li><a href="#uk-terms-10">4. Контакты</a></li>
+        </ul>
+      </aside>
+      <article class="legal-body">
+        <section class="legal-section">
+          <h2><span class="sec-num">1.</span> Полный текст соглашения</h2>
+          <p class="lead-p">Подробные условия соглашения доступны в украинской и английской версиях. Выберите нужный язык в меню сверху.</p>
+          <div class="legal-contact-box">
+            <div><h4>Поддержка ZapysAI</h4><p>support@zapysai.com • Telegram: @ZapysAI</p></div>
+            <div class="legal-contact-actions"><a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank"><i class="ph ph-telegram-logo"></i> Написать в Telegram</a></div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
 
 <footer class="legal-footer">
   <div class="container legal-footer-inner">
-    <p>© 2026 ZapysAI. Всі права захищено.</p>
+    <p>© 2026 ZapysAI. <span id="rightsText">Всі права захищено.</span></p>
     <ul class="legal-footer-links">
-      <li><a href="index.html">Головна</a></li>
-      <li><a href="privacy.html">Політика конфіденційності</a></li>
-      <li><a href="terms.html" style="font-weight: 600; color: var(--ink);">Умови використання</a></li>
+      <li><a href="index.html" class="nav-home-link" id="footerHomeLink">Головна</a></li>
+      <li><a href="privacy.html" id="footerPrivacyLink">Політика конфіденційності</a></li>
+      <li><a href="terms.html" id="footerTermsLink" style="font-weight: 600; color: var(--ink);">Умови використання</a></li>
       <li><a href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">Telegram</a></li>
     </ul>
   </div>
@@ -283,6 +629,58 @@
 (function () {
   var root = document.documentElement;
   var themeBtn = document.getElementById("themeBtn");
+  var langBtn = document.getElementById("langBtn");
+  var langMenu = document.getElementById("langMenu");
+  var langCur = document.getElementById("langCur");
+  var langOptions = Array.prototype.slice.call(langMenu.querySelectorAll("button"));
+  var backBtn = document.getElementById("backBtn");
+  var backText = document.getElementById("backText");
+  var rightsText = document.getElementById("rightsText");
+  var footerHomeLink = document.getElementById("footerHomeLink");
+  var footerPrivacyLink = document.getElementById("footerPrivacyLink");
+  var footerTermsLink = document.getElementById("footerTermsLink");
+
+  var i18nNav = {
+    uk: { back: "На головну", rights: "Всі права захищено.", home: "Головна", privacy: "Політика конфіденційності", terms: "Умови використання", title: "Умови використання — ZapysAI" },
+    en: { back: "Back to home", rights: "All rights reserved.", home: "Home", privacy: "Privacy Policy", terms: "Terms of Use", title: "Terms of Use — ZapysAI" },
+    pl: { back: "Strona główna", rights: "Wszelkie prawa zastrzeżone.", home: "Strona główna", privacy: "Polityka prywatności", terms: "Regulamin i warunki", title: "Regulamin i warunki — ZapysAI" },
+    es: { back: "Volver al inicio", rights: "Todos los derechos reservados.", home: "Inicio", privacy: "Política de privacidad", terms: "Términos de uso", title: "Términos de uso — ZapysAI" },
+    ru: { back: "На главную", rights: "Все права защищены.", home: "Главная", privacy: "Политика конфиденциальности", terms: "Условия использования", title: "Условия использования — ZapysAI" }
+  };
+
+  function setPageLang(l, save) {
+    if (!i18nNav[l]) l = "uk";
+    root.lang = l;
+    root.setAttribute("data-current-lang", l);
+    langCur.textContent = l.toUpperCase().replace("UK", "UA");
+    langOptions.forEach(function (btn) {
+      btn.setAttribute("aria-selected", btn.getAttribute("data-l") === l ? "true" : "false");
+    });
+
+    var meta = i18nNav[l];
+    document.title = meta.title;
+    if (backText) backText.textContent = meta.back;
+    if (rightsText) rightsText.textContent = meta.rights;
+    if (footerHomeLink) footerHomeLink.textContent = meta.home;
+    if (footerPrivacyLink) footerPrivacyLink.textContent = meta.privacy;
+    if (footerTermsLink) footerTermsLink.textContent = meta.terms;
+
+    // Update links with ?lang= parameter
+    document.querySelectorAll(".nav-home-link, #homeBrand, #backBtn").forEach(function (a) {
+      a.href = "index.html?lang=" + l;
+    });
+    if (footerTermsLink) footerTermsLink.href = "terms.html?lang=" + l;
+    if (footerPrivacyLink) footerPrivacyLink.href = "privacy.html?lang=" + l;
+
+    if (save) {
+      try {
+        localStorage.setItem("lang", l);
+        history.replaceState(null, "", "?lang=" + l);
+      } catch (e) {}
+    }
+  }
+
+  // Theme handling
   function setTheme(t, save) {
     if (t === "dark") root.setAttribute("data-theme", "dark");
     else root.removeAttribute("data-theme");
@@ -300,24 +698,53 @@
   }
   setTheme(root.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
 
-  // Active link scroll spy for TOC
-  var links = document.querySelectorAll(".toc-list a");
-  var sections = [];
-  links.forEach(function (link) {
-    var target = document.querySelector(link.getAttribute("href"));
-    if (target) sections.push({ link: link, target: target });
+  // Language Menu interaction
+  function menu(open) {
+    langMenu.hidden = !open;
+    langBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  langBtn.addEventListener("click", function () { menu(langMenu.hidden); });
+  langOptions.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      menu(false);
+      langBtn.focus();
+      setPageLang(btn.getAttribute("data-l"), true);
+    });
+  });
+  document.addEventListener("click", function (e) {
+    if (!langMenu.hidden && !e.target.closest(".lang-wrap")) menu(false);
   });
 
-  window.addEventListener("scroll", function () {
-    var scrollPos = window.scrollY + 140;
-    for (var i = sections.length - 1; i >= 0; i--) {
-      if (sections[i].target.offsetTop <= scrollPos) {
-        links.forEach(function (l) { l.classList.remove("active"); });
-        sections[i].link.classList.add("active");
-        break;
+  // Initial language
+  var initial = "uk";
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    initial = (q && i18nNav[q]) ? q : (i18nNav[localStorage.getItem("lang")] ? localStorage.getItem("lang") : "uk");
+  } catch (e) {}
+  setPageLang(initial, false);
+
+  // Active link scroll spy
+  function setupScrollSpy() {
+    var activeView = document.querySelector('.lang-view[data-lang="' + root.getAttribute("data-current-lang") + '"]') || document.querySelector('.lang-view[data-lang="uk"]');
+    if (!activeView) return;
+    var links = activeView.querySelectorAll(".toc-list a");
+    var sections = [];
+    links.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) sections.push({ link: link, target: target });
+    });
+    window.addEventListener("scroll", function () {
+      var scrollPos = window.scrollY + 140;
+      for (var i = sections.length - 1; i >= 0; i--) {
+        if (sections[i].target.offsetTop <= scrollPos) {
+          links.forEach(function (l) { l.classList.remove("active"); });
+          sections[i].link.classList.add("active");
+          break;
+        }
       }
-    }
-  }, { passive: true });
+    }, { passive: true });
+  }
+  setupScrollSpy();
 })();
 </script>
 

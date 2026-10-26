@@ -1562,6 +1562,10 @@ window.CONFIG = {
     if (!currencyChosen) currency = lang === "uk" || lang === "ru" ? "UAH" : "EUR";
     refreshPricing();
     if (!$("lead-form").querySelector(".form-done")) { $("f-submit").textContent = DICT[lang][index["Надіслати заявку"]]; }
+    document.querySelectorAll('a[href*="privacy.html"], a[href*="terms.html"]').forEach(function (a) {
+      var base = a.getAttribute("href").split("?")[0].split("#")[0];
+      a.setAttribute("href", base + "?lang=" + lang);
+    });
     if (save) { try { localStorage.setItem("lang", lang); } catch (e) {} }
     play(cur, false);publishLandingState();
   }

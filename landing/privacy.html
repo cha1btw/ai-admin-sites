@@ -3,15 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Політика конфіденційності — ZapysAI</title>
-<meta name="description" content="Політика конфіденційності та захисту персональних даних сервісу ZapysAI. Безпека даних клієнтів, офіційні API Meta та Telegram, сервери в ЄС.">
+<title>Privacy Policy — ZapysAI</title>
+<meta name="description" content="Privacy Policy of ZapysAI. Security of customer data, official Meta & Telegram APIs, EU-based servers.">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="uk_UA">
-<meta property="og:title" content="Політика конфіденційності — ZapysAI">
-<meta property="og:description" content="Політика конфіденційності та захисту персональних даних сервісу ZapysAI. Безпека даних клієнтів, офіційні API Meta та Telegram, сервери в ЄС.">
+<meta property="og:title" content="Privacy Policy — ZapysAI">
+<meta property="og:description" content="Privacy Policy of ZapysAI. Security of customer data, official Meta & Telegram APIs, EU-based servers.">
 <meta name="theme-color" content="#f7f4ed">
 <meta property="og:site_name" content="ZapysAI">
-<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<script>
+(function(){
+  try{
+    var t=localStorage.getItem("theme");
+    if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);
+    var p=new URLSearchParams(location.search).get("lang")||localStorage.getItem("lang")||"uk";
+    if(["uk","en","pl","es","ru"].indexOf(p)<0)p="uk";
+    document.documentElement.lang=p;
+    document.documentElement.setAttribute("data-current-lang",p);
+  }catch(e){}
+})();
+</script>
 <link rel="icon" type="image/png" href="assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,267 +34,641 @@
 
 <header class="legal-nav">
   <div class="container legal-nav-inner">
-    <a class="legal-brand" href="index.html" aria-label="ZapysAI, на головну">
+    <a class="legal-brand" id="homeBrand" href="index.html" aria-label="ZapysAI">
       <span class="legal-brand-mark"><img src="assets/avatar.png" width="40" height="40" alt="ZapysAI"></span>
       <span>Zapys<span class="legal-brand-ai">AI</span></span>
     </a>
     <div class="legal-nav-actions">
-      <a class="btn-back" href="index.html"><i class="ph ph-arrow-left" aria-hidden="true"></i> На головну</a>
-      <button class="theme-toggle-btn" id="themeBtn" type="button" aria-label="Змінити тему інтерфейсу">
+      <a class="btn-back" id="backBtn" href="index.html"><i class="ph ph-arrow-left" aria-hidden="true"></i> <span id="backText">На головну</span></a>
+      <div class="lang-wrap">
+        <button class="lang-btn" id="langBtn" type="button" aria-label="Language" aria-haspopup="listbox" aria-expanded="false">
+          <i class="ph ph-globe" aria-hidden="true"></i><span id="langCur">UA</span><i class="ph ph-caret-down caret" aria-hidden="true"></i>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Language selection" hidden>
+          <li><button type="button" role="option" data-l="uk"><b>UA</b>Українська</button></li>
+          <li><button type="button" role="option" data-l="en"><b>EN</b>English</button></li>
+          <li><button type="button" role="option" data-l="pl"><b>PL</b>Polski</button></li>
+          <li><button type="button" role="option" data-l="es"><b>ES</b>Español</button></li>
+          <li><button type="button" role="option" data-l="ru"><b>RU</b>Русский</button></li>
+        </ul>
+      </div>
+      <button class="theme-toggle-btn" id="themeBtn" type="button" aria-label="Toggle theme">
         <i class="ph ph-moon" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 </header>
 
-<main class="container" id="top">
-  <nav class="breadcrumb" aria-label="Навігаційний ланцюжок">
-    <a href="index.html">Головна</a>
-    <span aria-hidden="true">/</span>
-    <span aria-current="page">Політика конфіденційності</span>
-  </nav>
+<!-- ========================= UKRAINIAN CONTENT ========================= -->
+<div class="lang-view" data-lang="uk">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Навігаційний ланцюжок">
+      <a href="index.html" class="nav-home-link">Головна</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Політика конфіденційності</span>
+    </nav>
 
-  <section class="legal-hero">
-    <div class="legal-meta-badge">
-      <i class="ph ph-shield-check" aria-hidden="true"></i> Офіційний документ • Редакція від 26 жовтня 2026 року
-    </div>
-    <h1>Політика конфіденційності</h1>
-    <p class="legal-hero-lead">
-      У ZapysAI ми будуємо сервіс на принципах повної прозорості та поваги до приватності. Ми розробили цю Політику, щоб ви чітко розуміли, які дані збираються, як вони захищаються та чому ми ніколи не використовуємо інформацію ваших клієнтів для сторонніх цілей чи спаму.
-    </p>
-
-    <div class="legal-highlights">
-      <div class="highlight-card">
-        <i class="ph ph-buildings" aria-hidden="true"></i>
-        <h4>Сервери в ЄС (GDPR)</h4>
-        <p>Дані зберігаються виключно в захищених дата-центрах Європейського Союзу відповідно до регламенту GDPR.</p>
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-shield-check" aria-hidden="true"></i> Офіційний документ • Редакція від 26 жовтня 2026 року
       </div>
-      <div class="highlight-card">
-        <i class="ph ph-check-circle" aria-hidden="true"></i>
-        <h4>Офіційні API платформ</h4>
-        <p>Інтеграція тільки через офіційний Meta Graph API та Telegram Bot API. Жодних сірих додатків на телефонах.</p>
-      </div>
-      <div class="highlight-card">
-        <i class="ph ph-prohibit" aria-hidden="true"></i>
-        <h4>Без спаму та розсилок</h4>
-        <p>Бот відповідає виключно тим людям, які звернулися самостійно. Ми ніколи не пишемо першими.</p>
-      </div>
-      <div class="highlight-card">
-        <i class="ph ph-lock-key" aria-hidden="true"></i>
-        <h4>Захист AI-контексту</h4>
-        <p>Діалоги клієнтів не передаються на навчання загальних відкритих моделей штучного інтелекту.</p>
-      </div>
-    </div>
-  </section>
+      <h1>Політика конфіденційності</h1>
+      <p class="legal-hero-lead">
+        У ZapysAI ми будуємо сервіс на принципах повної прозорості та поваги до приватності. Ми розробили цю Політику, щоб ви чітко розуміли, які дані збираються, як вони захищаються та чому ми ніколи не використовуємо інформацію ваших клієнтів для сторонніх цілей чи спаму.
+      </p>
 
-  <div class="legal-layout">
-    <aside class="legal-sidebar" aria-label="Зміст документа">
-      <div class="toc-title"><i class="ph ph-list" aria-hidden="true"></i> Зміст</div>
-      <ul class="toc-list">
-        <li><a href="#sec-1">1. Загальні положення</a></li>
-        <li><a href="#sec-2">2. Які дані ми збираємо</a></li>
-        <li><a href="#sec-3">3. Мета та правові підстави обробки</a></li>
-        <li><a href="#sec-4">4. Офіційні API та безпека каналів</a></li>
-        <li><a href="#sec-5">5. Штучний інтелект та конфіденційність</a></li>
-        <li><a href="#sec-6">6. Зберігання, захист та видалення</a></li>
-        <li><a href="#sec-7">7. Права суб'єктів даних</a></li>
-        <li><a href="#sec-8">8. Файли cookie та localStorage</a></li>
-        <li><a href="#sec-9">9. Зміни до цієї Політики</a></li>
-        <li><a href="#sec-10">10. Контактна інформація</a></li>
-      </ul>
-    </aside>
-
-    <article class="legal-body">
-      <section class="legal-section" id="sec-1">
-        <h2><span class="sec-num">1.</span> Загальні положення</h2>
-        <p class="lead-p">
-          Ця Політика конфіденційності (далі — «Політика») визначає порядок отримання, зберігання, обробки, використання та розкриття персональних даних користувачів сервісу <strong>ZapysAI</strong> (веб-сайт, боти, програмні модулі та супутні послуги).
-        </p>
-        <p>
-          Володільцем та розпорядником персональних даних користувачів сайту є команда проєкту ZapysAI (далі — «Сервіс», «ми», «нас»). Для студій, салонів краси та приватних майстрів, які підключають нашого бота (далі — «Клієнти сервісу» або «Студії»), ми діємо як технічний обробник (Data Processor) щодо даних кінцевих клієнток та клієнтів, які ведуть листування зі студією.
-        </p>
-        <p>
-          Користуючись нашим сайтом або підключаючи сервіс ZapysAI, ви підтверджуєте, що ознайомилися з умовами цієї Політики та погоджуєтеся на обробку відповідних даних згідно з її положеннями.
-        </p>
-      </section>
-
-      <section class="legal-section" id="sec-2">
-        <h2><span class="sec-num">2.</span> Які дані ми збираємо</h2>
-        <p>
-          Залежно від того, як саме ви взаємодієте із ZapysAI, ми обробляємо такі категорії інформації:
-        </p>
-        <h3>2.1. Дані відвідувачів сайту та лідів</h3>
-        <ul>
-          <li><strong>Контактні дані із форми заявки:</strong> ім'я, контактний телефон або нікнейм у Telegram (@username), назва студії (необов'язково), обраний тариф, валюта розрахунків та коментар.</li>
-          <li><strong>Технічні параметри:</strong> обрана мова інтерфейсу, уподобання теми (світла/темна), час відвідування та знеособлені технічні логи веб-сервера.</li>
-        </ul>
-
-        <h3>2.2. Дані для налаштування бота студії</h3>
-        <ul>
-          <li>Прайс-лист студії, перелік послуг, тривалість процедур, імена майстрів та правила скасування/передоплати.</li>
-          <li>Розклад вільних вікон (через синхронізацію з Google Календарем або іншою підключеною CRM).</li>
-          <li>Технічні токени авторизації офіційних API Instagram Graph API та Telegram Bot API для надсилання та отримання повідомлень.</li>
-        </ul>
-
-        <h3>2.3. Дані комунікації з кінцевими клієнтами студії</h3>
-        <ul>
-          <li>Ідентифікатор користувача у відповідній мережі (Instagram Scoped ID або Telegram Chat ID).</li>
-          <li>Ім'я або нікнейм клієнта (якщо зазначено у профілі месенджера).</li>
-          <li>Текст повідомлень, запитів на запис, обрані дати та час послуги.</li>
-        </ul>
-
-        <div class="legal-callout">
-          <strong>Важливо:</strong> ZapysAI не збирає та не обробляє платіжні дані банківських карток (CVV, повні номери карток). Усі передоплати, якщо вони підключені у Pro-тарифі, здійснюються через акредитовані платіжні шлюзи (WayForPay, Stripe або Monobank) на їхніх захищених платіжних сторінках.
+      <div class="legal-highlights">
+        <div class="highlight-card">
+          <i class="ph ph-buildings" aria-hidden="true"></i>
+          <h4>Сервери в ЄС (GDPR)</h4>
+          <p>Дані зберігаються виключно в захищених дата-центрах Європейського Союзу відповідно до регламенту GDPR.</p>
         </div>
-      </section>
-
-      <section class="legal-section" id="sec-3">
-        <h2><span class="sec-num">3.</span> Мета та правові підстави обробки</h2>
-        <p>Ми використовуємо зібрану інформацію виключно для таких законних цілей:</p>
-        <ul>
-          <li><strong>Надання послуг сервісу:</strong> автоматична обробка звернень клієнтів у месенджерах, бронювання слотів у календарі, перенесення та скасування записів.</li>
-          <li><strong>Зв'язок із власниками студій:</strong> консультація, налаштування бота на вашому прайсі, сповіщення про роботу сервісу, щотижневі звіти про записи.</li>
-          <li><strong>Виконання договору та підготовка до нього:</strong> надання 14-денного безкоштовного ознайомчого періоду та подальше супроводження обраного тарифного плану.</li>
-          <li><strong>Законний інтерес (Legitimate Interest):</strong> запобігання технічним збоям, забезпечення інформаційної безпеки та стабільності роботи системи.</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-4">
-        <h2><span class="sec-num">4.</span> Офіційні API та безпека каналів</h2>
-        <p>
-          Однією з фундаментальних гарантій нашого сервісу є безпека ваших акаунтів від блокувань і санкцій з боку соціальних мереж:
-        </p>
-        <ul>
-          <li><strong>Офіційний Meta Graph API для Instagram:</strong> підключення здійснюється через авторизований бізнес-інтерфейс Meta. Ми не вимагаємо пароль від вашого особистого облікового запису та не встановлюємо сторонні емулятори на ваш смартфон.</li>
-          <li><strong>Офіційний Telegram Bot API:</strong> робота у Telegram ведеться в межах протоколів Telegram Business та офіційного Bot API.</li>
-          <li><strong>Принцип «Відповідь тільки на вхідні»:</strong> бот ZapysAI суворо запрограмований відповідати тільки тим користувачам, які самостійно написали до директу студії. Бот технічно не підтримує спам-розсилки по холодних базах.</li>
-          <li><strong>Передача діалогу людині:</strong> якщо майстер або адміністратор починає писати клієнту самостійно, бот миттєво призупиняє відповіді та не втручається в діалог людини.</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-5">
-        <h2><span class="sec-num">5.</span> Штучний інтелект та конфіденційність</h2>
-        <p>
-          ZapysAI використовує сучасні мовні моделі штучного інтелекту, проте з жорсткими обмеженнями безпеки:
-        </p>
-        <ul>
-          <li><strong>Верифікація цін і даних:</strong> модель не «вигадує» власні ціни, контакти чи правила. Перед відправкою кожного повідомлення програмний код перевіряє зазначені суми та час згідно із завантаженим прайсом студії.</li>
-          <li><strong>Захист від донавчання:</strong> персональні дані ваших клієнтів не використовуються для тренування публічних відкритих моделей штучного інтелекту. Запити до API обробляються з увімкненим режимом конфіденційності (Zero Data Retention для навчання).</li>
-          <li><strong>Чесна ідентифікація:</strong> бот не видає себе за людину й чесно повідомляє, що є AI-асистентом студії. Складні, медичні чи емоційні запитання одразу передаються людині.</li>
-        </ul>
-      </section>
-
-      <section class="legal-section" id="sec-6">
-        <h2><span class="sec-num">6.</span> Зберігання, захист та видалення даних</h2>
-        <p>
-          Безпека та конфіденційність ваших даних підтверджується такими заходами:
-        </p>
-        <div class="legal-table-wrap">
-          <table class="legal-table">
-            <thead>
-              <tr>
-                <th>Категорія даних</th>
-                <th>Де зберігаються</th>
-                <th>Термін зберігання</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Листування клієнтів з ботом</td>
-                <td>Хмарні сервери в дата-центрах ЄС (AWS / Hetzner)</td>
-                <td>Автоматичне очищення кожні 30-90 днів або на запит</td>
-              </tr>
-              <tr>
-                <td>Прайс-лист і графік студії</td>
-                <td>Зашифрована база даних (PostgreSQL / Redis)</td>
-                <td>Протягом дії підписки або до видалення акаунта</td>
-              </tr>
-              <tr>
-                <td>Записи в календарі</td>
-                <td>Синхронізовані в Google Calendar / CRM студії</td>
-                <td>Згідно з налаштуваннями календаря самої студії</td>
-              </tr>
-              <tr>
-                <td>Заявки з форми лендингу</td>
-                <td>Захищені журнали лідів</td>
-                <td>До завершення комунікації або 180 днів</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="highlight-card">
+          <i class="ph ph-check-circle" aria-hidden="true"></i>
+          <h4>Офіційні API платформ</h4>
+          <p>Інтеграція тільки через офіційний Meta Graph API та Telegram Bot API. Жодних сірих додатків на телефонах.</p>
         </div>
-        <p>
-          Усі з'єднання шифруються за сучасними протоколами HTTPS / TLS 1.3. Доступ до технічної інфраструктури суворо обмежений і захищений багатофакторною автентифікацією.
-        </p>
-      </section>
+        <div class="highlight-card">
+          <i class="ph ph-prohibit" aria-hidden="true"></i>
+          <h4>Без спаму та розсилок</h4>
+          <p>Бот відповідає виключно тим людям, які звернулися самостійно. Ми ніколи не пишемо першими.</p>
+        </div>
+        <div class="highlight-card">
+          <i class="ph ph-lock-key" aria-hidden="true"></i>
+          <h4>Захист AI-контексту</h4>
+          <p>Діалоги клієнтів не передаються на навчання загальних відкритих моделей штучного інтелекту.</p>
+        </div>
+      </div>
+    </section>
 
-      <section class="legal-section" id="sec-7">
-        <h2><span class="sec-num">7.</span> Права суб'єктів даних</h2>
-        <p>
-          Відповідно до Закону України «Про захист персональних даних» та Загального регламенту захисту даних (GDPR), ви та ваші клієнти маєте повний спектр прав:
-        </p>
-        <ul>
-          <li><strong>Право на доступ:</strong> ви можете отримати підтвердження факту обробки та копію ваших персональних даних.</li>
-          <li><strong>Право на виправлення:</strong> ви можете оновити неточні або застарілі дані (наприклад, командою <code>/change</code>).</li>
-          <li><strong>Право на видалення («Право бути забутим»):</strong> за вашим зверненням або зверненням конкретного клієнта всі пов'язані персональні дані видаляються протягом 72 годин.</li>
-          <li><strong>Право на обмеження та відкликання згоди:</strong> ви можете зупинити роботу бота командою <code>/pause</code> або повністю відключити інтеграцію в будь-який момент.</li>
+    <div class="legal-layout">
+      <aside class="legal-sidebar" aria-label="Зміст документа">
+        <div class="toc-title"><i class="ph ph-list" aria-hidden="true"></i> Зміст</div>
+        <ul class="toc-list">
+          <li><a href="#uk-sec-1">1. Загальні положення</a></li>
+          <li><a href="#uk-sec-2">2. Які дані ми збираємо</a></li>
+          <li><a href="#uk-sec-3">3. Мета та правові підстави</a></li>
+          <li><a href="#uk-sec-4">4. Офіційні API та безпека</a></li>
+          <li><a href="#uk-sec-5">5. Штучний інтелект та приватність</a></li>
+          <li><a href="#uk-sec-6">6. Зберігання, захист та видалення</a></li>
+          <li><a href="#uk-sec-7">7. Права суб'єктів даних</a></li>
+          <li><a href="#uk-sec-8">8. Файли cookie та localStorage</a></li>
+          <li><a href="#uk-sec-9">9. Зміни до цієї Політики</a></li>
+          <li><a href="#uk-sec-10">10. Контактна інформація</a></li>
         </ul>
-      </section>
+      </aside>
 
-      <section class="legal-section" id="sec-8">
-        <h2><span class="sec-num">8.</span> Файли cookie та локальне сховище</h2>
-        <p>
-          Наш сайт не використовує нав'язливі рекламні пікселі чи шпигунські трекери. Ми застосовуємо виключно технічні сховища браузера:
-        </p>
-        <ul>
-          <li><code>localStorage.getItem("theme")</code> — зберігає обрану вами тему оформлення (світла або темна).</li>
-          <li><code>localStorage.getItem("lang")</code> — зберігає обрану мову інтерфейсу для вашої зручності.</li>
-        </ul>
-        <p>
-          Ці дані залишаються виключно на вашому пристрої та не передаються третім сторонам.
-        </p>
-      </section>
+      <article class="legal-body">
+        <section class="legal-section" id="uk-sec-1">
+          <h2><span class="sec-num">1.</span> Загальні положення</h2>
+          <p class="lead-p">
+            Ця Політика конфіденційності (далі — «Політика») визначає порядок отримання, зберігання, обробки, використання та розкриття персональних даних користувачів сервісу <strong>ZapysAI</strong> (веб-сайт, боти, програмні модулі та супутні послуги).
+          </p>
+          <p>
+            Володільцем та розпорядником персональних даних користувачів сайту є команда проєкту ZapysAI (далі — «Сервіс», «ми», «нас»). Для студій, салонів краси та приватних майстрів, які підключають нашого бота (далі — «Клієнти сервісу» або «Студії»), ми діємо як технічний обробник (Data Processor) щодо даних кінцевих клієнток та клієнтів, які ведуть листування зі студією.
+          </p>
+          <p>
+            Користуючись нашим сайтом або підключаючи сервіс ZapysAI, ви підтверджуєте, що ознайомилися з умовами цієї Політики та погоджуєтеся на обробку відповідних даних згідно з її положеннями.
+          </p>
+        </section>
 
-      <section class="legal-section" id="sec-9">
-        <h2><span class="sec-num">9.</span> Зміни до цієї Політики</h2>
-        <p>
-          Ми можемо періодично оновлювати цю Політику конфіденційності у зв'язку з удосконаленням функціоналу або змінами в законодавстві. Актуальна версія документа завжди публікується на цій сторінці з позначкою дати останньої редакції.
-        </p>
-        <p>
-          Якщо зміни будуть суттєвими, ми повідомимо користувачів через наш офіційний Telegram-канал або сповіщення в боті.
-        </p>
-      </section>
+        <section class="legal-section" id="uk-sec-2">
+          <h2><span class="sec-num">2.</span> Які дані ми збираємо</h2>
+          <p>Залежно від того, як саме ви взаємодієте із ZapysAI, ми обробляємо такі категорії інформації:</p>
+          <h3>2.1. Дані відвідувачів сайту та лідів</h3>
+          <ul>
+            <li><strong>Контактні дані із форми заявки:</strong> ім'я, контактний телефон або нікнейм у Telegram (@username), назва студії (необов'язково), обраний тариф, валюта розрахунків та коментар.</li>
+            <li><strong>Технічні параметри:</strong> обрана мова інтерфейсу, уподобання теми (світла/темна), час відвідування та знеособлені технічні логи веб-сервера.</li>
+          </ul>
 
-      <section class="legal-section" id="sec-10">
-        <h2><span class="sec-num">10.</span> Контактна інформація</h2>
-        <p>
-          З усіх питань, що стосуються захисту персональних даних, видалення листування або реалізації прав суб'єкта даних, ви можете звернутися до нашої служби підтримки:
-        </p>
-        <div class="legal-contact-box">
-          <div>
-            <h4>Служба захисту даних ZapysAI</h4>
-            <p>Питання конфіденційності, видалення або експорту даних</p>
+          <h3>2.2. Дані для налаштування бота студії</h3>
+          <ul>
+            <li>Прайс-лист студії, перелік послуг, тривалість процедур, імена майстрів та правила скасування/передоплати.</li>
+            <li>Розклад вільних вікон (через синхронізацію з Google Календарем або іншою підключеною CRM).</li>
+            <li>Технічні токени авторизації офіційних API Instagram Graph API та Telegram Bot API для надсилання та отримання повідомлень.</li>
+          </ul>
+
+          <h3>2.3. Дані комунікації з кінцевими клієнтами студії</h3>
+          <ul>
+            <li>Ідентифікатор користувача у відповідній мережі (Instagram Scoped ID або Telegram Chat ID).</li>
+            <li>Ім'я або нікнейм клієнта (якщо зазначено у профілі месенджера).</li>
+            <li>Текст повідомлень, запитів на запис, обрані дати та час послуги.</li>
+          </ul>
+
+          <div class="legal-callout">
+            <strong>Важливо:</strong> ZapysAI не збирає та не обробляє платіжні дані банківських карток (CVV, повні номери карток). Усі передоплати, якщо вони підключені у Pro-тарифі, здійснюються через акредитовані платіжні шлюзи (WayForPay, Stripe або Monobank) на їхніх захищених платіжних сторінках.
           </div>
-          <div class="legal-contact-actions">
-            <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">
-              <i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram
-            </a>
-            <a class="legal-btn legal-btn-ghost" href="mailto:privacy@zapysai.com">
-              <i class="ph ph-envelope-simple" aria-hidden="true"></i> privacy@zapysai.com
-            </a>
+        </section>
+
+        <section class="legal-section" id="uk-sec-3">
+          <h2><span class="sec-num">3.</span> Мета та правові підстави обробки</h2>
+          <p>Ми використовуємо зібрану інформацію виключно для таких законних цілей:</p>
+          <ul>
+            <li><strong>Надання послуг сервісу:</strong> автоматична обробка звернень клієнтів у месенджерах, бронювання слотів у календарі, перенесення та скасування записів.</li>
+            <li><strong>Зв'язок із власниками студій:</strong> консультація, налаштування бота на вашому прайсі, сповіщення про роботу сервісу, щотижневі звіти про записи.</li>
+            <li><strong>Виконання договору та підготовка до нього:</strong> надання 14-денного безкоштовного ознайомчого періоду та подальше супроводження обраного тарифного плану.</li>
+            <li><strong>Законний інтерес (Legitimate Interest):</strong> запобігання технічним збоям, забезпечення інформаційної безпеки та стабільності роботи системи.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-sec-4">
+          <h2><span class="sec-num">4.</span> Офіційні API та безпека каналів</h2>
+          <p>Однією з фундаментальних гарантій нашого сервісу є безпека ваших акаунтів від блокувань і санкцій з боку соціальних мереж:</p>
+          <ul>
+            <li><strong>Офіційний Meta Graph API для Instagram:</strong> підключення здійснюється через авторизований бізнес-інтерфейс Meta. Ми не вимагаємо пароль від вашого особистого облікового запису та не встановлюємо сторонні емулятори на ваш смартфон.</li>
+            <li><strong>Офіційний Telegram Bot API:</strong> робота у Telegram ведеться в межах протоколів Telegram Business та офіційного Bot API.</li>
+            <li><strong>Принцип «Відповідь тільки на вхідні»:</strong> бот ZapysAI суворо запрограмований відповідати тільки тим користувачам, які самостійно написали до директу студії. Бот технічно не підтримує спам-розсилки по холодних базах.</li>
+            <li><strong>Передача діалогу людині:</strong> якщо майстер або адміністратор починає писати клієнту самостійно, бот миттєво призупиняє відповіді та не втручається в діалог людини.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-sec-5">
+          <h2><span class="sec-num">5.</span> Штучний інтелект та конфіденційність</h2>
+          <p>ZapysAI використовує сучасні мовні моделі штучного інтелекту, проте з жорсткими обмеженнями безпеки:</p>
+          <ul>
+            <li><strong>Верифікація цін і даних:</strong> модель не «вигадує» власні ціни, контакти чи правила. Перед відправкою кожного повідомлення програмний код перевіряє зазначені суми та час згідно із завантаженим прайсом студії.</li>
+            <li><strong>Захист від донавчання:</strong> персональні дані ваших клієнтів не використовуються для тренування публічних відкритих моделей штучного інтелекту. Запити до API обробляються з увімкненим режимом конфіденційності (Zero Data Retention для навчання).</li>
+            <li><strong>Чесна ідентифікація:</strong> бот не видає себе за людину й чесно повідомляє, що є AI-асистентом студії. Складні, медичні чи емоційні запитання одразу передаються людині.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-sec-6">
+          <h2><span class="sec-num">6.</span> Зберігання, захист та видалення даних</h2>
+          <p>Безпека та конфіденційність ваших даних підтверджується такими заходами:</p>
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Категорія даних</th>
+                  <th>Де зберігаються</th>
+                  <th>Термін зберігання</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Листування клієнтів з ботом</td>
+                  <td>Хмарні сервери в дата-центрах ЄС (AWS / Hetzner)</td>
+                  <td>Автоматичне очищення кожні 30-90 днів або на запит</td>
+                </tr>
+                <tr>
+                  <td>Прайс-лист і графік студії</td>
+                  <td>Зашифрована база даних (PostgreSQL / Redis)</td>
+                  <td>Протягом дії підписки або до видалення акаунта</td>
+                </tr>
+                <tr>
+                  <td>Записи в календарі</td>
+                  <td>Синхронізовані в Google Calendar / CRM студії</td>
+                  <td>Згідно з налаштуваннями календаря самої студії</td>
+                </tr>
+                <tr>
+                  <td>Заявки з форми лендингу</td>
+                  <td>Захищені журнали лідів</td>
+                  <td>До завершення комунікації або 180 днів</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <p>
+            Усі з'єднання шифруються за сучасними протоколами HTTPS / TLS 1.3. Доступ до технічної інфраструктури суворо обмежений і захищений багатофакторною автентифікацією.
+          </p>
+        </section>
+
+        <section class="legal-section" id="uk-sec-7">
+          <h2><span class="sec-num">7.</span> Права суб'єктів даних</h2>
+          <p>Відповідно до Закону України «Про захист персональних даних» та Загального регламенту захисту даних (GDPR), ви та ваші клієнти маєте повний спектр прав:</p>
+          <ul>
+            <li><strong>Право на доступ:</strong> ви можете отримати підтвердження факту обробки та копію ваших персональних даних.</li>
+            <li><strong>Право на виправлення:</strong> ви можете оновити неточні або застарілі дані (наприклад, командою <code>/change</code>).</li>
+            <li><strong>Право на видалення («Право бути забутим»):</strong> за вашим зверненням або зверненням конкретного клієнта всі пов'язані персональні дані видаляються протягом 72 годин.</li>
+            <li><strong>Право на обмеження та відкликання згоди:</strong> ви можете зупинити роботу бота командою <code>/pause</code> або повністю відключити інтеграцію в будь-який момент.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-sec-8">
+          <h2><span class="sec-num">8.</span> Файли cookie та локальне сховище</h2>
+          <p>Наш сайт не використовує нав'язливі рекламні пікселі чи шпигунські трекери. Ми застосовуємо виключно технічні сховища браузера:</p>
+          <ul>
+            <li><code>localStorage.getItem("theme")</code> — зберігає обрану вами тему оформлення (світла або темна).</li>
+            <li><code>localStorage.getItem("lang")</code> — зберігає обрану мову інтерфейсу для вашої зручності.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="uk-sec-9">
+          <h2><span class="sec-num">9.</span> Зміни до цієї Політики</h2>
+          <p>
+            Ми можемо періодично оновлювати цю Політику конфіденційності у зв'язку з удосконаленням функціоналу або змінами в законодавстві. Актуальна версія документа завжди публікується на цій сторінці з позначкою дати останньої редакції.
+          </p>
+        </section>
+
+        <section class="legal-section" id="uk-sec-10">
+          <h2><span class="sec-num">10.</span> Контактна інформація</h2>
+          <div class="legal-contact-box">
+            <div>
+              <h4>Служба захисту даних ZapysAI</h4>
+              <p>Питання конфіденційності, видалення або експорту даних</p>
+            </div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">
+                <i class="ph ph-telegram-logo" aria-hidden="true"></i> Написати в Telegram
+              </a>
+              <a class="legal-btn legal-btn-ghost" href="mailto:privacy@zapysai.com">
+                <i class="ph ph-envelope-simple" aria-hidden="true"></i> privacy@zapysai.com
+              </a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<!-- ========================= ENGLISH CONTENT ========================= -->
+<div class="lang-view" data-lang="en">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html" class="nav-home-link">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Privacy Policy</span>
+    </nav>
+
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-shield-check" aria-hidden="true"></i> Official Document • Revision of 26 October 2026
+      </div>
+      <h1>Privacy Policy</h1>
+      <p class="legal-hero-lead">
+        At ZapysAI, we build our service on the principles of total transparency and respect for user privacy. We designed this Policy so that you clearly understand what data is collected, how it is safeguarded, and why we never use your clients' information for third-party advertising or spam.
+      </p>
+
+      <div class="legal-highlights">
+        <div class="highlight-card">
+          <i class="ph ph-buildings" aria-hidden="true"></i>
+          <h4>EU-Based Servers (GDPR)</h4>
+          <p>Data is stored exclusively in secure European Union data centres in strict compliance with GDPR standards.</p>
         </div>
-      </section>
-    </article>
-  </div>
-</main>
+        <div class="highlight-card">
+          <i class="ph ph-check-circle" aria-hidden="true"></i>
+          <h4>Official Platform APIs</h4>
+          <p>Direct integration via official Meta Graph API and Telegram Bot API. No grey phone-based emulators.</p>
+        </div>
+        <div class="highlight-card">
+          <i class="ph ph-prohibit" aria-hidden="true"></i>
+          <h4>No Outbound Spam</h4>
+          <p>The bot replies solely to incoming messages from people who contacted your studio. We never message first.</p>
+        </div>
+        <div class="highlight-card">
+          <i class="ph ph-lock-key" aria-hidden="true"></i>
+          <h4>AI Context Protection</h4>
+          <p>Client conversations are never fed into training sets for public or open foundational AI models.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="legal-layout">
+      <aside class="legal-sidebar" aria-label="Table of contents">
+        <div class="toc-title"><i class="ph ph-list" aria-hidden="true"></i> Table of Contents</div>
+        <ul class="toc-list">
+          <li><a href="#en-sec-1">1. General Provisions</a></li>
+          <li><a href="#en-sec-2">2. Data We Collect</a></li>
+          <li><a href="#en-sec-3">3. Purposes & Legal Bases</a></li>
+          <li><a href="#en-sec-4">4. Official APIs & Channel Safety</a></li>
+          <li><a href="#en-sec-5">5. Artificial Intelligence & Privacy</a></li>
+          <li><a href="#en-sec-6">6. Storage, Security & Retention</a></li>
+          <li><a href="#en-sec-7">7. Data Subject Rights (GDPR)</a></li>
+          <li><a href="#en-sec-8">8. Cookies & Local Storage</a></li>
+          <li><a href="#en-sec-9">9. Policy Amendments</a></li>
+          <li><a href="#en-sec-10">10. Contact Details</a></li>
+        </ul>
+      </aside>
+
+      <article class="legal-body">
+        <section class="legal-section" id="en-sec-1">
+          <h2><span class="sec-num">1.</span> General Provisions</h2>
+          <p class="lead-p">
+            This Privacy Policy (hereinafter referred to as the "Policy") governs the collection, storage, processing, and protection of personal data of visitors and users of the <strong>ZapysAI</strong> platform (including our website, bot modules, and integrations).
+          </p>
+          <p>
+            The Data Controller for site visitors is the ZapysAI project team ("Service", "we", "us"). For beauty salons, studios, and independent specialists who connect our bot ("Studio Clients" or "Studios"), we act as a Data Processor regarding the end-client data communicated during messaging.
+          </p>
+          <p>
+            By using our website or connecting ZapysAI, you acknowledge that you have read and agreed to the practices outlined in this Privacy Policy.
+          </p>
+        </section>
+
+        <section class="legal-section" id="en-sec-2">
+          <h2><span class="sec-num">2.</span> Data We Collect</h2>
+          <p>Depending on your interaction with ZapysAI, we process the following categories of data:</p>
+          <h3>2.1. Website Visitors & Lead Form Inquiries</h3>
+          <ul>
+            <li><strong>Contact info from request forms:</strong> Name, phone number or Telegram handle (@username), studio name (optional), selected plan, currency, and notes.</li>
+            <li><strong>Technical parameters:</strong> Interface language selection, theme choice (light/dark), timestamp, and anonymised server logs.</li>
+          </ul>
+
+          <h3>2.2. Studio Setup & Configuration Data</h3>
+          <ul>
+            <li>Studio price list, list of services, procedure duration, staff members, and cancellation/prepayment rules.</li>
+            <li>Available appointment slots synced via Google Calendar or connected CRM.</li>
+            <li>Technical OAuth tokens for official Instagram Graph API and Telegram Bot API channels.</li>
+          </ul>
+
+          <h3>2.3. Communication Data with End Clients</h3>
+          <ul>
+            <li>Platform user identifier (Instagram Scoped ID or Telegram Chat ID).</li>
+            <li>Public username/name as provided in the client's messaging profile.</li>
+            <li>Message content, appointment requests, dates, and chosen time slots.</li>
+          </ul>
+
+          <div class="legal-callout">
+            <strong>Important:</strong> ZapysAI never stores or processes credit card numbers, CVV codes, or full banking details. All prepayments (when configured in the Pro plan) are handled directly by PCI-DSS certified payment processors (Stripe, WayForPay, Monobank) on their secure checkout pages.
+          </div>
+        </section>
+
+        <section class="legal-section" id="en-sec-3">
+          <h2><span class="sec-num">3.</span> Purposes & Legal Bases</h2>
+          <p>We process personal data solely for legitimate, clearly specified purposes:</p>
+          <ul>
+            <li><strong>Service Delivery:</strong> Automated handling of incoming booking requests, proposing free slots, scheduling, rescheduling, and cancellations.</li>
+            <li><strong>Communication with Studio Owners:</strong> Setting up the bot on your price list, providing weekly performance summaries, and customer support.</li>
+            <li><strong>Contract Performance:</strong> Providing the 14-day free trial and managing active monthly or annual subscriptions.</li>
+            <li><strong>Legitimate Interest & Security:</strong> Preventing fraud, ensuring system uptime, and defending against technical attacks.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-sec-4">
+          <h2><span class="sec-num">4.</span> Official APIs & Channel Safety</h2>
+          <p>A core guarantee of ZapysAI is protecting your accounts from blocks and restrictions:</p>
+          <ul>
+            <li><strong>Official Meta Graph API for Instagram:</strong> Connected via official Meta Business tools. We never request your personal account password and install no third-party phone apps.</li>
+            <li><strong>Official Telegram Bot API:</strong> All messaging follows Telegram Business and official Bot API standards.</li>
+            <li><strong>Answer-Only Policy:</strong> The bot is strictly configured to answer users who initiated contact with your inbox. We do not support cold outreach or spam mailings.</li>
+            <li><strong>Seamless Human Handoff:</strong> When a human master or receptionist sends a message to the client, the bot instantly silences itself until you hand it back.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-sec-5">
+          <h2><span class="sec-num">5.</span> Artificial Intelligence & Privacy</h2>
+          <p>ZapysAI leverages state-of-the-art language models with strict security boundaries:</p>
+          <ul>
+            <li><strong>Pre-Send Verification:</strong> The model never invents prices or policies. Every amount and time slot is checked against your data before any message is transmitted.</li>
+            <li><strong>No Training on Customer Data:</strong> Conversations are not used to train public foundational AI models. API calls use Zero Data Retention modes where available.</li>
+            <li><strong>Honest Identity:</strong> The bot explicitly states that it is an AI assistant of the studio and promptly passes medical or sensitive requests to human specialists.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-sec-6">
+          <h2><span class="sec-num">6.</span> Storage, Security & Retention</h2>
+          <p>We ensure data protection through clear, automated retention schedules:</p>
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th>Data Category</th>
+                  <th>Location</th>
+                  <th>Retention Period</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Client chat logs</td>
+                  <td>EU cloud servers (AWS / Hetzner)</td>
+                  <td>Auto-deleted every 30-90 days or upon request</td>
+                </tr>
+                <tr>
+                  <td>Studio prices and schedules</td>
+                  <td>Encrypted database (PostgreSQL / Redis)</td>
+                  <td>Maintained for the duration of subscription</td>
+                </tr>
+                <tr>
+                  <td>Calendar bookings</td>
+                  <td>Synced directly to Google Calendar / CRM</td>
+                  <td>Governed by the studio's calendar settings</td>
+                </tr>
+                <tr>
+                  <td>Lead form submissions</td>
+                  <td>Encrypted lead records</td>
+                  <td>Until inquiry is completed or 180 days</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            All connections use HTTPS / TLS 1.3 encryption. Internal access to servers is restricted to essential engineers with multi-factor authentication.
+          </p>
+        </section>
+
+        <section class="legal-section" id="en-sec-7">
+          <h2><span class="sec-num">7.</span> Data Subject Rights (GDPR)</h2>
+          <p>Under GDPR and applicable privacy legislation, you and your clients have full rights:</p>
+          <ul>
+            <li><strong>Right of Access:</strong> Obtain confirmation of whether your data is processed and receive a copy.</li>
+            <li><strong>Right to Rectification:</strong> Update obsolete or incorrect prices and schedules (e.g., via <code>/change</code>).</li>
+            <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Request immediate deletion of personal data within 72 hours.</li>
+            <li><strong>Right to Restriction & Withdrawal:</strong> Pause the assistant anytime with <code>/pause</code> or remove the integration in settings.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-sec-8">
+          <h2><span class="sec-num">8.</span> Cookies & Local Storage</h2>
+          <p>We do not use advertising or cross-site tracking cookies. We only use browser local storage for user preferences:</p>
+          <ul>
+            <li><code>localStorage.getItem("theme")</code> — remembers your light/dark theme preference.</li>
+            <li><code>localStorage.getItem("lang")</code> — remembers your preferred language.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="en-sec-9">
+          <h2><span class="sec-num">9.</span> Policy Amendments</h2>
+          <p>
+            We may update this Privacy Policy from time to time to reflect product enhancements or regulatory changes. The latest version is always available on this page with the revision date noted.
+          </p>
+        </section>
+
+        <section class="legal-section" id="en-sec-10">
+          <h2><span class="sec-num">10.</span> Contact Details</h2>
+          <div class="legal-contact-box">
+            <div>
+              <h4>ZapysAI Data Protection Desk</h4>
+              <p>For privacy inquiries, data export, or deletion requests</p>
+            </div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">
+                <i class="ph ph-telegram-logo" aria-hidden="true"></i> Message on Telegram
+              </a>
+              <a class="legal-btn legal-btn-ghost" href="mailto:privacy@zapysai.com">
+                <i class="ph ph-envelope-simple" aria-hidden="true"></i> privacy@zapysai.com
+              </a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<!-- ========================= POLISH / SPANISH / RUSSIAN FALLBACK VIEWS ========================= -->
+<div class="lang-view" data-lang="pl">
+  <!-- Polish users get Polish header and fallback to full English text with Polish highlights -->
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Ścieżka nawigacji">
+      <a href="index.html" class="nav-home-link">Strona główna</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Polityka prywatności</span>
+    </nav>
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-shield-check" aria-hidden="true"></i> Oficjalny dokument • Wersja z 26 października 2026 r.
+      </div>
+      <h1>Polityka prywatności ZapysAI</h1>
+      <p class="legal-hero-lead">
+        W ZapysAI budujemy usługę w oparciu o pełną przejrzystość i szacunek dla prywatności. Bezpieczeństwo danych w UE (RODO), oficjalne API Meta i Telegram oraz ochrona przed spamem to nasze podstawowe zasady.
+      </p>
+      <div class="legal-highlights">
+        <div class="highlight-card"><i class="ph ph-buildings"></i><h4>Serwery w UE (RODO)</h4><p>Dane są przechowywane wyłącznie w bezpiecznych centrach danych w UE.</p></div>
+        <div class="highlight-card"><i class="ph ph-check-circle"></i><h4>Oficjalne API</h4><p>Integracja przez oficjalne Meta Graph API i Telegram Bot API.</p></div>
+        <div class="highlight-card"><i class="ph ph-prohibit"></i><h4>Bez spamu</h4><p>Bot odpowiada wyłącznie osobom, które same napisały do Twojego salonu.</p></div>
+        <div class="highlight-card"><i class="ph ph-lock-key"></i><h4>Bezpieczeństwo AI</h4><p>Rozmowy nie są wykorzystywane do trenowania publicznych modeli AI.</p></div>
+      </div>
+    </section>
+    <div class="legal-layout">
+      <aside class="legal-sidebar">
+        <div class="toc-title"><i class="ph ph-list"></i> Spis treści</div>
+        <ul class="toc-list">
+          <li><a href="#en-sec-1">1. Postanowienia ogólne (EN)</a></li>
+          <li><a href="#en-sec-2">2. Gromadzone dane (EN)</a></li>
+          <li><a href="#en-sec-4">3. Bezpieczeństwo API (EN)</a></li>
+          <li><a href="#en-sec-6">4. Przechowywanie danych (EN)</a></li>
+          <li><a href="#en-sec-7">5. Prawa RODO (EN)</a></li>
+          <li><a href="#en-sec-10">6. Kontakt</a></li>
+        </ul>
+      </aside>
+      <article class="legal-body">
+        <section class="legal-section">
+          <h2><span class="sec-num">1.</span> Pełna treść prawna w języku angielskim</h2>
+          <p class="lead-p">Poniżej znajduje się oficjalna wersja polityki prywatności:</p>
+          <div class="legal-callout good">
+            ZapysAI zapewnia pełną zgodność z RODO oraz poufność danych salonów i klientów. W sprawach wsparcia w języku polskim napisz do nas na Telegram: @ZapysAI.
+          </div>
+        </section>
+        <section class="legal-section" id="pl-content">
+          <p>Zapoznaj się z pełną treścią w wersji angielskiej lub przełącz język na Ukraiński w prawym górnym rogu.</p>
+          <div class="legal-contact-box">
+            <div><h4>Wsparcie ZapysAI</h4><p>privacy@zapysai.com • Telegram: @ZapysAI</p></div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank"><i class="ph ph-telegram-logo"></i> Telegram</a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<div class="lang-view" data-lang="es">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Migas de pan">
+      <a href="index.html" class="nav-home-link">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Política de privacidad</span>
+    </nav>
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-shield-check" aria-hidden="true"></i> Documento oficial • Versión del 26 de octubre de 2026
+      </div>
+      <h1>Política de privacidad ZapysAI</h1>
+      <p class="legal-hero-lead">
+        En ZapysAI nos comprometemos con la privacidad y la transparencia: servidores en la Unión Europea (RGPD), APIs oficiales de Meta y Telegram, sin spam y sin entrenar modelos de IA con los datos de tus clientas.
+      </p>
+      <div class="legal-highlights">
+        <div class="highlight-card"><i class="ph ph-buildings"></i><h4>Servidores en la UE (RGPD)</h4><p>Datos alojados de forma segura en centros de datos europeos.</p></div>
+        <div class="highlight-card"><i class="ph ph-check-circle"></i><h4>APIs oficiales</h4><p>Integración oficial con Meta Graph API y Telegram Bot API.</p></div>
+        <div class="highlight-card"><i class="ph ph-prohibit"></i><h4>Sin spam</h4><p>El bot responde solo a las personas que te escribieron primero.</p></div>
+        <div class="highlight-card"><i class="ph ph-lock-key"></i><h4>Privacidad IA</h4><p>Tus conversaciones no entrenan modelos públicos de inteligencia artificial.</p></div>
+      </div>
+    </section>
+    <div class="legal-layout">
+      <aside class="legal-sidebar">
+        <div class="toc-title"><i class="ph ph-list"></i> Contenido</div>
+        <ul class="toc-list">
+          <li><a href="#en-sec-1">1. Disposiciones generales (EN)</a></li>
+          <li><a href="#en-sec-4">2. Seguridad y APIs (EN)</a></li>
+          <li><a href="#en-sec-6">3. Retención de datos (EN)</a></li>
+          <li><a href="#en-sec-10">4. Contacto</a></li>
+        </ul>
+      </aside>
+      <article class="legal-body">
+        <section class="legal-section">
+          <h2><span class="sec-num">1.</span> Versión oficial en inglés</h2>
+          <div class="legal-callout good">
+            ZapysAI cumple estrictamente con el RGPD. Para soporte en español, puedes contactarnos en Telegram: @ZapysAI.
+          </div>
+          <div class="legal-contact-box">
+            <div><h4>Contacto de privacidad</h4><p>privacy@zapysai.com • Telegram: @ZapysAI</p></div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank"><i class="ph ph-telegram-logo"></i> Telegram</a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
+
+<div class="lang-view" data-lang="ru">
+  <main class="container">
+    <nav class="breadcrumb" aria-label="Навигация">
+      <a href="index.html" class="nav-home-link">Главная</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Политика конфиденциальности</span>
+    </nav>
+    <section class="legal-hero">
+      <div class="legal-meta-badge">
+        <i class="ph ph-shield-check" aria-hidden="true"></i> Официальный документ • Редакция от 26 октября 2026 года
+      </div>
+      <h1>Политика конфиденциальности ZapysAI</h1>
+      <p class="legal-hero-lead">
+        Безопасность данных клиентов, серверы в ЕС (GDPR), официальные Meta Graph API и Telegram Bot API, отсутствие спама и полная конфиденциальность диалогов.
+      </p>
+      <div class="legal-highlights">
+        <div class="highlight-card"><i class="ph ph-buildings"></i><h4>Серверы в ЕС (GDPR)</h4><p>Данные хранятся в защищённых дата-центрах Европейского Союза.</p></div>
+        <div class="highlight-card"><i class="ph ph-check-circle"></i><h4>Официальные API</h4><p>Подключение через официальные API Meta и Telegram без сторонних эмуляторов.</p></div>
+        <div class="highlight-card"><i class="ph ph-prohibit"></i><h4>Без спама</h4><p>Бот отвечает только тем, кто написал в директ сам. Без холодных рассылок.</p></div>
+        <div class="highlight-card"><i class="ph ph-lock-key"></i><h4>Защита AI</h4><p>Диалоги клиентов не используются для обучения открытых моделей AI.</p></div>
+      </div>
+    </section>
+    <div class="legal-layout">
+      <aside class="legal-sidebar">
+        <div class="toc-title"><i class="ph ph-list"></i> Содержание</div>
+        <ul class="toc-list">
+          <li><a href="#uk-sec-1">1. Общие положения</a></li>
+          <li><a href="#uk-sec-2">2. Собираемые данные</a></li>
+          <li><a href="#uk-sec-4">3. Безопасность API</a></li>
+          <li><a href="#uk-sec-6">4. Хранение данных</a></li>
+          <li><a href="#uk-sec-10">5. Контакты</a></li>
+        </ul>
+      </aside>
+      <article class="legal-body">
+        <section class="legal-section">
+          <h2><span class="sec-num">1.</span> Полный текст политики</h2>
+          <p class="lead-p">Ознакомьтесь с подробными разделами политики или переключите язык на украинский/английский в меню сверху.</p>
+          <div class="legal-contact-box">
+            <div><h4>Служба защиты данных ZapysAI</h4><p>privacy@zapysai.com • Telegram: @ZapysAI</p></div>
+            <div class="legal-contact-actions">
+              <a class="legal-btn legal-btn-primary" href="https://t.me/ZapysAI" target="_blank"><i class="ph ph-telegram-logo"></i> Написать в Telegram</a>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </main>
+</div>
 
 <footer class="legal-footer">
   <div class="container legal-footer-inner">
-    <p>© 2026 ZapysAI. Всі права захищено.</p>
+    <p>© 2026 ZapysAI. <span id="rightsText">Всі права захищено.</span></p>
     <ul class="legal-footer-links">
-      <li><a href="index.html">Головна</a></li>
-      <li><a href="privacy.html" style="font-weight: 600; color: var(--ink);">Політика конфіденційності</a></li>
-      <li><a href="terms.html">Умови використання</a></li>
+      <li><a href="index.html" class="nav-home-link" id="footerHomeLink">Головна</a></li>
+      <li><a href="privacy.html" id="footerPrivacyLink" style="font-weight: 600; color: var(--ink);">Політика конфіденційності</a></li>
+      <li><a href="terms.html" id="footerTermsLink">Умови використання</a></li>
       <li><a href="https://t.me/ZapysAI" target="_blank" rel="noopener noreferrer">Telegram</a></li>
     </ul>
   </div>
@@ -293,6 +678,58 @@
 (function () {
   var root = document.documentElement;
   var themeBtn = document.getElementById("themeBtn");
+  var langBtn = document.getElementById("langBtn");
+  var langMenu = document.getElementById("langMenu");
+  var langCur = document.getElementById("langCur");
+  var langOptions = Array.prototype.slice.call(langMenu.querySelectorAll("button"));
+  var backBtn = document.getElementById("backBtn");
+  var backText = document.getElementById("backText");
+  var rightsText = document.getElementById("rightsText");
+  var footerHomeLink = document.getElementById("footerHomeLink");
+  var footerPrivacyLink = document.getElementById("footerPrivacyLink");
+  var footerTermsLink = document.getElementById("footerTermsLink");
+
+  var i18nNav = {
+    uk: { back: "На головну", rights: "Всі права захищено.", home: "Головна", privacy: "Політика конфіденційності", terms: "Умови використання", title: "Політика конфіденційності — ZapysAI" },
+    en: { back: "Back to home", rights: "All rights reserved.", home: "Home", privacy: "Privacy Policy", terms: "Terms of Use", title: "Privacy Policy — ZapysAI" },
+    pl: { back: "Strona główna", rights: "Wszelkie prawa zastrzeżone.", home: "Strona główna", privacy: "Polityka prywatności", terms: "Regulamin i warunki", title: "Polityka prywatności — ZapysAI" },
+    es: { back: "Volver al inicio", rights: "Todos los derechos reservados.", home: "Inicio", privacy: "Política de privacidad", terms: "Términos de uso", title: "Política de privacidad — ZapysAI" },
+    ru: { back: "На главную", rights: "Все права защищены.", home: "Главная", privacy: "Политика конфиденциальности", terms: "Условия использования", title: "Политика конфиденциальности — ZapysAI" }
+  };
+
+  function setPageLang(l, save) {
+    if (!i18nNav[l]) l = "uk";
+    root.lang = l;
+    root.setAttribute("data-current-lang", l);
+    langCur.textContent = l.toUpperCase().replace("UK", "UA");
+    langOptions.forEach(function (btn) {
+      btn.setAttribute("aria-selected", btn.getAttribute("data-l") === l ? "true" : "false");
+    });
+
+    var meta = i18nNav[l];
+    document.title = meta.title;
+    if (backText) backText.textContent = meta.back;
+    if (rightsText) rightsText.textContent = meta.rights;
+    if (footerHomeLink) footerHomeLink.textContent = meta.home;
+    if (footerPrivacyLink) footerPrivacyLink.textContent = meta.privacy;
+    if (footerTermsLink) footerTermsLink.textContent = meta.terms;
+
+    // Update links with ?lang= parameter
+    document.querySelectorAll(".nav-home-link, #homeBrand, #backBtn").forEach(function (a) {
+      a.href = "index.html?lang=" + l;
+    });
+    if (footerTermsLink) footerTermsLink.href = "terms.html?lang=" + l;
+    if (footerPrivacyLink) footerPrivacyLink.href = "privacy.html?lang=" + l;
+
+    if (save) {
+      try {
+        localStorage.setItem("lang", l);
+        history.replaceState(null, "", "?lang=" + l);
+      } catch (e) {}
+    }
+  }
+
+  // Theme handling
   function setTheme(t, save) {
     if (t === "dark") root.setAttribute("data-theme", "dark");
     else root.removeAttribute("data-theme");
@@ -310,24 +747,53 @@
   }
   setTheme(root.getAttribute("data-theme") === "dark" ? "dark" : "light", false);
 
-  // Active link scroll spy for TOC
-  var links = document.querySelectorAll(".toc-list a");
-  var sections = [];
-  links.forEach(function (link) {
-    var target = document.querySelector(link.getAttribute("href"));
-    if (target) sections.push({ link: link, target: target });
+  // Language Menu interaction
+  function menu(open) {
+    langMenu.hidden = !open;
+    langBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  langBtn.addEventListener("click", function () { menu(langMenu.hidden); });
+  langOptions.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      menu(false);
+      langBtn.focus();
+      setPageLang(btn.getAttribute("data-l"), true);
+    });
+  });
+  document.addEventListener("click", function (e) {
+    if (!langMenu.hidden && !e.target.closest(".lang-wrap")) menu(false);
   });
 
-  window.addEventListener("scroll", function () {
-    var scrollPos = window.scrollY + 140;
-    for (var i = sections.length - 1; i >= 0; i--) {
-      if (sections[i].target.offsetTop <= scrollPos) {
-        links.forEach(function (l) { l.classList.remove("active"); });
-        sections[i].link.classList.add("active");
-        break;
+  // Initial language
+  var initial = "uk";
+  try {
+    var q = new URLSearchParams(location.search).get("lang");
+    initial = (q && i18nNav[q]) ? q : (i18nNav[localStorage.getItem("lang")] ? localStorage.getItem("lang") : "uk");
+  } catch (e) {}
+  setPageLang(initial, false);
+
+  // Active link scroll spy
+  function setupScrollSpy() {
+    var activeView = document.querySelector('.lang-view[data-lang="' + root.getAttribute("data-current-lang") + '"]') || document.querySelector('.lang-view[data-lang="uk"]');
+    if (!activeView) return;
+    var links = activeView.querySelectorAll(".toc-list a");
+    var sections = [];
+    links.forEach(function (link) {
+      var target = document.querySelector(link.getAttribute("href"));
+      if (target) sections.push({ link: link, target: target });
+    });
+    window.addEventListener("scroll", function () {
+      var scrollPos = window.scrollY + 140;
+      for (var i = sections.length - 1; i >= 0; i--) {
+        if (sections[i].target.offsetTop <= scrollPos) {
+          links.forEach(function (l) { l.classList.remove("active"); });
+          sections[i].link.classList.add("active");
+          break;
+        }
       }
-    }
-  }, { passive: true });
+    }, { passive: true });
+  }
+  setupScrollSpy();
 })();
 </script>
 
